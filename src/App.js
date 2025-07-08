@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import './Main.css'
+import './Content.css'
+import {useState} from "react";
 
 function App() {
+    const [message, setMessage] = useState('');
+
+    function buttonShowCurrencyRatesOnClick() {
+        setMessage("Вы нажали на кнопку \"Курсы валют\"");
+    }
+
+    function buttonShowConverterOnClick() {
+        setMessage("Вы нажали на кнопку \"Конвертер валют\"");
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+          <div className="main-container">
+
+              <div className="button-container">
+                  <button className="btn" onClick={buttonShowCurrencyRatesOnClick}>Курсы валют</button>
+                  <button className="btn" onClick={buttonShowConverterOnClick}>Конвертер валют</button>
+              </div>
+          </div>
+          <div id="contentContainer" className="content-container">
+              {message}
+          </div>
+      </div>
   );
 }
 
