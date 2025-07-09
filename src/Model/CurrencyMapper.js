@@ -1,4 +1,4 @@
-import Currency from '../Model/Currency'; // Предположим, Currency лежит в папке models
+import Currency from '../Model/Currency';
 
 /**
  * Преобразует массив "сырых" данных о курсах из API
@@ -13,7 +13,9 @@ export function mapApiDataToCurrencies(apiDataArray) {
         return []; // Возвращаем пустой массив, чтобы приложение не упало
     }
 
+    // Используем метод .map() и наш фабричный метод из Currency
+    // .filter(Boolean) уберет все null, если какой-то объект в API будет некорректным
     return apiDataArray
         .map(apiObject => Currency.fromApiObject(apiObject))
-        .filter(currency => currency !== null);
+        .filter(Boolean);
 }

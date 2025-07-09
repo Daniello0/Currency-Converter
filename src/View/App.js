@@ -3,15 +3,14 @@ import './Content.css'
 import '../Model/CurrencyRatesView'
 import {useState} from "react";
 import Parser from "../Model/Parser";
-import {mapApiDataToCurrencies} from "../Model/CurrencyRatesList";
+import {mapApiDataToCurrencies} from "../Model/CurrencyMapper";
+import RatesView from "../Model/CurrencyRatesView";
 
 function App() {
-    const [message, setMessage] = useState('');
+    const [content, setContent] = useState(null);
 
     // Помечаем функцию как асинхронную
     async function buttonShowCurrencyRatesOnClick() {
-        setMessage("Вы нажали на кнопку \"Курсы валют\"");
-
         const parser = new Parser();
         const apiArray = await parser.parseRatesToArray();
         if (apiArray) {
@@ -20,13 +19,17 @@ function App() {
             const currencyList = mapApiDataToCurrencies(apiArray);
 
             console.log("Преобразованный список:", currencyList);
+
+            const ratesViewComponent = <RatesView rates={currencyList} />;
+
+            await setContent(ratesViewComponent);
         } else {
             console.error("Не удалось получить данные из API");
         }
     }
 
     function buttonShowConverterOnClick() {
-        setMessage("Вы нажали на кнопку \"Конвертер валют\"");
+        setContent("Конвертер в разработке...");
     }
 
   return (
@@ -39,7 +42,7 @@ function App() {
               </div>
           </div>
           <div id="contentContainer" className="content-container">
-              {message}
+              {content}
           </div>
       </div>
   );

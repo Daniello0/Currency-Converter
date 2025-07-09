@@ -3,14 +3,14 @@ export default class Currency {
     #name = "";
     #scale = 0;
     #abbreviation = "";
-    #officialRate = 0;
+    #officialRate = 0.0;
     #updateDate = null;
 
     constructor({ name, scale, abbreviation, officialRate, updateDate }) {
         this.#name = name || "";
         this.#scale = scale || 0;
         this.#abbreviation = abbreviation || "";
-        this.#officialRate = officialRate || 0;
+        this.#officialRate = officialRate || 0.0;
         this.#updateDate = updateDate || null;
     }
 
@@ -24,7 +24,7 @@ export default class Currency {
             scale: apiObject.Cur_Scale,
             abbreviation: apiObject.Cur_Abbreviation,
             officialRate: apiObject.Cur_OfficialRate,
-            updateDate: new Date(apiObject.Date) // Сразу преобразуем в объект Date
+            updateDate: new Date(apiObject.Date)
         });
     }
 
