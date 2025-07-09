@@ -1,12 +1,28 @@
 import './App.css'
 import './Content.css'
+import '../Model/CurrencyRatesView'
 import {useState} from "react";
+import Parser from "../Model/Parser";
+import {mapApiDataToCurrencies} from "../Model/CurrencyRatesList";
 
 function App() {
     const [message, setMessage] = useState('');
 
-    function buttonShowCurrencyRatesOnClick() {
+    // Помечаем функцию как асинхронную
+    async function buttonShowCurrencyRatesOnClick() {
         setMessage("Вы нажали на кнопку \"Курсы валют\"");
+
+        const parser = new Parser();
+        const apiArray = await parser.parseRatesToArray();
+        if (apiArray) {
+            console.log("Данные получены: ", apiArray);
+
+            const currencyList = mapApiDataToCurrencies(apiArray);
+
+            console.log("Преобразованный список:", currencyList);
+        } else {
+            console.error("Не удалось получить данные из API");
+        }
     }
 
     function buttonShowConverterOnClick() {

@@ -1,28 +1,40 @@
-const DEFAULT_CURRENCY = "BYN";
+export default class Currency {
 
-class Currency {
-    name = "";
-    value = "";
+    #name = "";
+    #scale = 0;
+    #abbreviation = "";
+    #officialRate = 0;
+    #updateDate = null;
 
-    constructor(name, value) {
-        this._name = name;
-        this._value = value;
+    constructor({ name, scale, abbreviation, officialRate, updateDate }) {
+        this.#name = name || "";
+        this.#scale = scale || 0;
+        this.#abbreviation = abbreviation || "";
+        this.#officialRate = officialRate || 0;
+        this.#updateDate = updateDate || null;
     }
 
+    static fromApiObject(apiObject) {
+        if (!apiObject) {
+            return null;
+        }
 
-    getName() {
-        return this._name;
+        return new Currency({
+            name: apiObject.Cur_Name,
+            scale: apiObject.Cur_Scale,
+            abbreviation: apiObject.Cur_Abbreviation,
+            officialRate: apiObject.Cur_OfficialRate,
+            updateDate: new Date(apiObject.Date) // Сразу преобразуем в объект Date
+        });
     }
 
-    setName(value) {
-        this._name = value;
-    }
+    get name() { return this.#name; }
+    get scale() { return this.#scale; }
+    get abbreviation() { return this.#abbreviation; }
+    get officialRate() { return this.#officialRate; }
+    get updateDate() { return this.#updateDate; }
 
-    getValue() {
-        return this._value;
-    }
-
-    setValue(value) {
-        this._value = value;
+    toString() {
+        return `${this.#scale} ${this.#name} (${this.#abbreviation}) = ${this.#officialRate}`;
     }
 }

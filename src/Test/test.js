@@ -12,24 +12,9 @@ describe("Parser", function () {
     });
 
     it('отображение массива полученных данных', () => {
-        getAndShowRates();
+        let parser;
+        parser = new Parser();
+        parser.parseRatesToArray().then(r => console.log(r));
+        console.log("End");
     });
 });
-
-async function getAndShowRates() {
-    const parser = new Parser();
-    console.log("Создан экземпляр парсера. Вызываем метод...");
-
-    const ratesArray = await parser.parseRatesToArray();
-
-    if (ratesArray) {
-        console.log("УСПЕХ! Данные получены.");
-        console.log("Тип данных:", typeof ratesArray);
-        console.log("Это массив?", Array.isArray(ratesArray));
-        console.log("Количество элементов:", ratesArray.length);
-        console.log("Первый элемент:", ratesArray[0]);
-        console.log("Все данные:", ratesArray);
-    } else {
-        console.error("ОШИБКА! Не удалось получить данные.");
-    }
-}
