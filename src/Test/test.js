@@ -1,4 +1,4 @@
-import Parser from "./Parser.js";
+import Parser from "../Model/Parser.js";
 import { assert } from 'chai';
 
 describe("Parser", function () {

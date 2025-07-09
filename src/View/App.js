@@ -1,4 +1,4 @@
-import './Main.css'
+import './App.css'
 import './Content.css'
 import {useState} from "react";
 
