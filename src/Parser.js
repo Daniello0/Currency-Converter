@@ -7,8 +7,7 @@ export default class Parser {
             if (!response.ok) {
                 console.log("Network connection error")
             }
-            const data = await response.json();
-            return data;
+            return await response.json();
         } catch (error) {
             console.error("Parse error ", error);
             return null;
