@@ -54,8 +54,6 @@ function RatesView( { rates }) {
             ))}
         </div>
     );
-
-    console.log("Конец рендеринга страницы RatesView");
 }
 
 export default RatesView;
