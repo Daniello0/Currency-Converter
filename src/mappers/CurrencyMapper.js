@@ -1,4 +1,4 @@
-import Currency from '../models/Currency';
+import Currency from '../models/Currency.js';
 
 /**
  * Преобразует массив "сырых" данных о курсах из API

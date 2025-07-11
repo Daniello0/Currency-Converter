@@ -1,20 +1,57 @@
-import Parser from "../services/Parser.js";
 import { assert } from 'chai';
+import { before } from 'mocha';
 
-describe("Parser", function () {
+import Parser from '../services/Parser.js';
+import Converter from '../services/Converter.js';
+import { mapApiDataToCurrencies } from '../mappers/CurrencyMapper.js';
 
-    it('получение массива данных', () => {
-        let parser;
-        parser = new Parser();
-        let data;
-        data = parser.parseRatesToArray();
-        assert.isNotNull(data);
+describe("Класс Parser", function () {
+
+    it('должен получать не null массив данных из API', async () => {
+        const parser = new Parser();
+
+        const data = await parser.parseRatesToArray();
+
+        assert.isNotNull(data, "Результат не должен быть null");
+        assert.isArray(data, "Результат должен быть массивом");
+    });
+});
+
+const parser = new Parser();
+let currencyList
+
+describe("Класс Converter", () => {
+
+    before(async function() {
+        console.log("Начало функции buttonShowCurrencyRatesOnClick()");
+
+        const apiArray = await parser.parseRatesToArray();
+        console.log(apiArray);
+        if (apiArray) {
+            currencyList = mapApiDataToCurrencies(apiArray);
+            console.log(currencyList);
+        } else {
+            console.error("Не удалось получить данные из API");
+        }
+
+        console.log("Конец функции buttonShowCurrencyRatesOnClick()");
     });
 
-    it('отображение массива полученных данных', () => {
-        let parser;
-        parser = new Parser();
-        parser.parseRatesToArray().then(r => console.log(r));
-        console.log("End");
+    it('должен правильно конвертировать из BRL в BYN с учетом scale', () => {
+        const converter = new Converter();
+
+        const result = converter.convertFromCurrencyToBYN(currencyList, 'BRL');
+
+        const expectedValue = 0.53914;
+        assert.closeTo(result, expectedValue, 0.00001, "Конвертация BRL некорректна");
+    });
+
+    it('должен правильно конвертировать из VND в BYN с учетом scale', () => {
+        const converter = new Converter();
+
+        const result = converter.convertFromCurrencyToBYN(currencyList, 'VND');
+
+        const expectedValue = 0.000113159;
+        assert.closeTo(result, expectedValue, 0.0000001, "Конвертация VND некорректна");
     });
 });

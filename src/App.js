@@ -51,8 +51,9 @@ function App() {
         switch (activeView) {
             case 'rates':
                 return <RatesView rates={currencyList} />;
-            case 'converter':
+            case 'converter': {
                 return <h2>Конвертер в разработке...</h2>;
+            }
             default:
                 return null;
         }
