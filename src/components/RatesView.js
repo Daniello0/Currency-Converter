@@ -1,5 +1,5 @@
 import React from 'react';
-import '../View/RatesView.css';
+import './RatesView.css';
 
 /**
  * Компонент для отображения списка курсов валют в виде таблицы.
@@ -7,6 +7,9 @@ import '../View/RatesView.css';
  * @param {Array} props.rates - Массив объектов с данными о валютах.
  */
 function RatesView( { rates }) {
+
+    console.log("Данные, пришедшие в RatesView: ", rates);
+
     if (!rates || rates.length === 0) {
         return <div className="loading-message">Загрузка курсов...</div>;
     }
@@ -18,41 +21,41 @@ function RatesView( { rates }) {
         return date.toLocaleDateString('ru-RU'); // 'ru-RU' для формата ДД.ММ.ГГГГ
     };
 
-    console.log("Данные, пришедшие в RatesView: ", rates);
+    console.log("Перед рендерингом страницы RatesView");
 
     return (
         <div className="rates-view-container">
-            {/!* Заголовок для нашей таблицы *!/}
+            {/* Заголовок для нашей таблицы */}
             <div className="rates-header rate-row">
                 <div className="currency-description">Валюта</div>
                 <div className="currency-value">Курс (BYN)</div>
                 <div className="currency-date">Дата</div>
             </div>
+            {rates.map((currency, index) => (
+                <div key={index} className="rate-row">
 
-            {rates.map(currency => (
-                // Используем Cur_Abbreviation как ключ, так как он тоже уникален.
-                <div key={currency.abbreviation} className="rate-row">
-
-                    {/!* Столбец 1: Описание валюты *!/}
+                    {/* Столбец 1: Описание валюты */}
                     <div className="currency-description">
-                        <span className="currency-scale">{currency.scale}</span>
-                        <span className="currency-full-name">{currency.name}</span>
+                        <span className="currency-scale">{String(currency.scale)}</span>
+                        <span className="currency-full-name">{String(currency.name)}</span>
                     </div>
 
-                    {/!* Столбец 2: Курс *!/}
+                    {/* Столбец 2: Курс */}
                     <div className="currency-value">
                         {String(currency.officialRate)}
                     </div>
 
-                    {/!* Столбец 3: Дата *!/}
+                    {/* Столбец 3: Дата */}
                     <div className="currency-date">
-                        {formatDate(currency.updateDate)}
+                        {String(formatDate(currency.updateDate))}
                     </div>
 
                 </div>
             ))}
         </div>
     );
+
+    console.log("Конец рендеринга страницы RatesView");
 }
 
 export default RatesView;
