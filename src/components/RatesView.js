@@ -32,12 +32,12 @@ function RatesView( { rates }) {
                 <div className="currency-date">Дата</div>
             </div>
             {rates.map((currency, index) => (
-                <div key={index} className="rate-row">
+                <div key={String(currency.abbreviation)} className="rate-row">
 
                     {/* Столбец 1: Описание валюты */}
                     <div className="currency-description">
                         <span className="currency-scale">{String(currency.scale)}</span>
-                        <span className="currency-full-name">{String(currency.name)}</span>
+                        <span className="currency-full-name">{String(currency.name)} ({String(currency.abbreviation)})</span>
                     </div>
 
                     {/* Столбец 2: Курс */}

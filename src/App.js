@@ -6,11 +6,13 @@ import './components/RatesView';
 
 import './App.css'
 import './Content.css'
-import './components/RatesView'
 import {mapApiDataToCurrencies} from "./mappers/CurrencyMapper";
 import RatesView from "./components/RatesView";
+import Converter from "./services/Converter";
+import ConverterView from "./components/ConverterView";
 
 const parser = new Parser();
+const converter = new Converter();
 
 function App() {
     const [currencyList, setCurrencyList] = useState([]);
@@ -19,28 +21,19 @@ function App() {
 
     // Помечаем функцию как асинхронную
     async function buttonShowCurrencyRatesOnClick() {
-
         console.log("Начало функции buttonShowCurrencyRatesOnClick()");
 
-        setIsLoading(true);
-        setActiveView('rates');
-
-        const apiArray = await parser.parseRatesToArray();
-        if (apiArray) {
-            const cleanList = mapApiDataToCurrencies(apiArray);
-            setCurrencyList(cleanList); // Обновляем состояние с ДАННЫМИ
-        } else {
-            console.error("Не удалось получить данные из API");
-            setCurrencyList([]); // В случае ошибки очищаем список
-        }
-
-        setIsLoading(false);
+        await setActiveViewAndGetCurrencyList('rates');
 
         console.log("Конец функции buttonShowCurrencyRatesOnClick()");
     }
 
-    function buttonShowConverterOnClick() {
-        setActiveView('converter');
+    async function buttonShowConverterOnClick() {
+        console.log("Начало функции buttonShowConverterOnClick()");
+
+        await setActiveViewAndGetCurrencyList('converter');
+
+        console.log("Конец функции buttonShowConverterOnClick()");
     }
 
     const renderContent = () => {
@@ -51,12 +44,29 @@ function App() {
         switch (activeView) {
             case 'rates':
                 return <RatesView rates={currencyList} />;
-            case 'converter':
-                return <h2>Конвертер в разработке...</h2>;
+            case 'converter': {
+                return <ConverterView rates={currencyList} converter={converter} />;
+            }
             default:
                 return null;
         }
     };
+
+    async function setActiveViewAndGetCurrencyList(activeViewName) {
+        setIsLoading(true);
+        setActiveView(activeViewName);
+
+        const apiArray = await parser.parseRatesToArray();
+        if (apiArray) {
+            const cleanList = mapApiDataToCurrencies(apiArray);
+            setCurrencyList(cleanList);
+        } else {
+            console.error("Не удалось получить данные из API");
+            setCurrencyList([]);
+        }
+
+        setIsLoading(false);
+    }
 
   return (
       <div>
