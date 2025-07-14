@@ -49,7 +49,7 @@ function ConverterView( {rates} ) {
                 value: value.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }),
             };
         });
-    }, [amount, baseCurrency, targetCurrencies]);
+    }, [amount, baseCurrency, targetCurrencies, rates]);
 
     return (
         <div className="converter-view-container">
