@@ -1,10 +1,14 @@
 export default class Converter {
 
-    convertFromCurrencyToBYN(currencyList, currencyAbbreviation) {
-        currencyList.forEach(currency => {
-            if (currency.abbreviation === currencyAbbreviation) {
-                return +currency.officialRate / +currency.scale;
-            }
-        })
+    static convertBetweenCurrencies (amount, from, to, currencyList) {
+        const fromRateData = currencyList.find(r => r.abbreviation === from);
+        const toRateData = currencyList.find(r => r.abbreviation === to);
+
+        if (!fromRateData || !toRateData) return 0;
+
+        const amountInByn = (amount * fromRateData.officialRate) / fromRateData.scale;
+
+        // конечная стоимость
+        return (amountInByn * toRateData.scale) / toRateData.officialRate;
     }
 }
