@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import Parser from "./services/Parser";
 import './mappers/CurrencyMapper';
 import './components/RatesView';
@@ -18,8 +18,36 @@ function App() {
     const [currencyList, setCurrencyList] = useState([]);
     const [activeView, setActiveView] = useState('none'); // 'none', 'rates', 'converter'
     const [isLoading, setIsLoading] = useState(false);
+    const [favorites, setFavorites] = useState(() => {
+        try {
+            const savedFavorites = localStorage.getItem('favoriteCurrencies');
+            return savedFavorites ? JSON.parse(savedFavorites) : [];
+        } catch (error) {
+            console.error("Ошибка при чтении favorites из localStorage:", error);
+            return [];
+        }
+    });
 
-    // Помечаем функцию как асинхронную
+    useEffect(() => {
+        try {
+            localStorage.setItem('favoriteCurrencies', JSON.stringify(favorites));
+        } catch (error) {
+            console.error("Ошибка при сохранении favorites в localStorage:", error);
+        }
+    }, [favorites]);
+
+    const toggleFavorite = (currencyCode) => {
+        setFavorites(prevFavorites => {
+            const newFavorites = new Set(prevFavorites);
+            if (newFavorites.has(currencyCode)) {
+                newFavorites.delete(currencyCode);
+            } else {
+                newFavorites.add(currencyCode);
+            }
+            return Array.from(newFavorites);
+        });
+    };
+
     async function buttonShowCurrencyRatesOnClick() {
         await setActiveViewAndGetCurrencyList('rates');
     }
@@ -35,7 +63,11 @@ function App() {
 
         switch (activeView) {
             case 'rates':
-                return <RatesView rates={currencyList} />;
+                return <RatesView
+                    rates = {sortedCurrencyList}
+                    favorites = {favorites}
+                    onToggleFavorite = {toggleFavorite}
+                />;
             case 'converter': {
                 return <ConverterView rates={currencyList} converter={converter} />;
             }
@@ -59,6 +91,16 @@ function App() {
 
         setIsLoading(false);
     }
+
+    const sortedCurrencyList = useMemo(() => {
+        if (!currencyList.length) return [];
+        return [...currencyList].sort((a, b) => {
+            const aIsFav = favorites.includes(a.abbreviation);
+            const bIsFav = favorites.includes(b.abbreviation);
+            if (aIsFav === bIsFav) return 0;
+            return aIsFav ? -1 : 1;
+        });
+    }, [currencyList, favorites]);
 
   return (
       <div>

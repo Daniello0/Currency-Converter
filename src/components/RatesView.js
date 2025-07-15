@@ -6,7 +6,7 @@ import './RatesView.css';
  * @param {object} props - Свойства, переданные от родителя.
  * @param {Array} props.rates - Массив объектов с данными о валютах.
  */
-function RatesView( { rates }) {
+function RatesView( { rates, favorites, onToggleFavorite }) {
 
     console.log("Данные, пришедшие в RatesView: ", rates);
 
@@ -15,10 +15,8 @@ function RatesView( { rates }) {
     }
 
     const formatDate = (dateString) => {
-        // Преобразуем "2025-07-09T00:00:00" в более читаемый формат, например "09.07.2025"
         const date = new Date(dateString);
-        // toLocaleDateString отформатирует дату согласно локальным настройкам браузера
-        return date.toLocaleDateString('ru-RU'); // 'ru-RU' для формата ДД.ММ.ГГГГ
+        return date.toLocaleDateString('ru-RU');
     };
 
     console.log("Перед рендерингом страницы RatesView");
@@ -32,7 +30,10 @@ function RatesView( { rates }) {
                 <div className="currency-date">Дата</div>
                 <div className="favorite-column">Избранное</div>
             </div>
-            {rates.map((currency, index) => (
+            {rates.map(currency => {
+                const isFavorite = favorites.includes(currency.abbreviation);
+
+                return (
                 <div key={String(currency.abbreviation)} className="rate-row">
 
                     {/* Столбец 1: Описание валюты */}
@@ -54,19 +55,18 @@ function RatesView( { rates }) {
                     {/*Столбец 4: Избраннле*/}
 
                     <div className="favorite-column">
-                        {/*
-                          Используем обычный текстовый символ звездочки.
-                          Класс favorite-star позволит нам стилизовать ее.
-                          tabIndex="0" делает элемент "фокусируемым" с клавиатуры.
-                        */}
-                        <span className="favorite-star" tabIndex="0" role="button">
-                            ☆
-                        </span>
-                        {/* ☆ - это HTML-код для пустой звездочки (☆) */}
-                        {/* ★ - это HTML-код для заполненной звездочки (★) */}
+                            <span
+                                className={`favorite-star ${isFavorite ? 'is-favorite' : ''}`}
+                                tabIndex="0"
+                                role="button"
+                                onClick={() => onToggleFavorite(currency.abbreviation)}
+                            >
+                                {isFavorite ? '★' : '☆'}
+                            </span>
                     </div>
                 </div>
-            ))}
+                );
+            })}
         </div>
     );
 }

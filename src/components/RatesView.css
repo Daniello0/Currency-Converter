@@ -66,17 +66,11 @@
 .favorite-star {
     font-size: 22px;
     cursor: pointer;
-    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
     color: #34495e;
 }
 
-/*
-  Эффект при нажатии (или при фокусе с клавиатуры).
-  Мы имитируем "закрашивание" звезды.
-*/
-.favorite-star:focus {
-    -webkit-text-stroke: 0;
-    color: #f1c40f;
+.favorite-star.is-favorite {
+    color: #f1c40f; /* Закрашиваем желтым */
 }
 
 .loading-message {
