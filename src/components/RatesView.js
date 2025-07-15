@@ -30,6 +30,7 @@ function RatesView( { rates }) {
                 <div className="currency-description">Валюта</div>
                 <div className="currency-value">Курс (BYN)</div>
                 <div className="currency-date">Дата</div>
+                <div className="favorite-column">Избранное</div>
             </div>
             {rates.map((currency, index) => (
                 <div key={String(currency.abbreviation)} className="rate-row">
@@ -50,6 +51,20 @@ function RatesView( { rates }) {
                         {String(formatDate(currency.updateDate))}
                     </div>
 
+                    {/*Столбец 4: Избраннле*/}
+
+                    <div className="favorite-column">
+                        {/*
+                          Используем обычный текстовый символ звездочки.
+                          Класс favorite-star позволит нам стилизовать ее.
+                          tabIndex="0" делает элемент "фокусируемым" с клавиатуры.
+                        */}
+                        <span className="favorite-star" tabIndex="0" role="button">
+                            ☆
+                        </span>
+                        {/* ☆ - это HTML-код для пустой звездочки (☆) */}
+                        {/* ★ - это HTML-код для заполненной звездочки (★) */}
+                    </div>
                 </div>
             ))}
         </div>

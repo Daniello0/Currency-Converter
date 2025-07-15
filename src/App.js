@@ -21,19 +21,11 @@ function App() {
 
     // Помечаем функцию как асинхронную
     async function buttonShowCurrencyRatesOnClick() {
-        console.log("Начало функции buttonShowCurrencyRatesOnClick()");
-
         await setActiveViewAndGetCurrencyList('rates');
-
-        console.log("Конец функции buttonShowCurrencyRatesOnClick()");
     }
 
     async function buttonShowConverterOnClick() {
-        console.log("Начало функции buttonShowConverterOnClick()");
-
         await setActiveViewAndGetCurrencyList('converter');
-
-        console.log("Конец функции buttonShowConverterOnClick()");
     }
 
     const renderContent = () => {
