@@ -26,8 +26,6 @@ function ConverterView( {rates : initialRates} ) {
         return ratesWithByn;
     }, [initialRates]);
 
-    console.log("Переданный список в ConverterView - ", rates);
-
     const [amount, setAmount] = useState(() => {
         try {
             const amount = localStorage.getItem('amount');
