@@ -71,6 +71,8 @@
 
 .favorite-star.is-favorite {
     color: #f1c40f; /* Закрашиваем желтым */
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 1px;
 }
 
 .loading-message {
