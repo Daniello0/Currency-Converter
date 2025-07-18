@@ -8,7 +8,6 @@ import './RatesView.css';
  */
 function RatesView( { rates, favorites, onToggleFavorite }) {
 
-    console.log("Данные, пришедшие в RatesView: ", rates);
 
     if (!rates || rates.length === 0) {
         return <div className="loading-message">Загрузка курсов...</div>;
@@ -19,7 +18,6 @@ function RatesView( { rates, favorites, onToggleFavorite }) {
         return date.toLocaleDateString('ru-RU');
     };
 
-    console.log("Перед рендерингом страницы RatesView");
 
     return (
         <div className="rates-view-container">
