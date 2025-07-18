@@ -1,15 +1,15 @@
-const URL = "https://api.nbrb.by/exrates/rates?periodicity=0"; // Использую ваш URL из примера
+const URL = "https://api.nbrb.by/exrates/rates?periodicity=0";
 
 export default class Parser {
     async parseRatesToArray() {
         try {
             const response = await fetch(URL);
             if (!response.ok) {
-                console.log("Network connection error")
+                console.error("Ошибка соединения")
             }
             return await response.json();
         } catch (error) {
-            console.error("Parse error ", error);
+            console.error("Ошибка парсинга ", error);
             return null;
         }
     }

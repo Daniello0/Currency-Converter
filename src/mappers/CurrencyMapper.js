@@ -1,20 +1,11 @@
 import Currency from '../models/Currency.js';
 
-/**
- * Преобразует массив "сырых" данных о курсах из API
- * в массив чистых, типизированных объектов Currency.
- * @param {Array<object>} apiDataArray - Массив данных, полученный от nbrb.by.
- * @returns {Array<Currency>} Массив экземпляров класса Currency.
- */
 export function mapApiDataToCurrencies(apiDataArray) {
-    // Проверка, что на вход пришел действительно массив
     if (!Array.isArray(apiDataArray)) {
         console.error("Ошибка маппинга: на вход ожидался массив.");
-        return []; // Возвращаем пустой массив, чтобы приложение не упало
+        return [];
     }
 
-    // Используем метод .map() и наш фабричный метод из Currency
-    // .filter(Boolean) уберет все null, если какой-то объект в API будет некорректным
     return apiDataArray
         .map(apiObject => Currency.fromApiObject(apiObject))
         .filter(Boolean);
