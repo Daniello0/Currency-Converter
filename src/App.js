@@ -17,7 +17,7 @@ const converter = new Converter();
 function App() {
     const [currencyList, setCurrencyList] = useState([]);
     const [activeView, setActiveView] = useState('none'); // 'none', 'rates', 'converter'
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [favorites, setFavorites] = useState(() => {
         try {
             const savedFavorites = localStorage.getItem('favoriteCurrencies');
@@ -47,6 +47,10 @@ function App() {
             return Array.from(newFavorites);
         });
     };
+
+    useEffect(() => {
+        setActiveViewAndGetCurrencyList('rates').then();
+    }, []);
 
     async function buttonShowCurrencyRatesOnClick() {
         await setActiveViewAndGetCurrencyList('rates');

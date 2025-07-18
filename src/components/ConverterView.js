@@ -1,32 +1,87 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import './ConverterView.css';
 import Converter from "../services/Converter";
 import Currency from "../models/Currency";
 
 const getFlagEmoji = (currencyCode) => {
     if (!currencyCode || currencyCode.length < 2) return '🏳️';
-    const codePoints = currencyCode.substring(0, 2).toUpperCase().split('').map(char => 127397 + char.charCodeAt());
+    const codePoints = currencyCode.substring(0, 2).toUpperCase().split('').map(char => 127397 + char.charCodeAt(0));
     return String.fromCodePoint(...codePoints);
 };
 
-function ConverterView( {rates} ) {
+function ConverterView( {rates : initialRates} ) {
 
     // Валюты BYN нет в rates, поэтому ее необходимо добавить
-    if (rates.find(r => r.abbreviation === 'BYN')) {
-    } else {
-        rates[rates.length] = new Currency({
-            name : "Белорусский рубль",
-            scale : 1,
-            abbreviation : "BYN",
-            officialRate : 1.0,
-            updateDate : "12.07.2025" });
-    }
+    const rates = useMemo(() => {
+        const ratesWithByn = [...initialRates]; // Создаем копию
+        if (!ratesWithByn.find(r => r.abbreviation === 'BYN')) {
+            ratesWithByn.push(new Currency({
+                name: "Белорусский рубль",
+                scale: 1,
+                abbreviation: "BYN",
+                officialRate: 1.0,
+                updateDate: new Date() // Используем текущую дату
+            }));
+        }
+        return ratesWithByn;
+    }, [initialRates]);
 
     console.log("Переданный список в ConverterView - ", rates);
 
-    const [amount, setAmount] = useState(1);
-    const [baseCurrency, setBaseCurrency] = useState('USD');
-    const [targetCurrencies, setTargetCurrencies] = useState(new Set(['EUR', 'BYN', 'RUB']));
+    const [amount, setAmount] = useState(() => {
+        try {
+            const amount = localStorage.getItem('amount');
+            return amount ? amount : 0;
+        } catch(e) {
+            console.error("Ошибка при чтении amount в ConverterView - ", e);
+            return 0;
+        }
+    });
+    const [baseCurrency, setBaseCurrency] = useState(() => {
+        try {
+            const baseCurrency = localStorage.getItem('baseCurrency');
+            return baseCurrency ? baseCurrency : 'USD';
+        } catch(e) {
+            console.error("Ошибка при чтении baseCurrency в ConverterView - ", e);
+            return 'USD';
+        }
+    });
+    const [targetCurrencies, setTargetCurrencies] = useState(() => {
+        try {
+            const targetCurrencies = localStorage.getItem('targetCurrencies');
+            if (targetCurrencies) {
+                return new Set(JSON.parse(targetCurrencies));
+            }
+            return new Set(['EUR', 'BYN', 'RUB']);
+        } catch(e) {
+            console.error("Ошибка при чтении targetCurrencies - ", e);
+            return new Set(['EUR', 'BYN', 'RUB']);
+        }
+    });
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('amount', amount);
+        } catch(e) {
+            console.error("Невозможно сохранить amount - ", e);
+        }
+    }, [amount]);
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('baseCurrency', baseCurrency);
+        } catch(e) {
+            console.error("Невозможно сохранить baseCurrency - ", e);
+        }
+    }, [baseCurrency]);
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('targetCurrencies', JSON.stringify(Array.from(targetCurrencies)));
+        } catch(e) {
+            console.error("Невозможно сохранить targetCurrencies - ", e);
+        }
+    }, [targetCurrencies]);
 
     const handleAmountChange = (e) => setAmount(Number(e.target.value));
     const handleBaseCurrencyChange = (e) => setBaseCurrency(e.target.value);
