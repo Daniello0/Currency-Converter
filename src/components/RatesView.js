@@ -1,5 +1,6 @@
 import React from 'react';
 import './RatesView.css';
+import {Flag} from "../services/Flag";
 
 /**
  * Компонент для отображения списка курсов валют в виде таблицы.
@@ -38,6 +39,7 @@ function RatesView( { rates, favorites, onToggleFavorite }) {
                     <div className="currency-description">
                         <span className="currency-scale">{String(currency.scale)}</span>
                         <span className="currency-full-name">{String(currency.name)} ({String(currency.abbreviation)})</span>
+                        <span className="currency-flag">{Flag.getFlagEmoji(currency.abbreviation)}</span>
                     </div>
 
                     {/* Столбец 2: Курс */}

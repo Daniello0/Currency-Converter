@@ -24,10 +24,10 @@ function ConverterView( {rates : initialRates} ) {
     const [amount, setAmount] = useState(() => {
         try {
             const amount = localStorage.getItem('amount');
-            return amount ? amount : 0;
+            return amount ? amount : '';
         } catch(e) {
             console.error("Ошибка при чтении amount в ConverterView - ", e);
-            return 0;
+            return '';
         }
     });
     const [baseCurrency, setBaseCurrency] = useState(() => {
@@ -76,7 +76,11 @@ function ConverterView( {rates : initialRates} ) {
         }
     }, [targetCurrencies]);
 
-    const handleAmountChange = (e) => setAmount(Number(e.target.value));
+    const handleAmountChange = (e) => {
+        if (e.target.value === '' || parseFloat(e.target.value) >= 0) {
+            setAmount(e.target.value);
+        }
+    };
     const handleBaseCurrencyChange = (e) => setBaseCurrency(e.target.value);
     const handleTargetChange = (e) => {
         const { value, checked } = e.target;
@@ -87,14 +91,19 @@ function ConverterView( {rates : initialRates} ) {
     };
 
     const conversionResults = useMemo(() => {
+
+        const numericAmount = parseFloat(amount);
+
         return Array.from(targetCurrencies).map(targetCode => {
-            const value = Converter.convertBetweenCurrencies(amount, baseCurrency,
+            const value = Converter.convertBetweenCurrencies(numericAmount, baseCurrency,
                 targetCode, rates);
             const targetCurrency = rates.find(r => r.abbreviation === targetCode);
             return {
                 code: targetCode,
                 name: targetCurrency ? targetCurrency.name : '',
-                value: value.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }),
+                value: value ?
+                    value.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
+                    : 'сумма не определена',
             };
         });
     }, [amount, baseCurrency, targetCurrencies, rates]);
