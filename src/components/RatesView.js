@@ -2,11 +2,6 @@ import React from 'react';
 import './RatesView.css';
 import {Flag} from "../services/Flag";
 
-/**
- * Компонент для отображения списка курсов валют в виде таблицы.
- * @param {object} props - Свойства, переданные от родителя.
- * @param {Array} props.rates - Массив объектов с данными о валютах.
- */
 function RatesView( { rates, favorites, onToggleFavorite }) {
 
 
@@ -22,7 +17,6 @@ function RatesView( { rates, favorites, onToggleFavorite }) {
 
     return (
         <div className="rates-view-container">
-            {/* Заголовок для нашей таблицы */}
             <div className="rates-header rate-row">
                 <div className="currency-description">Валюта</div>
                 <div className="currency-value">Курс (BYN)</div>
@@ -53,7 +47,6 @@ function RatesView( { rates, favorites, onToggleFavorite }) {
                     </div>
 
                     {/*Столбец 4: Избраннле*/}
-
                     <div className="favorite-column">
                             <span
                                 className={`favorite-star ${isFavorite ? 'is-favorite' : ''}`}

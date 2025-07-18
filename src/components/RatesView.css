@@ -62,7 +62,6 @@
     padding-left: 30px;
 }
 
-/* Стили для самой иконки-звездочки */
 .favorite-star {
     font-size: 22px;
     cursor: pointer;
@@ -70,7 +69,7 @@
 }
 
 .favorite-star.is-favorite {
-    color: #f1c40f; /* Закрашиваем желтым */
+    color: #f1c40f;
     -webkit-text-stroke-color: black;
     -webkit-text-stroke-width: 1px;
 }
