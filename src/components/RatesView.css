@@ -81,3 +81,9 @@
     padding: 20px;
     color: #7f8c8d;
 }
+
+.currency-flag {
+    font-size: 25px;
+    margin-left: 10px;
+    margin-right: 35px;
+}
