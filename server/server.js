@@ -3,6 +3,7 @@ import Parser from "./Parser.js";
 import cors from 'cors';
 import Cookies from "./Cookies.js";
 import cookieParser from 'cookie-parser';
+import DBController from "./DBController.js";
 
 const app = express();
 const port = 3001;
@@ -23,18 +24,15 @@ app.get('/api/currencies', async (req, res) => {
 
 app.get('/api/rates', async (req, res) => {
     const { base } = req.query;
-    const { target } = req.query;
-    const targets =
-        Array.isArray(target) ? target
-            : typeof target === 'string' ? target.split(',').map(s => s.trim()).filter(Boolean)
-                : [];
+    const { targets } = req.query;
+    const targetArray = targets.splice(',');
 
-    if (!base || targets.length === 0) {
+    if (!base || targetArray.length === 0) {
         return res.status(400).json({ error: 'Параметры base и target обязательны' });
     }
 
     try {
-        const data = await Parser.getRates(base, targets);
+        const data = await Parser.getRates(base, targetArray);
         res.json(data);
     } catch (e) {
         res.status(500).json({ error: 'Не удалось получить курсы' });
@@ -46,6 +44,21 @@ app.get('/api/user', (req, res) => {
     res.json({ userId: req.userId });
 });
 
+app.post('/api/user', (req, res) => {
+    const {base_currency, favorites, targets} = req.body;
+    const users = DBController.getUsers();
+    if (users.find(user => user.id === req.userId)) {
+        DBController.updateUser({
+            userId: req.userId,
+            base_currency: base_currency,
+            favorites: favorites,
+            targets: targets});
+    } else {
+        DBController.createUser(req.userId, base_currency, favorites, targets);
+    }
+})
+
+// Ниже - для app.get('/api/rates')
 /*const params = new URLSearchParams({ base: 'USD' });
 ['BYN', 'EUR', 'RUB', 'PLN', 'CNY'].forEach(t => params.append('target', t));
 

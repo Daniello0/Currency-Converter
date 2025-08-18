@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add prisma ORM &amp; connect DB">
-      <change afterPath="$PROJECT_DIR$/server/DBController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/Supabase.js.example" afterDir="false" />
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add &amp; connect supabase">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/DBController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/DBController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -368,7 +365,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755505521166</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="add &amp; connect supabase">
+      <option name="closed" value="true" />
+      <created>1755517915424</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1755517915424</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +403,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add project files, add main.html, add simple main content design" />
     <MESSAGE value="Delete main.html, add buttons and simple state transition" />
     <MESSAGE value="add some classes (Currency, Parser), add test environment, minor changes in Currency, Parser, test." />
     <MESSAGE value="delete useless files, add directories" />
@@ -423,6 +427,7 @@
     <MESSAGE value="add some endpoints" />
     <MESSAGE value="add some api (in server.js), add Parser.js" />
     <MESSAGE value="add prisma ORM &amp; connect DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="add prisma ORM &amp; connect DB" />
+    <MESSAGE value="add &amp; connect supabase" />
+    <option name="LAST_COMMIT_MESSAGE" value="add &amp; connect supabase" />
   </component>
 </project>
