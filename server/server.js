@@ -1,12 +1,17 @@
 import express, {json} from 'express';
 import Parser from "./Parser.js";
 import cors from 'cors';
+import Cookies from "./Cookies.js";
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const port = 3001;
 
 app.use(json());
 app.use(cors());
+
+app.use(cookieParser());
+app.use(Cookies.assignUserId);
 
 app.get('/api/currencies', async (req, res) => {
     try {
@@ -36,6 +41,10 @@ app.get('/api/rates', async (req, res) => {
     }
 });
 
+app.get('/api/user', (req, res) => {
+    console.log(req.userId);
+    res.json({ userId: req.userId });
+});
 
 /*const params = new URLSearchParams({ base: 'USD' });
 ['BYN', 'EUR', 'RUB', 'PLN', 'CNY'].forEach(t => params.append('target', t));

@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add some api (in server.js), add Parser.js">
-      <change afterPath="$PROJECT_DIR$/server/.env.example" afterDir="false" />
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add prisma ORM &amp; connect DB">
+      <change afterPath="$PROJECT_DIR$/server/Cookies.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +189,7 @@
       <workItem from="1754325956561" duration="352000" />
       <workItem from="1754326347672" duration="39000" />
       <workItem from="1754473908736" duration="27000" />
-      <workItem from="1755355569780" duration="10440000" />
+      <workItem from="1755355569780" duration="12904000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -358,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755432053402</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="add prisma ORM &amp; connect DB">
+      <option name="closed" value="true" />
+      <created>1755505521166</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1755505521166</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,7 +397,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initialize project using Create React App" />
     <MESSAGE value="Add project files, add main.html, add simple main content design" />
     <MESSAGE value="Delete main.html, add buttons and simple state transition" />
     <MESSAGE value="add some classes (Currency, Parser), add test environment, minor changes in Currency, Parser, test." />
@@ -413,6 +421,7 @@
     <MESSAGE value="add server dir, server.js" />
     <MESSAGE value="add some endpoints" />
     <MESSAGE value="add some api (in server.js), add Parser.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="add some api (in server.js), add Parser.js" />
+    <MESSAGE value="add prisma ORM &amp; connect DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="add prisma ORM &amp; connect DB" />
   </component>
 </project>
