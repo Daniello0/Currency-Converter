@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add prisma ORM &amp; connect DB">
-      <change afterPath="$PROJECT_DIR$/server/Cookies.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/DBController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/Supabase.js.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,42 +57,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JavaScript Debug.Debug Application.executor": "Run",
-    "Jest.test.js.executor": "Run",
-    "Mocha.Parser.executor": "Run",
-    "Mocha.Test.executor": "Run",
-    "Mocha.Класс Parser.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Node.js.ConverterTest.js.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "addServerToConverter",
-    "js.last.introduce.type": "LET",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/daniel/WebstormProjects/currency-converter/server",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "/Users/daniel/WebstormProjects/currency-converter/node_modules/react-scripts",
-    "nodejs.mocha.mocha_node_package_dir": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/mocha",
-    "nodejs_interpreter_path": "/Users/daniel/Library/Application Support/JetBrains/WebStorm2025.1/node/versions/22.17.0/bin/node",
-    "nodejs_package_manager_path": "npm",
-    "npm.npm start.executor": "Run",
-    "npm.test.executor": "Run",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.Debug Application.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.test.js.executor&quot;: &quot;Run&quot;,
+    &quot;Mocha.Parser.executor&quot;: &quot;Run&quot;,
+    &quot;Mocha.Test.executor&quot;: &quot;Run&quot;,
+    &quot;Mocha.Класс Parser.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.ConverterTest.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;addServerToConverter&quot;,
+    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/server&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/node_modules/react-scripts&quot;,
+    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client/node_modules/mocha&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;/Users/daniel/Library/Application Support/JetBrains/WebStorm2025.1/node/versions/22.17.0/bin/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.npm start.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Run&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/server" />
