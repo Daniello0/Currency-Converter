@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": ".",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -41,6 +42,7 @@
     "@types/chai": "^5.2.2",
     "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
+    "axios": "^1.11.0",
     "chai": "^5.2.1",
     "mocha": "^11.7.1"
   }

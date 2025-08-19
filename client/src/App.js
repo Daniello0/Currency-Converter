@@ -1,15 +1,15 @@
 import React, {useEffect, useMemo, useState} from "react";
-import Parser from "./services/Parser";
-import './mappers/CurrencyMapper';
-import './components/RatesView';
+import Parser from "./services/Parser.js";
+import './mappers/CurrencyMapper.js';
+import './components/RatesView.js';
 
 
 import './App.css'
 import './Content.css'
-import {mapApiDataToCurrencies} from "./mappers/CurrencyMapper";
-import RatesView from "./components/RatesView";
-import Converter from "./services/Converter";
-import ConverterView from "./components/ConverterView";
+import {mapApiDataToCurrencies} from "./mappers/CurrencyMapper.js";
+import RatesView from "./components/RatesView.js";
+import Converter from "./services/Converter.js";
+import ConverterView from "./components/ConverterView.js";
 
 const parser = new Parser();
 const converter = new Converter();

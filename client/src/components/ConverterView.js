@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import './ConverterView.css';
-import Converter from "../services/Converter";
-import Currency from "../models/Currency";
-import {Flag} from "../services/Flag";
+import Converter from "../services/Converter.js";
+import Currency from "../models/Currency.js";
+import {Flag} from "../services/Flag.js";
 
 function ConverterView( {rates : initialRates} ) {
 

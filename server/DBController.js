@@ -42,7 +42,3 @@ export default class DBController {
         return data;
     }
 }
-
-await DBController.upsertUser({
-    userId: '12345',
-}).then(r => console.log(r));

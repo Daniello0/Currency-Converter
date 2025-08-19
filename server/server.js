@@ -25,7 +25,7 @@ app.get('/api/currencies', async (req, res) => {
 app.get('/api/rates', async (req, res) => {
     const { base } = req.query;
     const { targets } = req.query;
-    const targetArray = targets.splice(',');
+    const targetArray = targets.split(',');
 
     if (!base || targetArray.length === 0) {
         return res.status(400).json({ error: 'Параметры base и target обязательны' });
@@ -33,7 +33,9 @@ app.get('/api/rates', async (req, res) => {
 
     try {
         const data = await Parser.getRates(base, targetArray);
-        res.json(data);
+        if (data) {
+            res.send(data);
+        }
     } catch (e) {
         res.status(500).json({ error: 'Не удалось получить курсы' });
     }
@@ -60,14 +62,5 @@ app.post('/api/user', async (req, res) => {
         console.error(error)
     }
 })
-
-// Ниже - для app.get('/api/rates')
-/*const params = new URLSearchParams({ base: 'USD' });
-['BYN', 'EUR', 'RUB', 'PLN', 'CNY'].forEach(t => params.append('target', t));
-
-fetch(`http://localhost:3001/api/rates?${params.toString()}`)
-    .then(r => r.json())
-    .then(console.log)
-    .catch(console.error);*/
 
 app.listen(port, () => console.log('Сервер запущен: ', `http://localhost:${port}`));

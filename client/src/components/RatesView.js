@@ -1,6 +1,6 @@
 import React from 'react';
 import './RatesView.css';
-import {Flag} from "../services/Flag";
+import {Flag} from "../services/Flag.js";
 
 function RatesView( { rates, favorites, onToggleFavorite }) {
 
