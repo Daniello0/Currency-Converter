@@ -59,7 +59,20 @@ export default class ServerController {
             console.error(error);
         }
     }
+
+    static async getAllCurrencyInfo() {
+        try {
+            const res = await axios.get('http://localhost:3001/api/allCurrencyInfo');
+            if (res) {
+                console.log(res.data);
+                return res.data;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
 
-await ServerController.getRates("USD", ["BYN", "EUR", "RUB"]);
-await ServerController.getCurrencies();
+/*await ServerController.getRates("USD", ["BYN", "EUR", "RUB"]);
+await ServerController.getCurrencies();*/
+await ServerController.getAllCurrencyInfo();

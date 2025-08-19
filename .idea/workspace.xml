@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="little updates">
-      <change afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RatesView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RatesView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/DBController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/DBController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/Parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/Parser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
@@ -196,6 +189,7 @@
       <workItem from="1754326347672" duration="39000" />
       <workItem from="1754473908736" duration="27000" />
       <workItem from="1755355569780" duration="12904000" />
+      <workItem from="1755598367621" duration="497000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -397,7 +391,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755591484447</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="add ServerController.js, minor updates">
+      <option name="closed" value="true" />
+      <created>1755597266404</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1755597266404</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,7 +429,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="delete useless files, add directories" />
     <MESSAGE value="Add fully functioning Currency.js &amp; CurrencyRatesList.js, converting from Api-Object to Array of Currencies (in CurrencyRatesView.js). Start working on design of CurrencyRatesView.js &amp; RatesView.css." />
     <MESSAGE value="minor updates, not-working RatesView &amp; rates-view button" />
     <MESSAGE value="fully functioning" />
@@ -452,6 +453,7 @@
     <MESSAGE value="add &amp; connect supabase" />
     <MESSAGE value="add some DB functions in DBController.js" />
     <MESSAGE value="little updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="little updates" />
+    <MESSAGE value="add ServerController.js, minor updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="add ServerController.js, minor updates" />
   </component>
 </project>

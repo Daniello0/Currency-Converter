@@ -14,6 +14,14 @@ app.use(cors());
 app.use(cookieParser());
 app.use(Cookies.assignUserId);
 
+app.get('/api/allCurrencyInfo', async (req, res) => {
+    try {
+        res.send(await Parser.getAllCurrencyInfo());
+    } catch (error) {
+        console.error(error)
+    }
+})
+
 app.get('/api/currencies', async (req, res) => {
     try {
         res.json(await Parser.getCurrenciesArray());

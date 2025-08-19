@@ -67,4 +67,12 @@ export default class Parser {
             return rates;
         }
     }
+
+    static async getAllCurrencyInfo() {
+        const API_URL = "https://api.nbrb.by/exrates/rates?periodicity=0";
+        const response = await fetch(API_URL);
+        if (response.ok) {
+            return await response.json();
+        }
+    }
 }
