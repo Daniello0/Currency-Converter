@@ -39,22 +39,25 @@ app.get('/api/rates', async (req, res) => {
     }
 });
 
-app.get('/api/user', (req, res) => {
-    console.log(req.userId);
-    res.json({ userId: req.userId });
+app.get('/api/user', async (req, res) => {
+    try{
+        res.json(DBController.getUser(req.userId));
+    } catch (error) {
+        console.error(error)
+    }
 });
 
-app.post('/api/user', (req, res) => {
+app.post('/api/user', async (req, res) => {
     const {base_currency, favorites, targets} = req.body;
-    const users = DBController.getUsers();
-    if (users.find(user => user.id === req.userId)) {
-        DBController.updateUser({
+    try {
+        await DBController.upsertUser({
             userId: req.userId,
             base_currency: base_currency,
             favorites: favorites,
-            targets: targets});
-    } else {
-        DBController.createUser(req.userId, base_currency, favorites, targets);
+            targets: targets
+        }).then(r => console.log("Успешно upsertUser: ", r));
+    } catch (error) {
+        console.error(error)
     }
 })
 

@@ -19,48 +19,6 @@ export default class DBController {
         return data;
     }
 
-    static async updateUser({ userId, base_currency = "USD", favorites, targets }) {
-        if (!userId) {
-            throw new Error('userId обязателен для обновления пользователя');
-        }
-
-        const payload = {};
-        if (base_currency !== undefined) payload.base_currency = base_currency;
-        if (favorites !== undefined) payload.favorites = favorites;
-        if (targets !== undefined) payload.targets = targets;
-
-        const {data, error } = await supabase
-            .from('users')
-            .update(payload)
-            .eq('id', userId)
-            .select()
-            .single();
-
-        if (error) {
-            throw error;
-        }
-
-        return data
-    }
-
-    static async createUser({userId, base_currency = "USD", favorites, targets}) {
-        const {data, error } = await supabase
-            .from('users')
-            .insert({
-                id: userId,
-                base_currency: base_currency,
-                favorites: favorites,
-                targets: targets
-            })
-            .select();
-
-        if (error) {
-            console.error(error);
-        }
-
-        return data
-    }
-
     static async upsertUser({userId, base_currency, favorites, targets}) {
         if (!userId) {
             throw new Error('userId обязателен для обновления или создания пользователя');
