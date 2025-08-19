@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="">
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add getAllCurrencyInfo() in ServerController.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/Parser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +189,7 @@
       <workItem from="1754326347672" duration="39000" />
       <workItem from="1754473908736" duration="27000" />
       <workItem from="1755355569780" duration="12904000" />
-      <workItem from="1755598367621" duration="497000" />
+      <workItem from="1755598367621" duration="1288000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -399,7 +399,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755597266404</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="add getAllCurrencyInfo() in ServerController.js">
+      <option name="closed" value="true" />
+      <created>1755599007598</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1755599007598</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -429,7 +437,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add fully functioning Currency.js &amp; CurrencyRatesList.js, converting from Api-Object to Array of Currencies (in CurrencyRatesView.js). Start working on design of CurrencyRatesView.js &amp; RatesView.css." />
     <MESSAGE value="minor updates, not-working RatesView &amp; rates-view button" />
     <MESSAGE value="fully functioning" />
     <MESSAGE value="fully functioning RatesView.js and App.js (working currency rates)." />
@@ -454,6 +461,7 @@
     <MESSAGE value="add some DB functions in DBController.js" />
     <MESSAGE value="little updates" />
     <MESSAGE value="add ServerController.js, minor updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ServerController.js, minor updates" />
+    <MESSAGE value="add getAllCurrencyInfo() in ServerController.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="add getAllCurrencyInfo() in ServerController.js" />
   </component>
 </project>

@@ -73,6 +73,6 @@ export default class ServerController {
     }
 }
 
-/*await ServerController.getRates("USD", ["BYN", "EUR", "RUB"]);
-await ServerController.getCurrencies();*/
-await ServerController.getAllCurrencyInfo();
+// await ServerController.getRates("USD", ["BYN", "EUR", "RUB"]);
+// await ServerController.getCurrencies();
+// await ServerController.getAllCurrencyInfo();
