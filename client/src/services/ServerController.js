@@ -23,16 +23,16 @@ export default class ServerController {
         try {
             const targetsString = targetCurrencies.join(',');
             const params = new URLSearchParams({ base: baseCurrency, targets: targetsString });
-            const url = `http://localhost:3001/api/rates?${params.toString()}`;
+            const url = `/api/rates?${params.toString()}`;
 
-            const res = await fetch(url, { method: 'GET' });
+            const res = await api.get(url);
 
-            if (!res.ok) {
-                const text = await res.text().catch(() => '');
+            if (!res) {
+                const text = await res.data.catch(() => '');
                 console.error(text);
             }
 
-            const data = await res.json();
+            const data = await res.data;
             console.log(data);
             return data;
         } catch (error) {
@@ -42,9 +42,9 @@ export default class ServerController {
 
     static async getUser() {
         try {
-            const res = await axios.get('http://localhost:3001/api/user');
+            const res = await api.get('/api/user');
             if (res) {
-                console.log(res.data);
+                console.log("Полученный пользователь: ", res.data);
                 return res.data;
             }
         } catch (error) {
@@ -54,7 +54,7 @@ export default class ServerController {
 
     static async upsertUser({base_currency, favorites, targets}) {
         try {
-            const res = await axios.post('http://localhost:3001/api/user', {base_currency, favorites, targets});
+            const res = await api.post('/api/user', {base_currency, favorites, targets});
 
             if (res) {
                 console.log(res.data);

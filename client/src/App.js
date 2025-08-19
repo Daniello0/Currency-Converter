@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useState} from "react";
-import Parser from "./services/Parser.js";
 import './mappers/CurrencyMapper.js';
 import './components/RatesView.js';
 
@@ -83,9 +82,11 @@ function App() {
         setIsLoading(true);
         setActiveView(activeViewName);
 
+        console.log("Вызывается функция ServerController.getAllCurrencyInfo()")
         const currencyObject = await ServerController.getAllCurrencyInfo();
         if (currencyObject) {
             const cleanList = mapApiDataToCurrencies(currencyObject);
+            console.log("Данные о всех курсах валют получены");
             setCurrencyList(cleanList);
         } else {
             console.error("Не удалось получить данные из API");

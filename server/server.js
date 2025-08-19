@@ -20,7 +20,6 @@ app.use(Cookies.assignUserId);
 app.get('/api/allCurrencyInfo', async (req, res) => {
     try {
         res.send(await Parser.getAllCurrencyInfo());
-        console.log("Данные о всех курсах валют отправлены, user_id = ", req.userId)
     } catch (error) {
         console.error(error)
     }

@@ -33,10 +33,13 @@ export default class DBController {
         const {data, error } = await supabase
             .from('users')
             .upsert(payload)
-            .select();
+            .select()
+            .single();
+
+        console.log(data);
 
         if (error) {
-            console.error(error);
+            console.error(error.message);
         }
 
         return data;
