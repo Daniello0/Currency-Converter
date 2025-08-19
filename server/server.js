@@ -9,7 +9,10 @@ const app = express();
 const port = 3001;
 
 app.use(json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 
 app.use(cookieParser());
 app.use(Cookies.assignUserId);
@@ -17,6 +20,7 @@ app.use(Cookies.assignUserId);
 app.get('/api/allCurrencyInfo', async (req, res) => {
     try {
         res.send(await Parser.getAllCurrencyInfo());
+        console.log("Данные о всех курсах валют отправлены, user_id = ", req.userId)
     } catch (error) {
         console.error(error)
     }

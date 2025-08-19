@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const api = axios.create({
+    baseURL: "http://localhost:3001",
+    withCredentials: true,
+});
+
 export default class ServerController {
 
     static async getCurrencies() {
@@ -62,7 +67,7 @@ export default class ServerController {
 
     static async getAllCurrencyInfo() {
         try {
-            const res = await axios.get('http://localhost:3001/api/allCurrencyInfo');
+            const res = await api.get('/api/allCurrencyInfo');
             if (res) {
                 console.log(res.data);
                 return res.data;

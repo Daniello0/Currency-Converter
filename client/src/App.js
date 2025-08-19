@@ -10,8 +10,7 @@ import {mapApiDataToCurrencies} from "./mappers/CurrencyMapper.js";
 import RatesView from "./components/RatesView.js";
 import Converter from "./services/Converter.js";
 import ConverterView from "./components/ConverterView.js";
-
-const parser = new Parser();
+import ServerController from "./services/ServerController.js";
 const converter = new Converter();
 
 function App() {
@@ -84,9 +83,9 @@ function App() {
         setIsLoading(true);
         setActiveView(activeViewName);
 
-        const apiArray = await parser.parseRatesToArray();
-        if (apiArray) {
-            const cleanList = mapApiDataToCurrencies(apiArray);
+        const currencyObject = await ServerController.getAllCurrencyInfo();
+        if (currencyObject) {
+            const cleanList = mapApiDataToCurrencies(currencyObject);
             setCurrencyList(cleanList);
         } else {
             console.error("Не удалось получить данные из API");

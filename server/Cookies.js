@@ -7,6 +7,9 @@ export default class Cookies {
             res.cookie('user_id', newUserId, {
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: true,
+                sameSite: 'lax',
+                secure: false,
+                path: '/'
             });
             req.userId = newUserId;
         } else {

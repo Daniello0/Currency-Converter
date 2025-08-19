@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add getAllCurrencyInfo() in ServerController.js">
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="remove prismaORM">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/Cookies.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/Cookies.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +190,7 @@
       <workItem from="1754326347672" duration="39000" />
       <workItem from="1754473908736" duration="27000" />
       <workItem from="1755355569780" duration="12904000" />
-      <workItem from="1755598367621" duration="1288000" />
+      <workItem from="1755598367621" duration="3481000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -407,7 +408,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755599007598</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="remove prismaORM">
+      <option name="closed" value="true" />
+      <created>1755602266844</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1755602266844</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,7 +446,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="minor updates, not-working RatesView &amp; rates-view button" />
     <MESSAGE value="fully functioning" />
     <MESSAGE value="fully functioning RatesView.js and App.js (working currency rates)." />
     <MESSAGE value="minor changes" />
@@ -462,6 +470,7 @@
     <MESSAGE value="little updates" />
     <MESSAGE value="add ServerController.js, minor updates" />
     <MESSAGE value="add getAllCurrencyInfo() in ServerController.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="add getAllCurrencyInfo() in ServerController.js" />
+    <MESSAGE value="remove prismaORM" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove prismaORM" />
   </component>
 </project>
