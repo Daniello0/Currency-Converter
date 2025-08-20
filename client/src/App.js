@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import './mappers/CurrencyMapper.js';
 import './components/RatesView.js';
 
@@ -16,23 +16,60 @@ function App() {
     const [currencyList, setCurrencyList] = useState([]);
     const [activeView, setActiveView] = useState('none'); // 'none', 'rates', 'converter'
     const [isLoading, setIsLoading] = useState(true);
-    const [favorites, setFavorites] = useState(() => {
-        try {
-            const savedFavorites = localStorage.getItem('favoriteCurrencies');
-            return savedFavorites ? JSON.parse(savedFavorites) : [];
-        } catch (error) {
-            console.error("Ошибка при чтении favorites из localStorage:", error);
-            return [];
-        }
-    });
+    const [favorites, setFavorites] = useState([]);
+    const [favoritesReadyToSync, setFavoritesReadyToSync] = useState(false);
+    const serverFavoritesRef = useRef(null);
 
+    // Загрузка favorites при монтировании
     useEffect(() => {
-        try {
-            localStorage.setItem('favoriteCurrencies', JSON.stringify(favorites));
-        } catch (error) {
-            console.error("Ошибка при сохранении favorites в localStorage:", error);
+        let cancelled = false;
+
+        (async () => {
+            try {
+                const user = await ServerController.getUser();
+                const loaded = user && typeof user.favorites === 'string'
+                    ? (user.favorites === '' ? [] : user.favorites.split(','))
+                    : [];
+
+                if (!cancelled) {
+                    serverFavoritesRef.current = loaded;
+                    setFavorites(loaded);
+                    setFavoritesReadyToSync(true);
+                }
+            } catch (e) {
+                console.error('Не удалось загрузить избранное:', e);
+                if (!cancelled) {
+                    setFavoritesReadyToSync(true);
+                }
+            }
+        })();
+
+        return () => { cancelled = true; };
+    }, []);
+
+    // запись в БД только при изменениях
+    useEffect(() => {
+        if (!favoritesReadyToSync) return;
+        if (serverFavoritesRef.current) {
+            const sameLength = serverFavoritesRef.current.length === favorites.length;
+            const sameValues = sameLength && serverFavoritesRef.current.every((v, i) => v === favorites[i]);
+            if (sameValues) {
+                serverFavoritesRef.current = null;
+                return;
+            }
+            serverFavoritesRef.current = null;
         }
-    }, [favorites]);
+
+        (async () => {
+            try {
+                await ServerController.upsertUser({
+                    favorites: favorites.join(',')
+                });
+            } catch (e) {
+                console.error('Не удалось сохранить избранное:', e);
+            }
+        })();
+    }, [favorites, favoritesReadyToSync]);
 
     const toggleFavorite = (currencyCode) => {
         setFavorites(prevFavorites => {
@@ -42,6 +79,7 @@ function App() {
             } else {
                 newFavorites.add(currencyCode);
             }
+            console.log(Array.from(newFavorites));
             return Array.from(newFavorites);
         });
     };

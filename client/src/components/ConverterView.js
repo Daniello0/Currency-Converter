@@ -3,6 +3,7 @@ import './ConverterView.css';
 import Converter from "../services/Converter.js";
 import Currency from "../models/Currency.js";
 import {Flag} from "../services/Flag.js";
+import ServerController from "../services/ServerController.js";
 
 function ConverterView( {rates : initialRates} ) {
 
@@ -30,15 +31,32 @@ function ConverterView( {rates : initialRates} ) {
             return '';
         }
     });
-    const [baseCurrency, setBaseCurrency] = useState(() => {
-        try {
-            const baseCurrency = localStorage.getItem('baseCurrency');
-            return baseCurrency ? baseCurrency : 'USD';
-        } catch(e) {
-            console.error("Ошибка при чтении baseCurrency в ConverterView - ", e);
-            return 'USD';
+
+    const [baseCurrency, setBaseCurrency] = useState('USD');
+    const [isBaseCurrencyLoaded, setIsBaseCurrencyLoaded] = useState(false);
+
+    //загрузка baseCurrency
+    useEffect(() => {
+        (async () => {
+            const user = await ServerController.getUser();
+            if (user) {
+                setBaseCurrency(user.base_currency);
+                setIsBaseCurrencyLoaded(true);
+            }
+        })();
+    }, []);
+
+    // сохранение данных
+    useEffect(() => {
+        if (isBaseCurrencyLoaded) {
+            (async () => {
+                await ServerController.upsertUser({
+                    base_currency: baseCurrency
+                });
+            })();
         }
-    });
+    }, [baseCurrency, isBaseCurrencyLoaded]);
+
     const [targetCurrencies, setTargetCurrencies] = useState(() => {
         try {
             const targetCurrencies = localStorage.getItem('targetCurrencies');

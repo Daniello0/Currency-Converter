@@ -15,7 +15,7 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
-app.use(Cookies.assignUserId);
+app.use(Cookies.assignUserIdAndAddUserToDB);
 
 app.get('/api/allCurrencyInfo', async (req, res) => {
     try {
@@ -54,7 +54,9 @@ app.get('/api/rates', async (req, res) => {
 
 app.get('/api/user', async (req, res) => {
     try{
-        res.json(DBController.getUser(req.userId));
+        console.log("user_id (get /api/user): ", req.userId);
+        console.log("get /api/user: ", await DBController.getUser(req.userId));
+        res.json(await DBController.getUser(req.userId));
     } catch (error) {
         console.error(error)
     }
@@ -69,6 +71,7 @@ app.post('/api/user', async (req, res) => {
             favorites: favorites,
             targets: targets
         }).then(r => console.log("Успешно upsertUser: ", r));
+        res.sendStatus(200);
     } catch (error) {
         console.error(error)
     }

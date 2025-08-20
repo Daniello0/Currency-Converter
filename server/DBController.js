@@ -36,8 +36,6 @@ export default class DBController {
             .select()
             .single();
 
-        console.log(data);
-
         if (error) {
             console.error(error.message);
         }

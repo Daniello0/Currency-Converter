@@ -4,6 +4,7 @@ import { before } from 'mocha';
 import Parser from '../services/Parser.js';
 import Converter from '../services/Converter.js';
 import { mapApiDataToCurrencies } from '../mappers/CurrencyMapper.js';
+import ServerController from "../services/ServerController.js";
 
 describe("Класс Parser", function () {
 
@@ -55,3 +56,12 @@ describe("Класс Converter", () => {
         assert.closeTo(result, expectedValue, 0.0000001, "Конвертация VND некорректна");
     });
 });
+
+describe("Test user", () => {
+    it("Test get user", async () => {
+        const user = await ServerController.getUser()
+        if (user) {
+            console.log(user)
+        }
+    })
+})
