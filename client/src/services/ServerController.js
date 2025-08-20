@@ -52,9 +52,9 @@ export default class ServerController {
         }
     }
 
-    static async upsertUser({base_currency, favorites, targets}) {
+    static async upsertUser({base_currency, favorites, targets, amount}) {
         try {
-            const res = await api.post('/api/user', {base_currency, favorites, targets});
+            const res = await api.post('/api/user', {base_currency, favorites, targets, amount});
 
             if (res) {
                 console.log(res.data);

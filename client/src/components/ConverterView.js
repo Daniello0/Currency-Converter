@@ -22,7 +22,7 @@ function ConverterView( {rates : initialRates} ) {
         return ratesWithByn;
     }, [initialRates]);
 
-    const [amount, setAmount] = useState(() => {
+    /*const [amount, setAmount] = useState(() => {
         try {
             const amount = localStorage.getItem('amount');
             return amount ? amount : '';
@@ -30,7 +30,30 @@ function ConverterView( {rates : initialRates} ) {
             console.error("Ошибка при чтении amount в ConverterView - ", e);
             return '';
         }
-    });
+    });*/
+
+    const [amount, setAmount] = useState(0);
+    const [isAmountLoaded, setIsAmountLoaded] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            const user = await ServerController.getUser();
+            if (user) {
+                setAmount(user.amount);
+                setIsAmountLoaded(true);
+            }
+        })()
+    }, []);
+
+    useEffect(() => {
+        if (isAmountLoaded) {
+            (async () => {
+                await ServerController.upsertUser({
+                    amount: amount
+                });
+            })();
+        }
+    }, [amount, isAmountLoaded]);
 
     const [baseCurrency, setBaseCurrency] = useState('USD');
     const [isBaseCurrencyLoaded, setIsBaseCurrencyLoaded] = useState(false);
@@ -70,7 +93,7 @@ function ConverterView( {rates : initialRates} ) {
         }
     });
 
-    useEffect(() => {
+    /*useEffect(() => {
         try {
             localStorage.setItem('amount', amount);
         } catch(e) {
@@ -84,7 +107,7 @@ function ConverterView( {rates : initialRates} ) {
         } catch(e) {
             console.error("Невозможно сохранить baseCurrency - ", e);
         }
-    }, [baseCurrency]);
+    }, [baseCurrency]);*/
 
     useEffect(() => {
         try {

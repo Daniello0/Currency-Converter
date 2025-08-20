@@ -63,13 +63,14 @@ app.get('/api/user', async (req, res) => {
 });
 
 app.post('/api/user', async (req, res) => {
-    const {base_currency, favorites, targets} = req.body;
+    const {base_currency, favorites, targets, amount} = req.body;
     try {
         await DBController.upsertUser({
             userId: req.userId,
             base_currency: base_currency,
             favorites: favorites,
-            targets: targets
+            targets: targets,
+            amount: amount,
         }).then(r => console.log("Успешно upsertUser: ", r));
         res.sendStatus(200);
     } catch (error) {
