@@ -26,10 +26,10 @@ export default class DBController {
 
         const payload = {};
         payload.id = userId;
-        if (base_currency !== 'USD') payload.base_currency = base_currency;
-        if (favorites !== '') payload.favorites = favorites;
-        if (targets !== '') payload.targets = targets;
-        if (amount !== '') payload.amount = amount;
+        if (base_currency !== undefined) payload.base_currency = base_currency;
+        if (favorites !== undefined) payload.favorites = favorites;
+        if (targets !== undefined) payload.targets = targets;
+        if (amount !== undefined) payload.amount = amount;
 
         const {data, error } = await supabase
             .from('users')
