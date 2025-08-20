@@ -64,4 +64,13 @@ describe("Test user", () => {
             console.log(user)
         }
     })
+});
+
+describe("Test get rates", () => {
+    it ("Test get rates", async () => {
+        const rates = await ServerController.getRates("USD", 5, ["BYN", "EUR", "RUB"])
+        if (rates) {
+            console.log(rates)
+        }
+    })
 })

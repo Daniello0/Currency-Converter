@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import './ConverterView.css';
 import Converter from "../services/Converter.js";
 import Currency from "../models/Currency.js";
@@ -21,16 +21,6 @@ function ConverterView( {rates : initialRates} ) {
         }
         return ratesWithByn;
     }, [initialRates]);
-
-    /*const [amount, setAmount] = useState(() => {
-        try {
-            const amount = localStorage.getItem('amount');
-            return amount ? amount : '';
-        } catch(e) {
-            console.error("Ошибка при чтении amount в ConverterView - ", e);
-            return '';
-        }
-    });*/
 
     const [amount, setAmount] = useState(0);
     const [isAmountLoaded, setIsAmountLoaded] = useState(false);
@@ -80,7 +70,7 @@ function ConverterView( {rates : initialRates} ) {
         }
     }, [baseCurrency, isBaseCurrencyLoaded]);
 
-    const [targetCurrencies, setTargetCurrencies] = useState(() => {
+    /*const [targetCurrencies, setTargetCurrencies] = useState(() => {
         try {
             const targetCurrencies = localStorage.getItem('targetCurrencies');
             if (targetCurrencies) {
@@ -93,29 +83,68 @@ function ConverterView( {rates : initialRates} ) {
         }
     });
 
-    /*useEffect(() => {
-        try {
-            localStorage.setItem('amount', amount);
-        } catch(e) {
-            console.error("Невозможно сохранить amount - ", e);
-        }
-    }, [amount]);
-
-    useEffect(() => {
-        try {
-            localStorage.setItem('baseCurrency', baseCurrency);
-        } catch(e) {
-            console.error("Невозможно сохранить baseCurrency - ", e);
-        }
-    }, [baseCurrency]);*/
-
     useEffect(() => {
         try {
             localStorage.setItem('targetCurrencies', JSON.stringify(Array.from(targetCurrencies)));
         } catch(e) {
             console.error("Невозможно сохранить targetCurrencies - ", e);
         }
-    }, [targetCurrencies]);
+    }, [targetCurrencies]);*/
+
+    const [targetCurrencies, setTargetCurrencies] = useState([]);
+    const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState(false);
+    const serverTargetsRef = useRef(null)
+
+    // Загрузка favorites при монтировании
+    useEffect(() => {
+        let cancelled = false;
+
+        (async () => {
+            try {
+                const user = await ServerController.getUser();
+                const loaded = user && typeof user.targets === 'string'
+                    ? (user.targets === '' ? [] : user.targets.split(','))
+                    : [];
+
+                if (!cancelled) {
+                    serverTargetsRef.current = loaded;
+                    setTargetCurrencies(loaded);
+                    setIsTargetCurrenciesLoaded(true);
+                }
+            } catch (e) {
+                console.error('Не удалось загрузить избранное:', e);
+                if (!cancelled) {
+                    setIsTargetCurrenciesLoaded(true);
+                }
+            }
+        })();
+
+        return () => { cancelled = true; };
+    }, []);
+
+    // запись в БД только при изменениях
+    useEffect(() => {
+        if (!isTargetCurrenciesLoaded) return;
+        if (serverTargetsRef.current) {
+            const sameLength = serverTargetsRef.current.length === targetCurrencies.length;
+            const sameValues = sameLength && serverTargetsRef.current.every((v, i) => v === targetCurrencies[i]);
+            if (sameValues) {
+                serverTargetsRef.current = null;
+                return;
+            }
+            serverTargetsRef.current = null;
+        }
+
+        (async () => {
+            try {
+                await ServerController.upsertUser({
+                    targets: targetCurrencies.join(',')
+                });
+            } catch (e) {
+                console.error('Не удалось сохранить избранное:', e);
+            }
+        })();
+    }, [targetCurrencies, isTargetCurrenciesLoaded]);
 
     const handleAmountChange = (e) => {
         if (e.target.value === '' || parseFloat(e.target.value) >= 0) {
@@ -125,9 +154,9 @@ function ConverterView( {rates : initialRates} ) {
     const handleBaseCurrencyChange = (e) => setBaseCurrency(e.target.value);
     const handleTargetChange = (e) => {
         const { value, checked } = e.target;
-        const newTargets = new Set(targetCurrencies);
-        if (checked) newTargets.add(value);
-        else newTargets.delete(value);
+        const newTargets = new Array(targetCurrencies);
+        if (checked) newTargets.push(value);
+        else newTargets.filter(item => item !== value);
         setTargetCurrencies(newTargets);
     };
 
@@ -183,7 +212,7 @@ function ConverterView( {rates : initialRates} ) {
                                     <input
                                         type="checkbox"
                                         value={rate.abbreviation}
-                                        checked={targetCurrencies.has(rate.abbreviation)}
+                                        checked={targetCurrencies.includes(rate.abbreviation)}
                                         onChange={handleTargetChange}
                                     />
                                     {Flag.getFlagEmoji(rate.abbreviation)} {rate.abbreviation}

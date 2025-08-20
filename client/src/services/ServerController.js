@@ -19,10 +19,11 @@ export default class ServerController {
         }
     }
 
-    static async getRates(baseCurrency, targetCurrencies) {
+    static async getRates(baseCurrency, amount, targetCurrencies) {
         try {
             const targetsString = targetCurrencies.join(',');
-            const params = new URLSearchParams({ base: baseCurrency, targets: targetsString });
+            const params = new URLSearchParams({ base: baseCurrency, amount: amount,
+                targets: targetsString });
             const url = `/api/rates?${params.toString()}`;
 
             const res = await api.get(url);

@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add working amount (in DB)">
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="mini changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/DBController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/DBController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Test/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/Parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/Parser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +105,7 @@
       <recent name="$PROJECT_DIR$/src/mappers" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.npm start">
+  <component name="RunManager" selected="Mocha.Test">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -188,7 +191,7 @@
       <workItem from="1754326347672" duration="39000" />
       <workItem from="1754473908736" duration="27000" />
       <workItem from="1755355569780" duration="12904000" />
-      <workItem from="1755598367621" duration="21622000" />
+      <workItem from="1755598367621" duration="24299000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -446,7 +449,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755690462027</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="mini changes">
+      <option name="closed" value="true" />
+      <created>1755692388010</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1755692388010</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,7 +487,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="minor update" />
     <MESSAGE value="Add &quot;favorites&quot; column &amp; symbol, minor updates in App.js" />
     <MESSAGE value="working &quot;favorites&quot;" />
     <MESSAGE value="immediately load RatesView" />
@@ -501,6 +511,7 @@
     <MESSAGE value="add working favorites &amp; base_currency (App.js, ConverterView.js)" />
     <MESSAGE value="add" />
     <MESSAGE value="add working amount (in DB)" />
-    <option name="LAST_COMMIT_MESSAGE" value="add working amount (in DB)" />
+    <MESSAGE value="mini changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="mini changes" />
   </component>
 </project>

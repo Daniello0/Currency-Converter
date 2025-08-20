@@ -35,6 +35,7 @@ app.get('/api/currencies', async (req, res) => {
 
 app.get('/api/rates', async (req, res) => {
     const { base } = req.query;
+    const {amount} = req.query;
     const { targets } = req.query;
     const targetArray = targets.split(',');
 
@@ -43,7 +44,7 @@ app.get('/api/rates', async (req, res) => {
     }
 
     try {
-        const data = await Parser.getRates(base, targetArray);
+        const data = await Parser.getRates(base, targetArray, amount);
         if (data) {
             res.send(data);
         }
