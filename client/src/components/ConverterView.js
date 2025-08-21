@@ -7,18 +7,40 @@ function ConverterView() {
 
     const [initialAbbreviations, setInitialAbbreviations ] = useState([]);
     const [isInitialAbbrLoaded, setIsInitialAbbrLoaded ] = useState(false);
+    const [amount, setAmount] = useState(0);
+    const [isAmountLoaded, setIsAmountLoaded] = useState(false);
+    const [baseCurrency, setBaseCurrency] = useState('USD');
+    const [isBaseCurrencyLoaded, setIsBaseCurrencyLoaded] = useState(false);
+    const [targetCurrencies, setTargetCurrencies] = useState([]);
+    const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState(false);
+    const serverTargetsRef = useRef(null)
 
     useEffect(() => {
-        if (!isInitialAbbrLoaded) {
-            (async () => {
-                const abbr_s = await ServerController.getCurrencies();
-                if (abbr_s) {
-                    setInitialAbbreviations(abbr_s);
+        (async () => {
+
+            const user = await ServerController.getUser();
+            const abbr_s = await ServerController.getCurrencies();
+
+            //load abbreviations
+            if (abbr_s) {
+                setInitialAbbreviations(abbr_s);
+                setIsInitialAbbrLoaded(true);
+            }
+
+            if (user) {
+                //load amount
+                setAmount(user.amount);
+                setIsAmountLoaded(true);
+
+                //load baseCurrency
+                setBaseCurrency(user.base_currency);
+                setIsBaseCurrencyLoaded(true);
+
+                //loadTargets
+                await loadTargets();
                 }
-            })()
-            setIsInitialAbbrLoaded(true);
-        }
-    }, [])
+            })();
+    }, []);
 
     // Валюты BYN нет, поэтому ее необходимо добавить
     const abbreviations = useMemo(() => {
@@ -35,19 +57,6 @@ function ConverterView() {
         return abbreviationsWithByn
     }, [initialAbbreviations])
 
-    const [amount, setAmount] = useState(0);
-    const [isAmountLoaded, setIsAmountLoaded] = useState(false);
-
-    useEffect(() => {
-        (async () => {
-            const user = await ServerController.getUser();
-            if (user) {
-                setAmount(user.amount);
-                setIsAmountLoaded(true);
-            }
-        })()
-    }, []);
-
     useEffect(() => {
         if (isAmountLoaded) {
             (async () => {
@@ -57,20 +66,6 @@ function ConverterView() {
             })();
         }
     }, [amount, isAmountLoaded]);
-
-    const [baseCurrency, setBaseCurrency] = useState('USD');
-    const [isBaseCurrencyLoaded, setIsBaseCurrencyLoaded] = useState(false);
-
-    //загрузка baseCurrency
-    useEffect(() => {
-        (async () => {
-            const user = await ServerController.getUser();
-            if (user) {
-                setBaseCurrency(user.base_currency);
-                setIsBaseCurrencyLoaded(true);
-            }
-        })();
-    }, []);
 
     // сохранение данных baseCurrency
     useEffect(() => {
@@ -83,36 +78,30 @@ function ConverterView() {
         }
     }, [baseCurrency, isBaseCurrencyLoaded]);
 
-    const [targetCurrencies, setTargetCurrencies] = useState([]);
-    const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState(false);
-    const serverTargetsRef = useRef(null)
-
     // Загрузка targets при монтировании
-    useEffect(() => {
+    async function loadTargets() {
         let cancelled = false;
 
-        (async () => {
-            try {
-                const user = await ServerController.getUser();
-                const loaded = user && typeof user.targets === 'string'
-                    ? (user.targets === '' ? [] : user.targets.split(','))
-                    : [];
+        try {
+            const user = await ServerController.getUser();
+            const loaded = user && typeof user.targets === 'string'
+                ? (user.targets === '' ? [] : user.targets.split(','))
+                : [];
 
-                if (!cancelled) {
-                    serverTargetsRef.current = loaded;
-                    setTargetCurrencies(loaded);
-                    setIsTargetCurrenciesLoaded(true);
-                }
-            } catch (e) {
-                console.error('Не удалось загрузить избранное:', e);
-                if (!cancelled) {
-                    setIsTargetCurrenciesLoaded(true);
-                }
+            if (!cancelled) {
+                serverTargetsRef.current = loaded;
+                setTargetCurrencies(loaded);
+                setIsTargetCurrenciesLoaded(true);
             }
-        })();
+        } catch (e) {
+            console.error('Не удалось загрузить избранное:', e);
+            if (!cancelled) {
+                setIsTargetCurrenciesLoaded(true);
+            }
+        }
 
         return () => { cancelled = true; };
-    }, []);
+    }
 
     // запись в БД targetCurrencies только при изменениях
     useEffect(() => {
@@ -158,13 +147,11 @@ function ConverterView() {
     };
 
     const [ratesData, setRatesData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         (async () => {
             try {
-                setIsLoading(true);
                 setError(null);
 
                 const numericAmount = parseFloat(amount);
@@ -174,7 +161,6 @@ function ConverterView() {
             } catch (e) {
                 console.error(e);
             } finally {
-                setIsLoading(false);
             }
         })()
     }, [amount, baseCurrency, targetCurrencies]);
@@ -196,7 +182,7 @@ function ConverterView() {
     }, [ratesData]);
 
     if (!abbreviations) {
-        return <div>Загрузка...</div>
+        return <div className="loading-message">Загрузка...</div>;
     }
 
     /*if (isLoading) {
@@ -204,7 +190,7 @@ function ConverterView() {
     }*/
 
     if (error) {
-        return <div>Ошибка при загрузке данных!</div>;
+        return <div>Ошибка при загрузке данных</div>;
     }
 
     return (

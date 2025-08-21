@@ -85,7 +85,10 @@ app.post('/api/user', async (req, res) => {
             favorites: favorites,
             targets: targets,
             amount: amount,
-        }).then(r => console.log("Успешно upsertUser: ", r));
+        }).then((r) => {
+            console.log("Успешно UPSERT. user_id: ", req.userId);
+            console.log("Данные: ", r);
+        });
         res.sendStatus(200);
     } catch (error) {
         console.error(error)

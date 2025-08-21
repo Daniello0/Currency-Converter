@@ -21,31 +21,28 @@ function App() {
     const serverFavoritesRef = useRef(null);
 
     // Загрузка favorites при монтировании
-    useEffect(() => {
+    async function loadFavorites() {
         let cancelled = false;
 
-        (async () => {
-            try {
-                const user = await ServerController.getUser();
-                const loaded = user && typeof user.favorites === 'string'
-                    ? (user.favorites === '' ? [] : user.favorites.split(','))
-                    : [];
+        try {
+            const user = await ServerController.getUser();
+            const loaded = user && typeof user.favorites === 'string'
+                ? (user.favorites === '' ? [] : user.favorites.split(','))
+                : [];
 
-                if (!cancelled) {
-                    serverFavoritesRef.current = loaded;
-                    setFavorites(loaded);
-                    setFavoritesReadyToSync(true);
-                }
-            } catch (e) {
-                console.error('Не удалось загрузить избранное:', e);
-                if (!cancelled) {
-                    setFavoritesReadyToSync(true);
-                }
+            if (!cancelled) {
+                serverFavoritesRef.current = loaded;
+                setFavorites(loaded);
+                setFavoritesReadyToSync(true);
             }
-        })();
-
+        } catch (e) {
+            console.error('Не удалось загрузить избранное:', e);
+            if (!cancelled) {
+                setFavoritesReadyToSync(true);
+            }
+        }
         return () => { cancelled = true; };
-    }, []);
+    }
 
     // запись в БД только при изменениях
     useEffect(() => {
@@ -85,7 +82,10 @@ function App() {
     };
 
     useEffect(() => {
-        setActiveViewAndGetCurrencyList('rates').then();
+        (async () => {
+            await setActiveViewAndGetCurrencyList('rates').then();
+            await loadFavorites();
+        })();
     }, []);
 
     async function buttonShowCurrencyRatesOnClick() {
@@ -109,7 +109,7 @@ function App() {
                     onToggleFavorite = {toggleFavorite}
                 />;
             case 'converter': {
-                return <ConverterView rates={currencyList} converter={converter} />;
+                return <ConverterView />;
             }
             default:
                 return null;
