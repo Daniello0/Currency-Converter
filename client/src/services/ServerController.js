@@ -9,7 +9,7 @@ export default class ServerController {
 
     static async getCurrencies() {
         try {
-            const res = await axios.get('http://localhost:3001/api/currencies');
+            const res = await api.get('/api/currencies');
             if (res) {
                 console.log(res.data);
                 return res.data;

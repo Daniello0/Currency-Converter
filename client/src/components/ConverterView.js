@@ -8,39 +8,10 @@ function ConverterView() {
     const [initialAbbreviations, setInitialAbbreviations ] = useState([]);
     const [isInitialAbbrLoaded, setIsInitialAbbrLoaded ] = useState(false);
     const [amount, setAmount] = useState(0);
-    const [isAmountLoaded, setIsAmountLoaded] = useState(false);
     const [baseCurrency, setBaseCurrency] = useState('USD');
-    const [isBaseCurrencyLoaded, setIsBaseCurrencyLoaded] = useState(false);
     const [targetCurrencies, setTargetCurrencies] = useState([]);
     const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState(false);
     const serverTargetsRef = useRef(null)
-
-    useEffect(() => {
-        (async () => {
-
-            const user = await ServerController.getUser();
-            const abbr_s = await ServerController.getCurrencies();
-
-            //load abbreviations
-            if (abbr_s) {
-                setInitialAbbreviations(abbr_s);
-                setIsInitialAbbrLoaded(true);
-            }
-
-            if (user) {
-                //load amount
-                setAmount(user.amount);
-                setIsAmountLoaded(true);
-
-                //load baseCurrency
-                setBaseCurrency(user.base_currency);
-                setIsBaseCurrencyLoaded(true);
-
-                //loadTargets
-                await loadTargets();
-                }
-            })();
-    }, []);
 
     // Валюты BYN нет, поэтому ее необходимо добавить
     const abbreviations = useMemo(() => {
@@ -58,32 +29,31 @@ function ConverterView() {
     }, [initialAbbreviations])
 
     useEffect(() => {
-        if (isAmountLoaded) {
-            (async () => {
-                await ServerController.upsertUser({
-                    amount: amount
-                });
-            })();
-        }
-    }, [amount, isAmountLoaded]);
+        (async () => {
 
-    // сохранение данных baseCurrency
-    useEffect(() => {
-        if (isBaseCurrencyLoaded) {
-            (async () => {
-                await ServerController.upsertUser({
-                    base_currency: baseCurrency
-                });
-            })();
-        }
-    }, [baseCurrency, isBaseCurrencyLoaded]);
+            const abbr_s = await ServerController.getCurrencies();
+            if (abbr_s) {
+                setInitialAbbreviations(abbr_s);
+                setIsInitialAbbrLoaded(true);
+            }
+
+            const user = await ServerController.getUser();
+            if (user) {
+
+                setAmount(user.amount);
+
+                setBaseCurrency(user.base_currency);
+
+                await loadTargets(user);
+            }
+        })();
+    }, []);
 
     // Загрузка targets при монтировании
-    async function loadTargets() {
+    async function loadTargets(user) {
         let cancelled = false;
 
         try {
-            const user = await ServerController.getUser();
             const loaded = user && typeof user.targets === 'string'
                 ? (user.targets === '' ? [] : user.targets.split(','))
                 : [];
@@ -107,25 +77,22 @@ function ConverterView() {
     useEffect(() => {
         if (!isTargetCurrenciesLoaded) return;
         if (serverTargetsRef.current) {
-            const sameLength = serverTargetsRef.current.length === targetCurrencies.length;
-            const sameValues = sameLength && serverTargetsRef.current.every((v, i) => v === targetCurrencies[i]);
-            if (sameValues) {
-                serverTargetsRef.current = null;
-                return;
-            }
             serverTargetsRef.current = null;
+            return;
         }
 
         (async () => {
             try {
                 await ServerController.upsertUser({
+                    amount: amount,
+                    base_currency: baseCurrency,
                     targets: targetCurrencies.join(',')
                 });
             } catch (e) {
-                console.error('Не удалось сохранить избранное:', e);
+                console.error('Не удалось сохранить настройки:', e);
             }
         })();
-    }, [targetCurrencies, isTargetCurrenciesLoaded]);
+    }, [amount, baseCurrency, targetCurrencies, isTargetCurrenciesLoaded]);
 
 
     const handleAmountChange = (e) => {

@@ -7,10 +7,8 @@ import './App.css'
 import './Content.css'
 import {mapApiDataToCurrencies} from "./mappers/CurrencyMapper.js";
 import RatesView from "./components/RatesView.js";
-import Converter from "./services/Converter.js";
 import ConverterView from "./components/ConverterView.js";
 import ServerController from "./services/ServerController.js";
-const converter = new Converter();
 
 function App() {
     const [currencyList, setCurrencyList] = useState([]);
@@ -120,15 +118,17 @@ function App() {
         setIsLoading(true);
         setActiveView(activeViewName);
 
-        console.log("Вызывается функция ServerController.getAllCurrencyInfo()")
-        const currencyObject = await ServerController.getAllCurrencyInfo();
-        if (currencyObject) {
-            const cleanList = mapApiDataToCurrencies(currencyObject);
-            console.log("Данные о всех курсах валют получены");
-            setCurrencyList(cleanList);
-        } else {
-            console.error("Не удалось получить данные из API");
-            setCurrencyList([]);
+        if (activeViewName !== 'converter') {
+            console.log("Вызывается функция ServerController.getAllCurrencyInfo()")
+            const currencyObject = await ServerController.getAllCurrencyInfo();
+            if (currencyObject) {
+                const cleanList = mapApiDataToCurrencies(currencyObject);
+                console.log("Данные о всех курсах валют получены");
+                setCurrencyList(cleanList);
+            } else {
+                console.error("Не удалось получить данные из API");
+                setCurrencyList([]);
+            }
         }
 
         setIsLoading(false);

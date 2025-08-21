@@ -36,6 +36,7 @@ app.get('/api/currencies', async (req, res) => {
 app.get('/api/rates', async (req, res) => {
     const { base, amount } = req.query;
     const targets = req.query.targets || '';
+    console.log("targets: ", targets);
 
     const targetArray = targets.split(',').filter(currency => currency.trim() !== '');
 
@@ -44,7 +45,7 @@ app.get('/api/rates', async (req, res) => {
     }
 
     if (targetArray.length === 0) {
-        console.log("Targets is empty, returning base structure.");
+        console.log("Targets is empty, returning base structure: ", targetArray);
         return res.json({
             base: base,
             amount: parseFloat(amount) || 0,
