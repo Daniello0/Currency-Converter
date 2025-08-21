@@ -20,7 +20,7 @@ function ConverterView() {
         }
     }, [])
 
-    // Валюты BYN нет в rates, поэтому ее необходимо добавить
+    // Валюты BYN нет, поэтому ее необходимо добавить
     const abbreviations = useMemo(() => {
         if (!isInitialAbbrLoaded) {
             return;
@@ -34,20 +34,6 @@ function ConverterView() {
 
         return abbreviationsWithByn
     }, [initialAbbreviations])
-
-    /*const rates = useMemo(() => {
-        const ratesWithByn = [...initialRates];
-        if (!ratesWithByn.find(r => r.abbreviation === 'BYN')) {
-            ratesWithByn.push(new Currency({
-                name: "Белорусский рубль",
-                scale: 1,
-                abbreviation: "BYN",
-                officialRate: 1.0,
-                updateDate: new Date()
-            }));
-        }
-        return ratesWithByn;
-    }, [initialRates]);*/
 
     const [amount, setAmount] = useState(0);
     const [isAmountLoaded, setIsAmountLoaded] = useState(false);
@@ -86,7 +72,7 @@ function ConverterView() {
         })();
     }, []);
 
-    // сохранение данных
+    // сохранение данных baseCurrency
     useEffect(() => {
         if (isBaseCurrencyLoaded) {
             (async () => {
@@ -128,7 +114,7 @@ function ConverterView() {
         return () => { cancelled = true; };
     }, []);
 
-    // запись в БД только при изменениях
+    // запись в БД targetCurrencies только при изменениях
     useEffect(() => {
         if (!isTargetCurrenciesLoaded) return;
         if (serverTargetsRef.current) {
@@ -161,10 +147,14 @@ function ConverterView() {
     const handleBaseCurrencyChange = (e) => setBaseCurrency(e.target.value);
     const handleTargetChange = (e) => {
         const { value, checked } = e.target;
-        const newTargets = new Array(targetCurrencies);
-        if (checked) newTargets.push(value);
-        else newTargets.filter(item => item !== value);
-        setTargetCurrencies(newTargets);
+
+        setTargetCurrencies(prevTargets => {
+            if (checked) {
+                return [...prevTargets, value];
+            } else {
+                return prevTargets.filter(currency => currency !== value);
+            }
+        });
     };
 
     const [ratesData, setRatesData] = useState(null);
@@ -209,9 +199,9 @@ function ConverterView() {
         return <div>Загрузка...</div>
     }
 
-    if (isLoading) {
-        return <div>Загрузка курсов...</div>;
-    }
+    /*if (isLoading) {
+        return <div>Загрузка...</div>;
+    }*/
 
     if (error) {
         return <div>Ошибка при загрузке данных!</div>;
@@ -246,7 +236,6 @@ function ConverterView() {
                     <label>Валюты</label>
                     <div className="checklist-box">
                         {abbreviations.map(abbr => (
-                            abbr !== baseCurrency && (
                                 <label key={abbr} className="check-item">
                                     <input
                                         type="checkbox"
@@ -257,7 +246,7 @@ function ConverterView() {
                                     {Flag.getFlagEmoji(abbr)} {abbr}
                                 </label>
                             )
-                        ))}
+                        )}
                     </div>
                 </div>
             </div>

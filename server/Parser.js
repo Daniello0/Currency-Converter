@@ -38,6 +38,7 @@ export default class Parser {
                     Cur_Abbreviation: 'BYN',
                     Cur_Scale: 1,
                     Cur_OfficialRate: 1,
+                    Cur_Name: "Белорусский рубль"
                 }
             }
 
@@ -55,6 +56,7 @@ export default class Parser {
                         Cur_Abbreviation: 'BYN',
                         Cur_Scale: 1,
                         Cur_OfficialRate: 1,
+                        Cur_Name: "Белорусский рубль"
                     }
                 }
 
