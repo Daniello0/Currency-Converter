@@ -73,4 +73,4 @@ describe("Test get rates", () => {
             console.log(rates)
         }
     })
-})
+});

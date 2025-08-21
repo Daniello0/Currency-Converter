@@ -34,21 +34,34 @@ app.get('/api/currencies', async (req, res) => {
 });
 
 app.get('/api/rates', async (req, res) => {
-    const { base } = req.query;
-    const {amount} = req.query;
-    const { targets } = req.query;
-    const targetArray = targets.split(',');
+    const { base, amount } = req.query;
+    const targets = req.query.targets || '';
 
-    if (!base || targetArray.length === 0) {
-        return res.status(400).json({ error: 'Параметры base и target обязательны' });
+    const targetArray = targets.split(',').filter(currency => currency.trim() !== '');
+
+    if (!base) {
+        return res.status(400).json({ error: 'Параметр base обязателен' });
+    }
+
+    if (targetArray.length === 0) {
+        console.log("Targets is empty, returning base structure.");
+        return res.json({
+            base: base,
+            amount: parseFloat(amount) || 0,
+            target: []
+        });
     }
 
     try {
         const data = await Parser.getRates(base, targetArray, amount);
         if (data) {
+            console.log("Данные из get api/rates: ", data);
             res.send(data);
+        } else {
+            res.status(404).json({ error: 'Не удалось найти данные для указанных валют' });
         }
     } catch (e) {
+        console.error("Error in /api/rates:", e);
         res.status(500).json({ error: 'Не удалось получить курсы' });
     }
 });

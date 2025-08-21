@@ -1,26 +1,53 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import './ConverterView.css';
-import Converter from "../services/Converter.js";
-import Currency from "../models/Currency.js";
 import {Flag} from "../services/Flag.js";
 import ServerController from "../services/ServerController.js";
 
-function ConverterView( {rates : initialRates} ) {
+function ConverterView() {
+
+    const [initialAbbreviations, setInitialAbbreviations ] = useState([]);
+    const [isInitialAbbrLoaded, setIsInitialAbbrLoaded ] = useState(false);
+
+    useEffect(() => {
+        if (!isInitialAbbrLoaded) {
+            (async () => {
+                const abbr_s = await ServerController.getCurrencies();
+                if (abbr_s) {
+                    setInitialAbbreviations(abbr_s);
+                }
+            })()
+            setIsInitialAbbrLoaded(true);
+        }
+    }, [])
 
     // Валюты BYN нет в rates, поэтому ее необходимо добавить
-    const rates = useMemo(() => {
-        const ratesWithByn = [...initialRates]; // Создаем копию
+    const abbreviations = useMemo(() => {
+        if (!isInitialAbbrLoaded) {
+            return;
+        }
+
+        const abbreviationsWithByn = [...initialAbbreviations];
+
+        if (!abbreviationsWithByn.find(abbr => abbr === 'BYN')) {
+            abbreviationsWithByn.push('BYN');
+        }
+
+        return abbreviationsWithByn
+    }, [initialAbbreviations])
+
+    /*const rates = useMemo(() => {
+        const ratesWithByn = [...initialRates];
         if (!ratesWithByn.find(r => r.abbreviation === 'BYN')) {
             ratesWithByn.push(new Currency({
                 name: "Белорусский рубль",
                 scale: 1,
                 abbreviation: "BYN",
                 officialRate: 1.0,
-                updateDate: new Date() // Используем текущую дату
+                updateDate: new Date()
             }));
         }
         return ratesWithByn;
-    }, [initialRates]);
+    }, [initialRates]);*/
 
     const [amount, setAmount] = useState(0);
     const [isAmountLoaded, setIsAmountLoaded] = useState(false);
@@ -70,32 +97,11 @@ function ConverterView( {rates : initialRates} ) {
         }
     }, [baseCurrency, isBaseCurrencyLoaded]);
 
-    /*const [targetCurrencies, setTargetCurrencies] = useState(() => {
-        try {
-            const targetCurrencies = localStorage.getItem('targetCurrencies');
-            if (targetCurrencies) {
-                return new Set(JSON.parse(targetCurrencies));
-            }
-            return new Set(['EUR', 'BYN', 'RUB']);
-        } catch(e) {
-            console.error("Ошибка при чтении targetCurrencies - ", e);
-            return new Set(['EUR', 'BYN', 'RUB']);
-        }
-    });
-
-    useEffect(() => {
-        try {
-            localStorage.setItem('targetCurrencies', JSON.stringify(Array.from(targetCurrencies)));
-        } catch(e) {
-            console.error("Невозможно сохранить targetCurrencies - ", e);
-        }
-    }, [targetCurrencies]);*/
-
     const [targetCurrencies, setTargetCurrencies] = useState([]);
     const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState(false);
     const serverTargetsRef = useRef(null)
 
-    // Загрузка favorites при монтировании
+    // Загрузка targets при монтировании
     useEffect(() => {
         let cancelled = false;
 
@@ -146,6 +152,7 @@ function ConverterView( {rates : initialRates} ) {
         })();
     }, [targetCurrencies, isTargetCurrenciesLoaded]);
 
+
     const handleAmountChange = (e) => {
         if (e.target.value === '' || parseFloat(e.target.value) >= 0) {
             setAmount(e.target.value);
@@ -160,23 +167,55 @@ function ConverterView( {rates : initialRates} ) {
         setTargetCurrencies(newTargets);
     };
 
+    const [ratesData, setRatesData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+
+                const numericAmount = parseFloat(amount);
+                const result = await ServerController.getRates(baseCurrency, numericAmount,
+                    targetCurrencies);
+                setRatesData(result);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setIsLoading(false);
+            }
+        })()
+    }, [amount, baseCurrency, targetCurrencies]);
+
     const conversionResults = useMemo(() => {
+        if (!ratesData || !ratesData.target) {
+            return [];
+        }
 
-        const numericAmount = parseFloat(amount);
-
-        return Array.from(targetCurrencies).map(targetCode => {
-            const value = Converter.convertBetweenCurrencies(numericAmount, baseCurrency,
-                targetCode, rates);
-            const targetCurrency = rates.find(r => r.abbreviation === targetCode);
+        return ratesData.target.map(targetObj => {
             return {
-                code: targetCode,
-                name: targetCurrency ? targetCurrency.name : '',
-                value: value ?
-                    value.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
+                code: targetObj.abbreviation, // В вашем объекте это abbreviation
+                name: targetObj.name || '',
+                value: targetObj.amount != null // Проверяем на null/undefined
+                    ? targetObj.amount.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
                     : 'сумма не определена',
             };
         });
-    }, [amount, baseCurrency, targetCurrencies, rates]);
+    }, [ratesData]);
+
+    if (!abbreviations) {
+        return <div>Загрузка...</div>
+    }
+
+    if (isLoading) {
+        return <div>Загрузка курсов...</div>;
+    }
+
+    if (error) {
+        return <div>Ошибка при загрузке данных!</div>;
+    }
 
     return (
         <div className="converter-view-container">
@@ -195,9 +234,9 @@ function ConverterView( {rates : initialRates} ) {
                         value={baseCurrency}
                         onChange={handleBaseCurrencyChange}
                     >
-                        {rates.map(rate => (
-                            <option key={rate.abbreviation} value={rate.abbreviation}>
-                                {Flag.getFlagEmoji(rate.abbreviation)} {rate.abbreviation}
+                        {abbreviations.map(abbr => (
+                            <option key={abbr} value={abbr}>
+                                {Flag.getFlagEmoji(abbr)} {abbr}
                             </option>
                         ))}
                     </select>
@@ -206,16 +245,16 @@ function ConverterView( {rates : initialRates} ) {
                 <div className="target-currencies">
                     <label>Валюты</label>
                     <div className="checklist-box">
-                        {rates.map(rate => (
-                            rate.abbreviation !== baseCurrency && (
-                                <label key={rate.abbreviation} className="check-item">
+                        {abbreviations.map(abbr => (
+                            abbr !== baseCurrency && (
+                                <label key={abbr} className="check-item">
                                     <input
                                         type="checkbox"
-                                        value={rate.abbreviation}
-                                        checked={targetCurrencies.includes(rate.abbreviation)}
+                                        value={abbr}
+                                        checked={targetCurrencies.includes(abbr)}
                                         onChange={handleTargetChange}
                                     />
-                                    {Flag.getFlagEmoji(rate.abbreviation)} {rate.abbreviation}
+                                    {Flag.getFlagEmoji(abbr)} {abbr}
                                 </label>
                             )
                         ))}

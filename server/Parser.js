@@ -60,8 +60,11 @@ export default class Parser {
 
                 const oneCurrencyObject = currencyObject.Cur_OfficialRate / currencyObject.Cur_Scale;
                 const abbreviation = currencyObject.Cur_Abbreviation;
+                const name = currencyObject.Cur_Name;
                 const obj = {};
-                obj[abbreviation] = this.round((oneBaseCurrency / oneCurrencyObject) * amount);
+                obj.amount = this.round((oneBaseCurrency / oneCurrencyObject) * amount);
+                obj.abbreviation = abbreviation;
+                obj.name = name
                 rates.target.push(obj);
             }
 
