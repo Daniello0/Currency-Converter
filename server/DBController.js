@@ -6,7 +6,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default class DBController {
     static async getUser(user_id) {
-        let { data, error } = await supabase.from('users').select('*').eq('id', user_id).single();
+        let { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', user_id)
+            .single();
 
         if (error) {
             console.error(error);
@@ -27,7 +31,11 @@ export default class DBController {
         if (targets !== undefined) payload.targets = targets;
         if (amount !== undefined) payload.amount = amount;
 
-        const { data, error } = await supabase.from('users').upsert(payload).select().single();
+        const { data, error } = await supabase
+            .from('users')
+            .upsert(payload)
+            .select()
+            .single();
 
         if (error) {
             console.error(error.message);
@@ -35,4 +43,35 @@ export default class DBController {
 
         return data;
     }
+
+    static async getRatesCache({ base_currency, targets }) {
+        const { data, error } = await supabase
+            .from('cache')
+            .select('base_currency, targets, data')
+            .eq('base_currency', base_currency)
+            .eq('targets', targets)
+            .single();
+
+        if (error) {
+            console.log('Не удалось получить данные getRatesCache');
+            return null;
+        }
+        return data;
+    }
+
+    static async upsertRatesCache({ base_currency, targets, data }) {
+        const payload = {};
+        if (base_currency !== undefined) payload.base_currency = base_currency;
+        if (targets !== undefined) payload.targets = targets;
+        if (data !== undefined) payload.data = data;
+        const { error } = await supabase.from('cache').upsert(payload);
+        if (error) {
+            console.error(error);
+        }
+    }
 }
+
+await DBController.getRatesCache({
+    base_currency: 'USD',
+    targets: ['BYN', 'EUR', 'RUB'],
+});

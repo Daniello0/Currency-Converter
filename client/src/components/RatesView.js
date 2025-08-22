@@ -27,18 +27,26 @@ function RatesView({ rates, favorites, onToggleFavorite }) {
                     <div key={String(currency.abbreviation)} className="rate-row">
                         {/* Столбец 1: Описание валюты */}
                         <div className="currency-description">
-                            <span className="currency-scale">{String(currency.scale)}</span>
+                            <span className="currency-scale">
+                                {String(currency.scale)}
+                            </span>
                             <span className="currency-full-name">
                                 {String(currency.name)} ({String(currency.abbreviation)})
                             </span>
-                            <span className="currency-flag">{Flag.getFlagEmoji(currency.abbreviation)}</span>
+                            <span className="currency-flag">
+                                {Flag.getFlagEmoji(currency.abbreviation)}
+                            </span>
                         </div>
 
                         {/* Столбец 2: Курс */}
-                        <div className="currency-value">{String(currency.officialRate)}</div>
+                        <div className="currency-value">
+                            {String(currency.officialRate)}
+                        </div>
 
                         {/* Столбец 3: Дата */}
-                        <div className="currency-date">{String(formatDate(currency.updateDate))}</div>
+                        <div className="currency-date">
+                            {String(formatDate(currency.updateDate))}
+                        </div>
 
                         {/*Столбец 4: Избраннле*/}
                         <div className="favorite-column">

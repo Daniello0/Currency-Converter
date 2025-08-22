@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Cache from "./Cache.js";
+import Cache from './Cache.js';
 
 const api = axios.create({
     baseURL: 'http://localhost:3001',
@@ -9,7 +9,7 @@ const api = axios.create({
 export default class ServerController {
     static async getCurrencies() {
         try {
-            const cache_key = '__cache__/api/currencies'
+            const cache_key = '__cache__/api/currencies';
             const requestCache = Cache.getRequestCacheData(cache_key);
 
             if (requestCache) {
@@ -30,7 +30,10 @@ export default class ServerController {
     static async getRates(baseCurrency, targetCurrencies) {
         try {
             const targetsString = targetCurrencies.join(',');
-            const params = new URLSearchParams({ base: baseCurrency, targets: targetsString });
+            const params = new URLSearchParams({
+                base: baseCurrency,
+                targets: targetsString,
+            });
             const url = `/api/rates?${params.toString()}`;
             const cache_key = '__cache__' + url;
 
@@ -67,6 +70,7 @@ export default class ServerController {
             const res = await api.get('/api/user');
             if (res) {
                 console.log('Полученный пользователь: ', await res.data);
+                Cache.saveRequestCache(cache_key, await res.data);
                 return await res.data;
             }
         } catch (error) {
@@ -77,7 +81,12 @@ export default class ServerController {
     static async upsertUser({ base_currency, favorites, targets, amount }) {
         try {
             const cache_key = '__cache__/api/user';
-            const res = await api.post('/api/user', { base_currency, favorites, targets, amount });
+            const res = await api.post('/api/user', {
+                base_currency,
+                favorites,
+                targets,
+                amount,
+            });
 
             if (res) {
                 console.log(res.data);
@@ -91,7 +100,7 @@ export default class ServerController {
 
     static async getAllCurrencyInfo() {
         try {
-            const cache_key = '__cache__/api/allCurrencyInfo'
+            const cache_key = '__cache__/api/allCurrencyInfo';
             const requestCache = Cache.getRequestCacheData(cache_key);
 
             if (requestCache) {

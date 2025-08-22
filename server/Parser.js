@@ -58,7 +58,8 @@ export default class Parser {
                     };
                 }
 
-                const oneCurrencyObject = currencyObject.Cur_OfficialRate / currencyObject.Cur_Scale;
+                const oneCurrencyObject =
+                    currencyObject.Cur_OfficialRate / currencyObject.Cur_Scale;
                 const abbreviation = currencyObject.Cur_Abbreviation;
                 const name = currencyObject.Cur_Name;
                 const obj = {};

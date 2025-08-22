@@ -62,7 +62,11 @@ function ConverterView() {
 
         try {
             const loaded =
-                user && typeof user.targets === 'string' ? (user.targets === '' ? [] : user.targets.split(',')) : [];
+                user && typeof user.targets === 'string'
+                    ? user.targets === ''
+                        ? []
+                        : user.targets.split(',')
+                    : [];
 
             if (!cancelled) {
                 serverTargetsRef.current = loaded;
@@ -128,7 +132,10 @@ function ConverterView() {
             try {
                 setError(null);
 
-                const result = await ServerController.getRates(baseCurrency, targetCurrencies);
+                const result = await ServerController.getRates(
+                    baseCurrency,
+                    targetCurrencies
+                );
                 setRatesData(result);
             } catch (e) {
                 console.error(e);
@@ -182,7 +189,11 @@ function ConverterView() {
                         onChange={handleAmountChange}
                         min="0"
                     />
-                    <select className="currency-select" value={baseCurrency} onChange={handleBaseCurrencyChange}>
+                    <select
+                        className="currency-select"
+                        value={baseCurrency}
+                        onChange={handleBaseCurrencyChange}
+                    >
                         {abbreviations.map((abbr) => (
                             <option key={abbr} value={abbr}>
                                 {Flag.getFlagEmoji(abbr)} {abbr}

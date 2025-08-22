@@ -9,10 +9,10 @@ export default class Cache {
             expires: Date.now() + fiveMinutesInMs,
         };
         localStorage.setItem(key, JSON.stringify(objToSave));
-    }
+    };
 
     static cleanRequestCache = () => {
-        Object.keys(localStorage).forEach(key => {
+        Object.keys(localStorage).forEach((key) => {
             try {
                 const itemStr = localStorage.getItem(key);
                 if (!itemStr) return;
@@ -26,7 +26,7 @@ export default class Cache {
                 console.error(error);
             }
         });
-    }
+    };
 
     static getRequestCacheData = (key) => {
         const itemStr = localStorage.getItem(key);
@@ -44,10 +44,10 @@ export default class Cache {
             }
 
             return item.data;
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             localStorage.removeItem(key);
             return null;
         }
-    }
+    };
 }

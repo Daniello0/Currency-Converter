@@ -4,14 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="complete with client-side cache">
-      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="refactor &quot;get /api/rates&quot; (in Parser.js &amp; other files) for caching">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.prettierrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/.prettierrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/Test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Test/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RatesView.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RatesView.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RatesView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RatesView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/mappers/CurrencyMapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/mappers/CurrencyMapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/Cache.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/Cache.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/Converter.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/Parser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.prettierrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/.prettierrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/Cache.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/Cache.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/DBController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/DBController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,43 +69,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JavaScript Debug.Debug Application.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.Test get rates.Test get rates.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.test.js.executor&quot;: &quot;Run&quot;,
-    &quot;Mocha.Parser.executor&quot;: &quot;Run&quot;,
-    &quot;Mocha.Test.executor&quot;: &quot;Run&quot;,
-    &quot;Mocha.Класс Parser.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.ConverterTest.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;addServerToConverter&quot;,
-    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client/node_modules/react-scripts&quot;,
-    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client/node_modules/mocha&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;/Users/daniel/Library/Application Support/JetBrains/WebStorm2025.1/node/versions/22.17.0/bin/node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.npm start.executor&quot;: &quot;Run&quot;,
-    &quot;npm.test.executor&quot;: &quot;Run&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.Debug Application.executor": "Run",
+    "Jest.Test get rates.Test get rates.executor": "Run",
+    "Jest.test.js.executor": "Run",
+    "Mocha.Parser.executor": "Run",
+    "Mocha.Test.executor": "Run",
+    "Mocha.Класс Parser.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.ConverterTest.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "addServerToConverter",
+    "js.last.introduce.type": "LET",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/daniel/WebstormProjects/currency-converter/client",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/react-scripts",
+    "nodejs.mocha.mocha_node_package_dir": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/mocha",
+    "nodejs_interpreter_path": "/Users/daniel/Library/Application Support/JetBrains/WebStorm2025.1/node/versions/22.17.0/bin/node",
+    "nodejs_package_manager_path": "npm",
+    "npm.format.executor": "Run",
+    "npm.lint.executor": "Run",
+    "npm.lint:fix.executor": "Run",
+    "npm.npm start.executor": "Run",
+    "npm.test.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/prettier",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/client" />
@@ -109,8 +123,38 @@
       <recent name="$PROJECT_DIR$/src/mappers" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.npm start">
+  <component name="RunManager" selected="npm.format">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+    <configuration name="format" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="format" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="lint:fix" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint:fix" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="npm start" type="js.build_tools.npm">
@@ -139,7 +183,17 @@
       <item itemvalue="JavaScript Debug.Debug Application" />
       <item itemvalue="Mocha.Test" />
       <item itemvalue="npm.npm start" />
+      <item itemvalue="npm.format" />
+      <item itemvalue="npm.lint" />
+      <item itemvalue="npm.lint:fix" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.format" />
+        <item itemvalue="npm.lint:fix" />
+        <item itemvalue="npm.lint" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -198,7 +252,7 @@
       <workItem from="1755598367621" duration="28115000" />
       <workItem from="1755765267908" duration="1343000" />
       <workItem from="1755766734243" duration="25750000" />
-      <workItem from="1755858018647" duration="1689000" />
+      <workItem from="1755858018647" duration="6143000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -528,7 +582,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755857987595</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="refactor &quot;get /api/rates&quot; (in Parser.js &amp; other files) for caching">
+      <option name="closed" value="true" />
+      <created>1755859809701</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1755859809701</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -558,7 +620,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Merge pull request #7 from Daniello0/design-work&#10;&#10;minor updates" />
     <MESSAGE value="add server dir, server.js" />
     <MESSAGE value="add some endpoints" />
     <MESSAGE value="add some api (in server.js), add Parser.js" />
@@ -583,6 +644,7 @@
     <MESSAGE value="add linter &amp; prettier. Format project files" />
     <MESSAGE value="add memory cache in server.js, add .nvmrc, add client-side cache (App.js, ServerController.js)" />
     <MESSAGE value="complete with client-side cache" />
-    <option name="LAST_COMMIT_MESSAGE" value="complete with client-side cache" />
+    <MESSAGE value="refactor &quot;get /api/rates&quot; (in Parser.js &amp; other files) for caching" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor &quot;get /api/rates&quot; (in Parser.js &amp; other files) for caching" />
   </component>
 </project>

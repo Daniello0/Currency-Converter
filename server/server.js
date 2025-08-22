@@ -4,7 +4,7 @@ import cors from 'cors';
 import Cookies from './Cookies.js';
 import cookieParser from 'cookie-parser';
 import DBController from './DBController.js';
-import Cache from "./Cache.js";
+import Cache from './Cache.js';
 
 const app = express();
 const port = 3001;
@@ -60,12 +60,30 @@ app.get('/api/rates', async (req, res) => {
     }
 
     try {
+        const cacheData = await DBController.getRatesCache({
+            base_currency: base,
+            targets: targets,
+        });
+        if (cacheData !== null) {
+            console.log('cacheData is not null:\n', cacheData.data);
+            res.send(cacheData.data);
+            return;
+        }
+        console.log('cacheData is null');
+
         const data = await Parser.getRates(base, targetArray);
         if (data) {
             console.log('Данные из get api/rates: ', data);
+            await DBController.upsertRatesCache({
+                base_currency: base,
+                targets: targets,
+                data: JSON.stringify(data),
+            });
             res.send(data);
         } else {
-            res.status(404).json({ error: 'Не удалось найти данные для указанных валют' });
+            res.status(404).json({
+                error: 'Не удалось найти данные для указанных валют',
+            });
         }
     } catch (e) {
         console.error('Error in /api/rates:', e);

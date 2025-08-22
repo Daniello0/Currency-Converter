@@ -8,7 +8,7 @@ import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.js';
 import RatesView from './components/RatesView.js';
 import ConverterView from './components/ConverterView.js';
 import ServerController from './services/ServerController.js';
-import Cache from "./services/Cache.js";
+import Cache from './services/Cache.js';
 
 function App() {
     const [currencyList, setCurrencyList] = useState([]);
@@ -20,7 +20,7 @@ function App() {
 
     useEffect(() => {
         Cache.cleanRequestCache();
-    }, [])
+    }, []);
 
     // Загрузка favorites при монтировании
     async function loadFavorites() {
@@ -56,7 +56,9 @@ function App() {
         if (!favoritesReadyToSync) return;
         if (serverFavoritesRef.current) {
             const sameLength = serverFavoritesRef.current.length === favorites.length;
-            const sameValues = sameLength && serverFavoritesRef.current.every((v, i) => v === favorites[i]);
+            const sameValues =
+                sameLength &&
+                serverFavoritesRef.current.every((v, i) => v === favorites[i]);
             if (sameValues) {
                 serverFavoritesRef.current = null;
                 return;
@@ -110,7 +112,13 @@ function App() {
 
         switch (activeView) {
             case 'rates':
-                return <RatesView rates={sortedCurrencyList} favorites={favorites} onToggleFavorite={toggleFavorite} />;
+                return (
+                    <RatesView
+                        rates={sortedCurrencyList}
+                        favorites={favorites}
+                        onToggleFavorite={toggleFavorite}
+                    />
+                );
             case 'converter': {
                 return <ConverterView />;
             }

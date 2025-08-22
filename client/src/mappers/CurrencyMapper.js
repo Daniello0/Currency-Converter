@@ -6,5 +6,7 @@ export function mapApiDataToCurrencies(apiDataArray) {
         return [];
     }
 
-    return apiDataArray.map((apiObject) => Currency.fromApiObject(apiObject)).filter(Boolean);
+    return apiDataArray
+        .map((apiObject) => Currency.fromApiObject(apiObject))
+        .filter(Boolean);
 }
