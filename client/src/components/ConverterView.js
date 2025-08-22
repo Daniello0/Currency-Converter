@@ -1,17 +1,16 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './ConverterView.css';
-import {Flag} from "../services/Flag.js";
-import ServerController from "../services/ServerController.js";
+import { Flag } from '../services/Flag.js';
+import ServerController from '../services/ServerController.js';
 
 function ConverterView() {
-
-    const [initialAbbreviations, setInitialAbbreviations ] = useState([]);
-    const [isInitialAbbrLoaded, setIsInitialAbbrLoaded ] = useState(false);
+    const [initialAbbreviations, setInitialAbbreviations] = useState([]);
+    const [isInitialAbbrLoaded, setIsInitialAbbrLoaded] = useState(false);
     const [amount, setAmount] = useState(0);
     const [baseCurrency, setBaseCurrency] = useState('USD');
     const [targetCurrencies, setTargetCurrencies] = useState([]);
     const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState(false);
-    const serverTargetsRef = useRef(null)
+    const serverTargetsRef = useRef(null);
 
     // Валюты BYN нет, поэтому ее необходимо добавить
     const abbreviations = useMemo(() => {
@@ -21,31 +20,39 @@ function ConverterView() {
 
         const abbreviationsWithByn = [...initialAbbreviations];
 
-        if (!abbreviationsWithByn.find(abbr => abbr === 'BYN')) {
+        if (!abbreviationsWithByn.find((abbr) => abbr === 'BYN')) {
             abbreviationsWithByn.push('BYN');
         }
 
-        return abbreviationsWithByn
-    }, [initialAbbreviations])
+        return abbreviationsWithByn;
+    }, [initialAbbreviations]);
 
     useEffect(() => {
         (async () => {
-
-            const abbr_s = await ServerController.getCurrencies();
-            if (abbr_s) {
+            ServerController.getCurrencies().then((r) => {
+                setInitialAbbreviations(r);
+                setIsInitialAbbrLoaded(true);
+            });
+            /*if (abbr_s) {
                 setInitialAbbreviations(abbr_s);
                 setIsInitialAbbrLoaded(true);
-            }
+            }*/
 
-            const user = await ServerController.getUser();
-            if (user) {
+            ServerController.getUser().then((r) => {
+                setAmount(r.amount);
+
+                setBaseCurrency(r.base_currency);
+
+                loadTargets(r);
+            });
+            /*if (user) {
 
                 setAmount(user.amount);
 
                 setBaseCurrency(user.base_currency);
 
                 await loadTargets(user);
-            }
+            }*/
         })();
     }, []);
 
@@ -54,9 +61,8 @@ function ConverterView() {
         let cancelled = false;
 
         try {
-            const loaded = user && typeof user.targets === 'string'
-                ? (user.targets === '' ? [] : user.targets.split(','))
-                : [];
+            const loaded =
+                user && typeof user.targets === 'string' ? (user.targets === '' ? [] : user.targets.split(',')) : [];
 
             if (!cancelled) {
                 serverTargetsRef.current = loaded;
@@ -70,7 +76,9 @@ function ConverterView() {
             }
         }
 
-        return () => { cancelled = true; };
+        return () => {
+            cancelled = true;
+        };
     }
 
     // запись в БД targetCurrencies только при изменениях
@@ -86,14 +94,13 @@ function ConverterView() {
                 await ServerController.upsertUser({
                     amount: amount,
                     base_currency: baseCurrency,
-                    targets: targetCurrencies.join(',')
+                    targets: targetCurrencies.join(','),
                 });
             } catch (e) {
                 console.error('Не удалось сохранить настройки:', e);
             }
         })();
     }, [amount, baseCurrency, targetCurrencies, isTargetCurrenciesLoaded]);
-
 
     const handleAmountChange = (e) => {
         if (e.target.value === '' || parseFloat(e.target.value) >= 0) {
@@ -104,11 +111,11 @@ function ConverterView() {
     const handleTargetChange = (e) => {
         const { value, checked } = e.target;
 
-        setTargetCurrencies(prevTargets => {
+        setTargetCurrencies((prevTargets) => {
             if (checked) {
                 return [...prevTargets, value];
             } else {
-                return prevTargets.filter(currency => currency !== value);
+                return prevTargets.filter((currency) => currency !== value);
             }
         });
     };
@@ -122,14 +129,13 @@ function ConverterView() {
                 setError(null);
 
                 const numericAmount = parseFloat(amount);
-                const result = await ServerController.getRates(baseCurrency, numericAmount,
-                    targetCurrencies);
+                const result = await ServerController.getRates(baseCurrency, numericAmount, targetCurrencies);
                 setRatesData(result);
             } catch (e) {
                 console.error(e);
             } finally {
             }
-        })()
+        })();
     }, [amount, baseCurrency, targetCurrencies]);
 
     const conversionResults = useMemo(() => {
@@ -137,13 +143,17 @@ function ConverterView() {
             return [];
         }
 
-        return ratesData.target.map(targetObj => {
+        return ratesData.target.map((targetObj) => {
             return {
                 code: targetObj.abbreviation, // В вашем объекте это abbreviation
                 name: targetObj.name || '',
-                value: targetObj.amount != null // Проверяем на null/undefined
-                    ? targetObj.amount.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
-                    : 'сумма не определена',
+                value:
+                    targetObj.amount != null // Проверяем на null/undefined
+                        ? targetObj.amount.toLocaleString('ru-RU', {
+                              minimumFractionDigits: 4,
+                              maximumFractionDigits: 4,
+                          })
+                        : 'сумма не определена',
             };
         });
     }, [ratesData]);
@@ -172,12 +182,8 @@ function ConverterView() {
                         onChange={handleAmountChange}
                         min="0"
                     />
-                    <select
-                        className="currency-select"
-                        value={baseCurrency}
-                        onChange={handleBaseCurrencyChange}
-                    >
-                        {abbreviations.map(abbr => (
+                    <select className="currency-select" value={baseCurrency} onChange={handleBaseCurrencyChange}>
+                        {abbreviations.map((abbr) => (
                             <option key={abbr} value={abbr}>
                                 {Flag.getFlagEmoji(abbr)} {abbr}
                             </option>
@@ -188,25 +194,24 @@ function ConverterView() {
                 <div className="target-currencies">
                     <label>Валюты</label>
                     <div className="checklist-box">
-                        {abbreviations.map(abbr => (
-                                <label key={abbr} className="check-item">
-                                    <input
-                                        type="checkbox"
-                                        value={abbr}
-                                        checked={targetCurrencies.includes(abbr)}
-                                        onChange={handleTargetChange}
-                                    />
-                                    {Flag.getFlagEmoji(abbr)} {abbr}
-                                </label>
-                            )
-                        )}
+                        {abbreviations.map((abbr) => (
+                            <label key={abbr} className="check-item">
+                                <input
+                                    type="checkbox"
+                                    value={abbr}
+                                    checked={targetCurrencies.includes(abbr)}
+                                    onChange={handleTargetChange}
+                                />
+                                {Flag.getFlagEmoji(abbr)} {abbr}
+                            </label>
+                        ))}
                     </div>
                 </div>
             </div>
 
             <div className="converter-results">
                 {conversionResults.length > 0 ? (
-                    conversionResults.map(result => (
+                    conversionResults.map((result) => (
                         <div key={result.code} className="result-row">
                             <span className="result-name">
                                 {Flag.getFlagEmoji(result.code)} {result.name}

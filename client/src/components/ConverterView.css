@@ -22,11 +22,13 @@
     align-items: flex-start;
 }
 
-.input-group, .target-currencies {
+.input-group,
+.target-currencies {
     flex: 1;
 }
 
-.input-group label, .target-currencies label {
+.input-group label,
+.target-currencies label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
@@ -34,7 +36,8 @@
     font-size: 14px;
 }
 
-.amount-input, .currency-select {
+.amount-input,
+.currency-select {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -64,7 +67,7 @@
     font-size: 15px;
 }
 
-.check-item input[type="checkbox"] {
+.check-item input[type='checkbox'] {
     margin-right: 10px;
     cursor: pointer;
 }

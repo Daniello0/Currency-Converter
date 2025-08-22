@@ -1,14 +1,13 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './mappers/CurrencyMapper.js';
 import './components/RatesView.js';
 
-
-import './App.css'
-import './Content.css'
-import {mapApiDataToCurrencies} from "./mappers/CurrencyMapper.js";
-import RatesView from "./components/RatesView.js";
-import ConverterView from "./components/ConverterView.js";
-import ServerController from "./services/ServerController.js";
+import './App.css';
+import './Content.css';
+import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.js';
+import RatesView from './components/RatesView.js';
+import ConverterView from './components/ConverterView.js';
+import ServerController from './services/ServerController.js';
 
 function App() {
     const [currencyList, setCurrencyList] = useState([]);
@@ -24,9 +23,12 @@ function App() {
 
         try {
             const user = await ServerController.getUser();
-            const loaded = user && typeof user.favorites === 'string'
-                ? (user.favorites === '' ? [] : user.favorites.split(','))
-                : [];
+            const loaded =
+                user && typeof user.favorites === 'string'
+                    ? user.favorites === ''
+                        ? []
+                        : user.favorites.split(',')
+                    : [];
 
             if (!cancelled) {
                 serverFavoritesRef.current = loaded;
@@ -39,7 +41,9 @@ function App() {
                 setFavoritesReadyToSync(true);
             }
         }
-        return () => { cancelled = true; };
+        return () => {
+            cancelled = true;
+        };
     }
 
     // запись в БД только при изменениях
@@ -58,7 +62,7 @@ function App() {
         (async () => {
             try {
                 await ServerController.upsertUser({
-                    favorites: favorites.join(',')
+                    favorites: favorites.join(','),
                 });
             } catch (e) {
                 console.error('Не удалось сохранить избранное:', e);
@@ -67,7 +71,7 @@ function App() {
     }, [favorites, favoritesReadyToSync]);
 
     const toggleFavorite = (currencyCode) => {
-        setFavorites(prevFavorites => {
+        setFavorites((prevFavorites) => {
             const newFavorites = new Set(prevFavorites);
             if (newFavorites.has(currencyCode)) {
                 newFavorites.delete(currencyCode);
@@ -101,11 +105,7 @@ function App() {
 
         switch (activeView) {
             case 'rates':
-                return <RatesView
-                    rates = {sortedCurrencyList}
-                    favorites = {favorites}
-                    onToggleFavorite = {toggleFavorite}
-                />;
+                return <RatesView rates={sortedCurrencyList} favorites={favorites} onToggleFavorite={toggleFavorite} />;
             case 'converter': {
                 return <ConverterView />;
             }
@@ -119,14 +119,14 @@ function App() {
         setActiveView(activeViewName);
 
         if (activeViewName !== 'converter') {
-            console.log("Вызывается функция ServerController.getAllCurrencyInfo()")
+            console.log('Вызывается функция ServerController.getAllCurrencyInfo()');
             const currencyObject = await ServerController.getAllCurrencyInfo();
             if (currencyObject) {
                 const cleanList = mapApiDataToCurrencies(currencyObject);
-                console.log("Данные о всех курсах валют получены");
+                console.log('Данные о всех курсах валют получены');
                 setCurrencyList(cleanList);
             } else {
-                console.error("Не удалось получить данные из API");
+                console.error('Не удалось получить данные из API');
                 setCurrencyList([]);
             }
         }
@@ -144,20 +144,23 @@ function App() {
         });
     }, [currencyList, favorites]);
 
-  return (
-      <div>
-          <div className="main-container">
-
-              <div className="button-container">
-                  <button className="btn" onClick={buttonShowCurrencyRatesOnClick}>Курсы валют</button>
-                  <button className="btn" onClick={buttonShowConverterOnClick}>Конвертер валют</button>
-              </div>
-          </div>
-          <div id="contentContainer" className="content-container">
-              {renderContent()}
-          </div>
-      </div>
-  );
+    return (
+        <div>
+            <div className="main-container">
+                <div className="button-container">
+                    <button className="btn" onClick={buttonShowCurrencyRatesOnClick}>
+                        Курсы валют
+                    </button>
+                    <button className="btn" onClick={buttonShowConverterOnClick}>
+                        Конвертер валют
+                    </button>
+                </div>
+            </div>
+            <div id="contentContainer" className="content-container">
+                {renderContent()}
+            </div>
+        </div>
+    );
 }
 
 export default App;

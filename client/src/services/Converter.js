@@ -1,8 +1,7 @@
 export default class Converter {
-
-    static convertBetweenCurrencies (amount, from, to, currencyList) {
-        const fromRateData = currencyList.find(r => r.abbreviation === from);
-        const toRateData = currencyList.find(r => r.abbreviation === to);
+    static convertBetweenCurrencies(amount, from, to, currencyList) {
+        const fromRateData = currencyList.find((r) => r.abbreviation === from);
+        const toRateData = currencyList.find((r) => r.abbreviation === to);
 
         if (!fromRateData || !toRateData) return 0;
 

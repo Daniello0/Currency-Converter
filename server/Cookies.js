@@ -1,5 +1,5 @@
-import {v4 as uuidv4} from "uuid";
-import DBController from "./DBController.js";
+import { v4 as uuidv4 } from 'uuid';
+import DBController from './DBController.js';
 
 export default class Cookies {
     static assignUserIdAndAddUserToDB = async (req, res, next) => {
@@ -10,7 +10,7 @@ export default class Cookies {
                 httpOnly: true,
                 sameSite: 'lax',
                 secure: false,
-                path: '/'
+                path: '/',
             });
             req.userId = newUserId;
             await DBController.upsertUser({

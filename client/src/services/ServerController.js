@@ -1,12 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "http://localhost:3001",
+    baseURL: 'http://localhost:3001',
     withCredentials: true,
 });
 
 export default class ServerController {
-
     static async getCurrencies() {
         try {
             const res = await api.get('/api/currencies');
@@ -22,8 +21,7 @@ export default class ServerController {
     static async getRates(baseCurrency, amount, targetCurrencies) {
         try {
             const targetsString = targetCurrencies.join(',');
-            const params = new URLSearchParams({ base: baseCurrency, amount: amount,
-                targets: targetsString });
+            const params = new URLSearchParams({ base: baseCurrency, amount: amount, targets: targetsString });
             const url = `/api/rates?${params.toString()}`;
 
             const res = await api.get(url);
@@ -45,7 +43,7 @@ export default class ServerController {
         try {
             const res = await api.get('/api/user');
             if (res) {
-                console.log("Полученный пользователь: ", res.data);
+                console.log('Полученный пользователь: ', res.data);
                 return res.data;
             }
         } catch (error) {
@@ -53,9 +51,9 @@ export default class ServerController {
         }
     }
 
-    static async upsertUser({base_currency, favorites, targets, amount}) {
+    static async upsertUser({ base_currency, favorites, targets, amount }) {
         try {
-            const res = await api.post('/api/user', {base_currency, favorites, targets, amount});
+            const res = await api.post('/api/user', { base_currency, favorites, targets, amount });
 
             if (res) {
                 console.log(res.data);
