@@ -4,7 +4,6 @@ import { before } from 'mocha';
 import Parser from '../services/Parser.js';
 import Converter from '../services/Converter.js';
 import { mapApiDataToCurrencies } from '../mappers/CurrencyMapper.js';
-import ServerController from '../services/ServerController.js';
 
 describe('Класс Parser', function () {
     it('должен получать не null массив данных из API', async () => {

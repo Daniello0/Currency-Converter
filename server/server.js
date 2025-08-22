@@ -41,7 +41,7 @@ app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (req, res) =
 });
 
 app.get('/api/rates', async (req, res) => {
-    const { base, amount } = req.query;
+    const { base } = req.query;
     const targets = req.query.targets || '';
     console.log('targets: ', targets);
 
@@ -55,13 +55,12 @@ app.get('/api/rates', async (req, res) => {
         console.log('Targets is empty, returning base structure: ', targetArray);
         return res.json({
             base: base,
-            amount: parseFloat(amount) || 0,
             target: [],
         });
     }
 
     try {
-        const data = await Parser.getRates(base, targetArray, amount);
+        const data = await Parser.getRates(base, targetArray);
         if (data) {
             console.log('Данные из get api/rates: ', data);
             res.send(data);

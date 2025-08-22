@@ -128,8 +128,7 @@ function ConverterView() {
             try {
                 setError(null);
 
-                const numericAmount = parseFloat(amount);
-                const result = await ServerController.getRates(baseCurrency, numericAmount, targetCurrencies);
+                const result = await ServerController.getRates(baseCurrency, targetCurrencies);
                 setRatesData(result);
             } catch (e) {
                 console.error(e);
@@ -144,11 +143,12 @@ function ConverterView() {
         }
 
         return ratesData.target.map((targetObj) => {
+            targetObj.amount *= amount;
             return {
-                code: targetObj.abbreviation, // В вашем объекте это abbreviation
+                code: targetObj.abbreviation,
                 name: targetObj.name || '',
                 value:
-                    targetObj.amount != null // Проверяем на null/undefined
+                    targetObj.amount !== null
                         ? targetObj.amount.toLocaleString('ru-RU', {
                               minimumFractionDigits: 4,
                               maximumFractionDigits: 4,

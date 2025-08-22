@@ -27,10 +27,10 @@ export default class ServerController {
         }
     }
 
-    static async getRates(baseCurrency, amount, targetCurrencies) {
+    static async getRates(baseCurrency, targetCurrencies) {
         try {
             const targetsString = targetCurrencies.join(',');
-            const params = new URLSearchParams({ base: baseCurrency, amount: amount, targets: targetsString });
+            const params = new URLSearchParams({ base: baseCurrency, targets: targetsString });
             const url = `/api/rates?${params.toString()}`;
             const cache_key = '__cache__' + url;
 

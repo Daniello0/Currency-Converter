@@ -16,7 +16,7 @@ export default class Parser {
         }
     }
 
-    static async getRates(baseCurrency, targetCurrencies, amount) {
+    static async getRates(baseCurrency, targetCurrencies) {
         const API_URL = 'https://api.nbrb.by/exrates/rates?periodicity=0';
         const response = await fetch(API_URL);
         if (response.ok) {
@@ -24,7 +24,6 @@ export default class Parser {
 
             let rates = {
                 base: baseCurrency,
-                amount: amount,
                 target: [],
             };
 
@@ -63,7 +62,7 @@ export default class Parser {
                 const abbreviation = currencyObject.Cur_Abbreviation;
                 const name = currencyObject.Cur_Name;
                 const obj = {};
-                obj.amount = this.round((oneBaseCurrency / oneCurrencyObject) * amount);
+                obj.amount = this.round(oneBaseCurrency / oneCurrencyObject);
                 obj.abbreviation = abbreviation;
                 obj.name = name;
                 rates.target.push(obj);
