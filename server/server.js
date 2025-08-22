@@ -4,6 +4,7 @@ import cors from 'cors';
 import Cookies from './Cookies.js';
 import cookieParser from 'cookie-parser';
 import DBController from './DBController.js';
+import Cache from "./Cache.js";
 
 const app = express();
 const port = 3001;
@@ -16,10 +17,13 @@ app.use(
     })
 );
 
+//Время
+const ONE_HOUR = 3600;
+
 app.use(cookieParser());
 app.use(Cookies.assignUserIdAndAddUserToDB);
 
-app.get('/api/allCurrencyInfo', async (req, res) => {
+app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (req, res) => {
     try {
         res.send(await Parser.getAllCurrencyInfo());
     } catch (error) {
@@ -27,7 +31,7 @@ app.get('/api/allCurrencyInfo', async (req, res) => {
     }
 });
 
-app.get('/api/currencies', async (req, res) => {
+app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (req, res) => {
     try {
         res.json(await Parser.getCurrenciesArray());
     } catch (error) {

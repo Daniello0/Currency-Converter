@@ -8,6 +8,7 @@ import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.js';
 import RatesView from './components/RatesView.js';
 import ConverterView from './components/ConverterView.js';
 import ServerController from './services/ServerController.js';
+import Cache from "./services/Cache.js";
 
 function App() {
     const [currencyList, setCurrencyList] = useState([]);
@@ -16,6 +17,10 @@ function App() {
     const [favorites, setFavorites] = useState([]);
     const [favoritesReadyToSync, setFavoritesReadyToSync] = useState(false);
     const serverFavoritesRef = useRef(null);
+
+    useEffect(() => {
+        Cache.cleanRequestCache();
+    }, [])
 
     // Загрузка favorites при монтировании
     async function loadFavorites() {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cache from "./Cache.js";
 
 const api = axios.create({
     baseURL: 'http://localhost:3001',
@@ -8,9 +9,16 @@ const api = axios.create({
 export default class ServerController {
     static async getCurrencies() {
         try {
+            const cache_key = '__cache__/api/currencies'
+            const requestCache = Cache.getRequestCacheData(cache_key);
+            if (requestCache) {
+                return requestCache;
+            }
+
             const res = await api.get('/api/currencies');
             if (res) {
                 console.log(res.data);
+                Cache.saveRequestCache(cache_key, res.data);
                 return res.data;
             }
         } catch (error) {
@@ -23,6 +31,12 @@ export default class ServerController {
             const targetsString = targetCurrencies.join(',');
             const params = new URLSearchParams({ base: baseCurrency, amount: amount, targets: targetsString });
             const url = `/api/rates?${params.toString()}`;
+            const cache_key = '__cache__' + url;
+
+            const requestCache = Cache.getRequestCacheData(cache_key);
+            if (requestCache) {
+                return requestCache;
+            }
 
             const res = await api.get(url);
 
