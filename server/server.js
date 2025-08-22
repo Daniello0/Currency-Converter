@@ -96,8 +96,8 @@ app.post('/api/user', async (req, res) => {
         }).then((r) => {
             console.log('Успешно UPSERT. user_id: ', req.userId);
             console.log('Данные: ', r);
+            res.json(r);
         });
-        res.sendStatus(200);
     } catch (error) {
         console.error(error);
     }

@@ -54,21 +54,3 @@ describe('Класс Converter', () => {
         assert.closeTo(result, expectedValue, 0.0000001, 'Конвертация VND некорректна');
     });
 });
-
-describe('Test user', () => {
-    it('Test get user', async () => {
-        const user = await ServerController.getUser();
-        if (user) {
-            console.log(user);
-        }
-    });
-});
-
-describe('Test get rates', () => {
-    it('Test get rates', async () => {
-        const rates = await ServerController.getRates('USD', 5, ['BYN', 'EUR', 'RUB']);
-        if (rates) {
-            console.log(rates);
-        }
-    });
-});

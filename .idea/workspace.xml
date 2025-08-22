@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add linter &amp; prettier. Format project files">
-      <change afterPath="$PROJECT_DIR$/client/.nvmrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/services/Cache.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/.nvmrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/Cache.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add memory cache in server.js, add .nvmrc, add client-side cache (App.js, ServerController.js)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Test/test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,6 +59,7 @@
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
     "JavaScript Debug.Debug Application.executor": "Run",
+    "Jest.Test get rates.Test get rates.executor": "Run",
     "Jest.test.js.executor": "Run",
     "Mocha.Parser.executor": "Run",
     "Mocha.Test.executor": "Run",
@@ -82,7 +76,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "/Users/daniel/WebstormProjects/currency-converter/node_modules/react-scripts",
+    "nodejs.jest.jest_package": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/react-scripts",
     "nodejs.mocha.mocha_node_package_dir": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/mocha",
     "nodejs_interpreter_path": "/Users/daniel/Library/Application Support/JetBrains/WebStorm2025.1/node/versions/22.17.0/bin/node",
     "nodejs_package_manager_path": "npm",
@@ -199,7 +193,7 @@
       <workItem from="1755355569780" duration="12904000" />
       <workItem from="1755598367621" duration="28115000" />
       <workItem from="1755765267908" duration="1343000" />
-      <workItem from="1755766734243" duration="23310000" />
+      <workItem from="1755766734243" duration="25548000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -513,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755846086540</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="add memory cache in server.js, add .nvmrc, add client-side cache (App.js, ServerController.js)">
+      <option name="closed" value="true" />
+      <created>1755855182165</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1755855182165</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update amount in ConverterView.js, add flag symbol in RatesView.js" />
     <MESSAGE value="minor updates" />
     <MESSAGE value="Merge pull request #7 from Daniello0/design-work&#10;&#10;minor updates" />
     <MESSAGE value="add server dir, server.js" />
@@ -568,6 +569,7 @@
     <MESSAGE value="defect fixing (in DB, in process)" />
     <MESSAGE value="fix defect" />
     <MESSAGE value="add linter &amp; prettier. Format project files" />
-    <option name="LAST_COMMIT_MESSAGE" value="add linter &amp; prettier. Format project files" />
+    <MESSAGE value="add memory cache in server.js, add .nvmrc, add client-side cache (App.js, ServerController.js)" />
+    <option name="LAST_COMMIT_MESSAGE" value="add memory cache in server.js, add .nvmrc, add client-side cache (App.js, ServerController.js)" />
   </component>
 </project>

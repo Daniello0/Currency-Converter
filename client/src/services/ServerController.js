@@ -11,6 +11,7 @@ export default class ServerController {
         try {
             const cache_key = '__cache__/api/currencies'
             const requestCache = Cache.getRequestCacheData(cache_key);
+
             if (requestCache) {
                 return requestCache;
             }
@@ -40,14 +41,15 @@ export default class ServerController {
 
             const res = await api.get(url);
 
-            if (!res) {
-                const text = await res.data.catch(() => '');
-                console.error(text);
+            if (res) {
+                const data = await res.data;
+                console.log(data);
+                Cache.saveRequestCache(cache_key, data);
+                return data;
             }
 
-            const data = await res.data;
-            console.log(data);
-            return data;
+            const text = await res.data.catch(() => '');
+            console.error(text);
         } catch (error) {
             console.error(error);
         }
@@ -55,10 +57,17 @@ export default class ServerController {
 
     static async getUser() {
         try {
+            const cache_key = '__cache__/api/user';
+            const requestCache = Cache.getRequestCacheData(cache_key);
+
+            if (requestCache) {
+                return requestCache;
+            }
+
             const res = await api.get('/api/user');
             if (res) {
-                console.log('Полученный пользователь: ', res.data);
-                return res.data;
+                console.log('Полученный пользователь: ', await res.data);
+                return await res.data;
             }
         } catch (error) {
             console.error(error);
@@ -67,11 +76,13 @@ export default class ServerController {
 
     static async upsertUser({ base_currency, favorites, targets, amount }) {
         try {
+            const cache_key = '__cache__/api/user';
             const res = await api.post('/api/user', { base_currency, favorites, targets, amount });
 
             if (res) {
                 console.log(res.data);
-                return res.data;
+                Cache.saveRequestCache(cache_key, await res.data);
+                return await res.data;
             }
         } catch (error) {
             console.error(error);
@@ -80,9 +91,17 @@ export default class ServerController {
 
     static async getAllCurrencyInfo() {
         try {
+            const cache_key = '__cache__/api/allCurrencyInfo'
+            const requestCache = Cache.getRequestCacheData(cache_key);
+
+            if (requestCache) {
+                return requestCache;
+            }
+
             const res = await api.get('/api/allCurrencyInfo');
             if (res) {
                 console.log(res.data);
+                Cache.saveRequestCache(cache_key, res.data);
                 return res.data;
             }
         } catch (error) {
