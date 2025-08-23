@@ -1,13 +1,20 @@
 import React from 'react';
 import './RatesView.css';
-import { Flag } from '../services/Flag.ts';
+import Flag from '../services/Flag.ts';
+import Currency from '../models/Currency.ts';
 
-function RatesView({ rates, favorites, onToggleFavorite }) {
+type RatesViewProps = {
+    rates: Currency[];
+    favorites: string[];
+    onToggleFavorite: (currencyCode: string) => void;
+}
+
+function RatesView({ rates, favorites, onToggleFavorite }: RatesViewProps) {
     if (!rates || rates.length === 0) {
         return <div className="loading-message">Загрузка...</div>;
     }
 
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('ru-RU');
     };
@@ -20,7 +27,7 @@ function RatesView({ rates, favorites, onToggleFavorite }) {
                 <div className="currency-date">Дата</div>
                 <div className="favorite-column">Избранное</div>
             </div>
-            {rates.map((currency) => {
+            {rates.map((currency: Currency) => {
                 const isFavorite = favorites.includes(currency.abbreviation);
 
                 return (
@@ -48,7 +55,7 @@ function RatesView({ rates, favorites, onToggleFavorite }) {
                             {String(formatDate(currency.updateDate))}
                         </div>
 
-                        {/*Столбец 4: Избраннле*/}
+                        {/*Столбец 4: Избранное*/}
                         <div className="favorite-column">
                             <span
                                 className={`favorite-star ${isFavorite ? 'is-favorite' : ''}`}

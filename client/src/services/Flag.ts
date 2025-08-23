@@ -1,4 +1,4 @@
-export class Flag {
+export default class Flag {
     static getFlagEmoji = (currencyAbbreviation: string) => {
         if (!currencyAbbreviation || currencyAbbreviation.length < 2) return '🏳️';
         const codePoints: number[] = currencyAbbreviation

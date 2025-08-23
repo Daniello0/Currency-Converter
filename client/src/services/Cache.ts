@@ -8,7 +8,7 @@ export default class Cache {
         //В данном контексте key - набор входных данных в body (при post-запросе) или ссылка (при get-запросе),
         // Или, если параметров нет - уникальный ключ для этого запроса
 
-        const fiveMinutesInMs = 5 * 60 * 1000;
+        const fiveMinutesInMs: number = 5 * 60 * 1000;
         const objToSave: CacheObj = {
             data: dataToSave,
             expires: Date.now() + fiveMinutesInMs,
@@ -19,7 +19,7 @@ export default class Cache {
     static cleanRequestCache = () => {
         Object.keys(localStorage).forEach((key: string) => {
             try {
-                const itemStr: string = localStorage.getItem(key);
+                const itemStr: string | null = localStorage.getItem(key);
                 if (!itemStr) return;
                 const item: CacheObj = JSON.parse(itemStr);
 
@@ -34,7 +34,7 @@ export default class Cache {
     };
 
     static getRequestCacheData = (key: string) => {
-        const itemStr: string = localStorage.getItem(key);
+        const itemStr: string | null = localStorage.getItem(key);
 
         if (!itemStr) {
             return null;

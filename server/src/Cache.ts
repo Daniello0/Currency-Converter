@@ -1,5 +1,4 @@
 import type { NextFunction, Request, Response } from 'express';
-// @ts-expect-error mcache импортируется
 import mcache from 'memory-cache';
 
 export default class Cache {

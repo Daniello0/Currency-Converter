@@ -17,9 +17,9 @@ type constructorParams = {
 export default class Currency {
     name: string = '';
     scale: number = 0;
-    abbreviation = '';
-    officialRate = 0.0;
-    updateDate = null;
+    abbreviation: string = '';
+    officialRate: number = 0.0;
+    updateDate: Date | null = null;
 
     constructor({ name, scale, abbreviation, officialRate, updateDate }: constructorParams) {
         this.name = name || '';

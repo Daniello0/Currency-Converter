@@ -5,10 +5,37 @@ type RateParsed = {
     Cur_Name: string;
 }
 
-type RateObject = {
-    amount: number;
+type PlainAllCurrenciesObject = {
+    Cur_Abbreviation: string;
+    Cur_Scale: number;
+    Cur_OfficialRate: number;
+    Cur_Name: string;
+}
+
+type TargetObject = {
     abbreviation: string;
+    amount: number;
     name: string;
+}
+
+function isPlainCurrenciesArray(data: unknown): data is PlainAllCurrenciesObject[] {
+    return Array.isArray(data) &&
+        data.every(
+            (item) =>
+                item &&
+                typeof item === 'object' &&
+                'Cur_Abbreviation' in item &&
+                typeof (item).Cur_Abbreviation === 'string'
+        );
+}
+
+type RateObject = {
+    base: string,
+    targets : {
+        abbreviation: string,
+        amount: number,
+        name: string,
+    }[]
 }
 
 export default class Parser {
@@ -16,31 +43,37 @@ export default class Parser {
         return Number(Number(value).toFixed(digits));
     }
 
-    static async getCurrenciesArray() {
+    static async getCurrenciesArray(): Promise<string[]> {
         const API_URL = 'https://api.nbrb.by/exrates/rates?periodicity=0';
         const response = await fetch(API_URL);
-        if (response.ok) {
-            const json = await response.json();
-            let abbreviations: string[] = [];
-            for (const item of json) {
-                abbreviations.push(item.Cur_Abbreviation);
-            }
-            return abbreviations;
+
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status} ${response.statusText}`);
         }
+        const data: unknown = await response.json();
+        if (!isPlainCurrenciesArray(data)) {
+            throw new Error('Неверный формат данных от API');
+        }
+        return data.map((item) => item.Cur_Abbreviation);
     }
 
-    static async getRates(baseCurrency: string, targetCurrencies: string[]) {
+
+    static async getRates(baseCurrency: string, targetCurrencies: string[]): Promise<RateObject | undefined> {
         const API_URL = 'https://api.nbrb.by/exrates/rates?periodicity=0';
         const response = await fetch(API_URL);
         if (response.ok) {
-            const json = await response.json();
+            const data: unknown = await response.json();
 
-            let rates: {base: string; target: RateObject[]} = {
+            if (!isPlainCurrenciesArray(data)) {
+                throw new Error('Неверный формат данных от API');
+            }
+
+            let rates: { base: string; targets: TargetObject[] } = {
                 base: baseCurrency,
-                target: [],
+                targets: [],
             };
 
-            let baseObject = json.find((rate: RateParsed) => {
+            let baseObject: PlainAllCurrenciesObject | undefined = data.find((rate: PlainAllCurrenciesObject) => {
                 return rate.Cur_Abbreviation === baseCurrency;
             });
 
@@ -53,12 +86,21 @@ export default class Parser {
                 };
             }
 
-            const oneBaseCurrency = baseObject.Cur_OfficialRate / baseObject.Cur_Scale;
+            if (!baseObject) {
+                throw new Error(`Неизвестная базовая валюта: ${baseCurrency}`);
+            }
+
+            const oneBaseCurrency: number =
+                baseObject.Cur_OfficialRate / baseObject.Cur_Scale;
 
             for (let currency of targetCurrencies) {
-                let currencyObject: RateParsed = json.find((rate: RateParsed) => {
+                let currencyObject: PlainAllCurrenciesObject | undefined = data.find((rate: RateParsed) => {
                     return rate.Cur_Abbreviation === currency;
                 });
+
+                if (!currencyObject) {
+                    throw new Error("currencyObject не определен");
+                }
 
                 if (currency === 'BYN') {
                     currencyObject = {
@@ -69,15 +111,15 @@ export default class Parser {
                     };
                 }
 
-                const oneCurrencyObject =
+                const oneCurrencyObject: number =
                     currencyObject.Cur_OfficialRate / currencyObject.Cur_Scale;
                 const abbreviation = currencyObject.Cur_Abbreviation;
                 const name = currencyObject.Cur_Name;
-                const obj = {} as RateObject;
+                const obj = {} as TargetObject;
                 obj.amount = this.round(oneBaseCurrency / oneCurrencyObject);
                 obj.abbreviation = abbreviation;
                 obj.name = name;
-                rates.target.push(obj);
+                rates.targets.push(obj);
             }
 
             return rates;

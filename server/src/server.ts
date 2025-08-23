@@ -1,15 +1,12 @@
 import { json } from 'express';
 import {Request, Response} from 'express';
-// @ts-expect-error express импортируется
 import express, { type Express } from 'express';
-import Parser from './Parser';
-// @ts-expect-error cors импортируется
+import Parser from './Parser.ts';
 import cors from 'cors';
-import Cookies from './Cookies';
-// @ts-expect-error cookieParser импортируется
+import Cookies from './Cookies.ts';
 import cookieParser from 'cookie-parser';
-import DBController from './DBController';
-import Cache from './Cache';
+import DBController from './DBController.ts';
+import Cache from './Cache.ts';
 
 type RequestWithUserId = Request & {
     userId?: string;
@@ -76,7 +73,7 @@ app.get('/api/rates', async (req: Request, res: Response) => {
 
     try {
         const sortedTargets: string = targetArray.sort().join(',');
-        const cacheData: CacheObj = await DBController.getRatesCache({
+        const cacheData: CacheObj | null = await DBController.getRatesCache({
             base_currency: String(base),
             targets: sortedTargets,
         });
@@ -111,8 +108,10 @@ app.get('/api/rates', async (req: Request, res: Response) => {
 app.get('/api/user', async (req: RequestWithUserId, res) => {
     try {
         console.log('user_id (get /api/user): ', req.userId);
-        console.log('get /api/user: ', await DBController.getUser(req.userId));
-        res.json(await DBController.getUser(req.userId));
+        if (req.userId !== undefined) {
+            console.log('get /api/user: ', await DBController.getUser(req.userId));
+            res.json(await DBController.getUser(req.userId));
+        }
     } catch (error) {
         console.error(error);
     }
@@ -121,6 +120,10 @@ app.get('/api/user', async (req: RequestWithUserId, res) => {
 app.post('/api/user', async (req: RequestWithUserId, res) => {
     const { base_currency, favorites, targets, amount } = req.body;
     try {
+        if (req.userId === undefined) {
+            console.log("user_id is undefined");
+            return;
+        }
         await DBController.upsertUser({
             userId: req.userId,
             base_currency: base_currency,
