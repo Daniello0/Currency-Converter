@@ -1,12 +1,21 @@
-import express, { json } from 'express';
-import Parser from './Parser.js';
+import { json } from 'express';
+import {Request, Response} from 'express';
+// @ts-expect-error express импортируется
+import express, { type Express } from 'express';
+import Parser from './Parser';
+// @ts-expect-error cors импортируется
 import cors from 'cors';
-import Cookies from './Cookies.js';
+import Cookies from './Cookies';
+// @ts-expect-error cookieParser импортируется
 import cookieParser from 'cookie-parser';
-import DBController from './DBController.js';
-import Cache from './Cache.js';
+import DBController from './DBController';
+import Cache from './Cache';
 
-const app = express();
+type RequestWithUserId = Request & {
+    userId?: string;
+}
+
+const app: Express = express();
 const port = 3001;
 
 app.use(json());
@@ -23,7 +32,7 @@ const ONE_HOUR = 3600;
 app.use(cookieParser());
 app.use(Cookies.assignUserIdAndAddUserToDB);
 
-app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (req, res) => {
+app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (_req: Request, res: Response) => {
     try {
         res.send(await Parser.getAllCurrencyInfo());
     } catch (error) {
@@ -31,7 +40,7 @@ app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (req, r
     }
 });
 
-app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (req, res) => {
+app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (_req: Request, res: Response) => {
     try {
         res.json(await Parser.getCurrenciesArray());
     } catch (error) {
@@ -40,12 +49,12 @@ app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (req, res) =
     }
 });
 
-app.get('/api/rates', async (req, res) => {
+app.get('/api/rates', async (req: Request, res: Response) => {
     const { base } = req.query;
-    const targets = req.query.targets || '';
+    const targets: unknown = req.query.targets || '';
     console.log('targets: ', targets);
 
-    const targetArray = targets.split(',').filter((currency) => currency.trim() !== '');
+    const targetArray = String(targets).split(',').filter((currency) => currency.trim() !== '');
 
     if (!base) {
         return res.status(400).json({ error: 'Параметр base обязателен' });
@@ -60,8 +69,8 @@ app.get('/api/rates', async (req, res) => {
     }
 
     try {
-        const sortedTargets = targetArray.sort().join(',');
-        const cacheData = await DBController.getRatesCache({
+        const sortedTargets: string = targetArray.sort().join(',');
+        const cacheData: {data: object} = await DBController.getRatesCache({
             base_currency: base,
             targets: sortedTargets,
         });
@@ -72,7 +81,8 @@ app.get('/api/rates', async (req, res) => {
         }
         console.log('cacheData is null');
 
-        const data = await Parser.getRates(base, targetArray);
+        const data = await Parser.getRates(String(base), targetArray);
+
         if (data) {
             console.log('Данные из get api/rates: ', data);
             await DBController.upsertRatesCache({
@@ -92,7 +102,7 @@ app.get('/api/rates', async (req, res) => {
     }
 });
 
-app.get('/api/user', async (req, res) => {
+app.get('/api/user', async (req: RequestWithUserId, res) => {
     try {
         console.log('user_id (get /api/user): ', req.userId);
         console.log('get /api/user: ', await DBController.getUser(req.userId));
@@ -102,7 +112,7 @@ app.get('/api/user', async (req, res) => {
     }
 });
 
-app.post('/api/user', async (req, res) => {
+app.post('/api/user', async (req: RequestWithUserId, res) => {
     const { base_currency, favorites, targets, amount } = req.body;
     try {
         await DBController.upsertUser({

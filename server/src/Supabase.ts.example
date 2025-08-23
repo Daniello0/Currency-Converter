@@ -1,0 +1,4 @@
+export default class Supabase {
+    static SUPABASE_URL: string = <SUPABASE_URL>;
+    static SUPABASE_ANON_KEY: string = <SUPABASE_ANON_KEY>
+}

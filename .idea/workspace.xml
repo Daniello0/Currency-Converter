@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add new table func's in DBController.js, add server caching in server.js, minor updates">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="start refactoring to TS, refactor server-part to TS">
       <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/DBController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/DBController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,13 +17,14 @@
       <list>
         <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="addServerToConverter" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,7 +66,7 @@
     "Node.js.ConverterTest.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "addServerToConverter",
+    "git-widget-placeholder": "addServerToConverter(TS)",
     "js.last.introduce.type": "LET",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/Users/daniel/WebstormProjects/currency-converter/client",
@@ -86,9 +83,9 @@
     "npm.lint:fix.executor": "Run",
     "npm.npm start.executor": "Run",
     "npm.test.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/prettier",
+    "prettierjs.PrettierConfiguration.Package": "/Users/daniel/WebstormProjects/currency-converter/server/node_modules/prettier",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Users/daniel/WebstormProjects/currency-converter/server/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -103,11 +100,11 @@
       <recent name="$PROJECT_DIR$/server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server/src" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/client" />
       <recent name="$PROJECT_DIR$/src/services" />
       <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/src/mappers" />
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
@@ -239,7 +236,7 @@
       <workItem from="1755598367621" duration="28115000" />
       <workItem from="1755765267908" duration="1343000" />
       <workItem from="1755766734243" duration="25750000" />
-      <workItem from="1755858018647" duration="8651000" />
+      <workItem from="1755858018647" duration="15975000" />
     </task>
     <task id="LOCAL-00001" summary="Add project files, add main.html, add simple main content design">
       <option name="closed" value="true" />
@@ -585,7 +582,23 @@
       <option name="project" value="LOCAL" />
       <updated>1755871176634</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="minor fixes">
+      <option name="closed" value="true" />
+      <created>1755946338740</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1755946338740</updated>
+    </task>
+    <task id="LOCAL-00045" summary="start refactoring to TS, refactor server-part to TS">
+      <option name="closed" value="true" />
+      <created>1755953409064</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1755953409064</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,7 +615,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="design-work" />
+                        <option value="addServerToConverter(TS)" />
                       </list>
                     </value>
                   </entry>
@@ -615,7 +628,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add some endpoints" />
     <MESSAGE value="add some api (in server.js), add Parser.js" />
     <MESSAGE value="add prisma ORM &amp; connect DB" />
     <MESSAGE value="add &amp; connect supabase" />
@@ -625,7 +637,6 @@
     <MESSAGE value="add getAllCurrencyInfo() in ServerController.js" />
     <MESSAGE value="remove prismaORM" />
     <MESSAGE value="fix cookie" />
-    <MESSAGE value="minor fixes" />
     <MESSAGE value="add working favorites &amp; base_currency (App.js, ConverterView.js)" />
     <MESSAGE value="add" />
     <MESSAGE value="add working amount (in DB)" />
@@ -640,6 +651,8 @@
     <MESSAGE value="complete with client-side cache" />
     <MESSAGE value="refactor &quot;get /api/rates&quot; (in Parser.js &amp; other files) for caching" />
     <MESSAGE value="add new table func's in DBController.js, add server caching in server.js, minor updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="add new table func's in DBController.js, add server caching in server.js, minor updates" />
+    <MESSAGE value="minor fixes" />
+    <MESSAGE value="start refactoring to TS, refactor server-part to TS" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

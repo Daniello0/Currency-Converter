@@ -95,7 +95,7 @@ function ConverterView() {
 
         (async () => {
             try {
-                const timeout = setTimeout( async () => {
+                setTimeout( async () => {
                     await ServerController.upsertUser({
                         amount: amount,
                         base_currency: baseCurrency,
