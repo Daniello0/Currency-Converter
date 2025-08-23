@@ -29,7 +29,7 @@ export default class ServerController {
 
     static async getRates(baseCurrency, targetCurrencies) {
         try {
-            const targetsString = targetCurrencies.join(',');
+            const targetsString = targetCurrencies.sort().join(',');
             const params = new URLSearchParams({
                 base: baseCurrency,
                 targets: targetsString,

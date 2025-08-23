@@ -95,11 +95,13 @@ function ConverterView() {
 
         (async () => {
             try {
-                await ServerController.upsertUser({
-                    amount: amount,
-                    base_currency: baseCurrency,
-                    targets: targetCurrencies.join(','),
-                });
+                const timeout = setTimeout( async () => {
+                    await ServerController.upsertUser({
+                        amount: amount,
+                        base_currency: baseCurrency,
+                        targets: targetCurrencies.join(','),
+                    });
+                }, 100);
             } catch (e) {
                 console.error('Не удалось сохранить настройки:', e);
             }

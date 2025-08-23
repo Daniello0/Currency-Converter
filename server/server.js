@@ -60,9 +60,10 @@ app.get('/api/rates', async (req, res) => {
     }
 
     try {
+        const sortedTargets = targetArray.sort().join(',');
         const cacheData = await DBController.getRatesCache({
             base_currency: base,
-            targets: targets,
+            targets: sortedTargets,
         });
         if (cacheData !== null) {
             console.log('cacheData is not null:\n', cacheData.data);
@@ -76,7 +77,7 @@ app.get('/api/rates', async (req, res) => {
             console.log('Данные из get api/rates: ', data);
             await DBController.upsertRatesCache({
                 base_currency: base,
-                targets: targets,
+                targets: sortedTargets,
                 data: JSON.stringify(data),
             });
             res.send(data);
