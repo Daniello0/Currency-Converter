@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import Parser from '../services/Parser.js';
+import Parser from '../services/Parser.ts';
 
 // eslint-disable-next-line no-undef
 describe('Класс Parser', function () {

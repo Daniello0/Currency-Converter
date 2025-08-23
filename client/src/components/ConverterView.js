@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './ConverterView.css';
-import { Flag } from '../services/Flag.js';
-import ServerController from '../services/ServerController.js';
+import { Flag } from '../services/Flag.ts';
+import ServerController from '../services/ServerController.ts';
 
 function ConverterView() {
     const [initialAbbreviations, setInitialAbbreviations] = useState([]);

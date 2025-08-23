@@ -15,6 +15,12 @@ type RequestWithUserId = Request & {
     userId?: string;
 }
 
+type CacheObj = {
+    base_currency: string;
+    targets: string;
+    data: string;
+}
+
 const app: Express = express();
 const port = 3001;
 
@@ -70,8 +76,8 @@ app.get('/api/rates', async (req: Request, res: Response) => {
 
     try {
         const sortedTargets: string = targetArray.sort().join(',');
-        const cacheData: {data: object} = await DBController.getRatesCache({
-            base_currency: base,
+        const cacheData: CacheObj = await DBController.getRatesCache({
+            base_currency: String(base),
             targets: sortedTargets,
         });
         if (cacheData !== null) {
@@ -86,7 +92,7 @@ app.get('/api/rates', async (req: Request, res: Response) => {
         if (data) {
             console.log('Данные из get api/rates: ', data);
             await DBController.upsertRatesCache({
-                base_currency: base,
+                base_currency: String(base),
                 targets: sortedTargets,
                 data: JSON.stringify(data),
             });

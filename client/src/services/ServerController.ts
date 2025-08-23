@@ -1,10 +1,26 @@
-import axios from 'axios';
-import Cache from './Cache.js';
+import axios, { AxiosInstance } from 'axios';
+import Cache from './Cache';
 
-const api = axios.create({
+const api: AxiosInstance = axios.create({
     baseURL: 'http://localhost:3001',
     withCredentials: true,
 });
+
+type RatesData = {
+    base: string;
+    target: {
+        abbreviation: string;
+        amount: number;
+        name: string;
+    }[];
+}
+
+type UpsertUserFunc = {
+    base_currency?: string;
+    favorites?: string;
+    targets?: string;
+    amount?: number;
+}
 
 export default class ServerController {
     static async getCurrencies() {
@@ -27,17 +43,17 @@ export default class ServerController {
         }
     }
 
-    static async getRates(baseCurrency, targetCurrencies) {
+    static async getRates(baseCurrency: string, targetCurrencies: string[]) {
         try {
-            const targetsString = targetCurrencies.sort().join(',');
+            const targetsString: string = targetCurrencies.sort().join(',');
             const params = new URLSearchParams({
                 base: baseCurrency,
                 targets: targetsString,
             });
             const url = `/api/rates?${params.toString()}`;
-            const cache_key = '__cache__' + url;
+            const cache_key: string = '__cache__' + url;
 
-            const requestCache = Cache.getRequestCacheData(cache_key);
+            const requestCache: object = Cache.getRequestCacheData(cache_key);
             if (requestCache) {
                 return requestCache;
             }
@@ -45,13 +61,13 @@ export default class ServerController {
             const res = await api.get(url);
 
             if (res) {
-                const data = await res.data;
+                const data: RatesData = await res.data;
                 console.log(data);
                 Cache.saveRequestCache(cache_key, data);
                 return data;
             }
 
-            const text = await res.data.catch(() => '');
+            const text: string = await res.data.catch(() => '');
             console.error(text);
         } catch (error) {
             console.error(error);
@@ -61,7 +77,7 @@ export default class ServerController {
     static async getUser() {
         try {
             const cache_key = '__cache__/api/user';
-            const requestCache = Cache.getRequestCacheData(cache_key);
+            const requestCache: object = Cache.getRequestCacheData(cache_key);
 
             if (requestCache) {
                 return requestCache;
@@ -78,7 +94,7 @@ export default class ServerController {
         }
     }
 
-    static async upsertUser({ base_currency, favorites, targets, amount }) {
+    static async upsertUser({ base_currency, favorites, targets, amount } : UpsertUserFunc) {
         try {
             const cache_key = '__cache__/api/user';
             const res = await api.post('/api/user', {
@@ -101,7 +117,7 @@ export default class ServerController {
     static async getAllCurrencyInfo() {
         try {
             const cache_key = '__cache__/api/allCurrencyInfo';
-            const requestCache = Cache.getRequestCacheData(cache_key);
+            const requestCache: object = Cache.getRequestCacheData(cache_key);
 
             if (requestCache) {
                 return requestCache;

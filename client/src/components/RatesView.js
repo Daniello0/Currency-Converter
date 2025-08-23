@@ -1,6 +1,6 @@
 import React from 'react';
 import './RatesView.css';
-import { Flag } from '../services/Flag.js';
+import { Flag } from '../services/Flag.ts';
 
 function RatesView({ rates, favorites, onToggleFavorite }) {
     if (!rates || rates.length === 0) {

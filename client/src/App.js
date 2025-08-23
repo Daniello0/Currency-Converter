@@ -7,8 +7,8 @@ import './Content.css';
 import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.js';
 import RatesView from './components/RatesView.js';
 import ConverterView from './components/ConverterView.js';
-import ServerController from './services/ServerController.js';
-import Cache from './services/Cache.js';
+import ServerController from './services/ServerController.ts';
+import Cache from './services/Cache.ts';
 
 function App() {
     const [currencyList, setCurrencyList] = useState([]);

@@ -69,7 +69,7 @@ export default class DBController {
         return data;
     }
 
-    static async getRatesCache({ base_currency, targets }) {
+    static async getRatesCache({ base_currency, targets }: {base_currency: string, targets: string}) {
         const { data, error } = await supabase
             .from('cache')
             .select('base_currency, targets, data')
@@ -84,7 +84,7 @@ export default class DBController {
         return data;
     }
 
-    static async upsertRatesCache({ base_currency, targets, data }) {
+    static async upsertRatesCache({ base_currency, targets, data }: UpsertCache) {
         const payload = {} as UpsertCache;
         if (base_currency !== undefined) payload.base_currency = base_currency;
         if (targets !== undefined) payload.targets = targets;

@@ -1,4 +1,4 @@
-import Currency from '../models/Currency.js';
+import Currency from '../models/Currency.ts';
 
 export function mapApiDataToCurrencies(apiDataArray) {
     if (!Array.isArray(apiDataArray)) {
