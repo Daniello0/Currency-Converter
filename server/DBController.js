@@ -70,8 +70,3 @@ export default class DBController {
         }
     }
 }
-
-await DBController.getRatesCache({
-    base_currency: 'USD',
-    targets: ['BYN', 'EUR', 'RUB'],
-});
