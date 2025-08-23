@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="complete refactoring">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/Parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/Parser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.ts" afterDir="false" />
-    </list>
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="bug fix &amp; add BYN to converter" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -239,14 +234,6 @@
       <workItem from="1755765267908" duration="1343000" />
       <workItem from="1755766734243" duration="25750000" />
       <workItem from="1755858018647" duration="15975000" />
-    </task>
-    <task id="LOCAL-00003" summary="add some classes (Currency, Parser), add test environment, minor changes in Currency, Parser, test.">
-      <option name="closed" value="true" />
-      <created>1752061028913</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1752061028913</updated>
     </task>
     <task id="LOCAL-00004" summary="delete useless files, add directories">
       <option name="closed" value="true" />
@@ -632,7 +619,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755983677520</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="bug fix &amp; add BYN to converter">
+      <option name="closed" value="true" />
+      <created>1755986695754</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1755986695754</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -662,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add ServerController.js, minor updates" />
     <MESSAGE value="add getAllCurrencyInfo() in ServerController.js" />
     <MESSAGE value="remove prismaORM" />
     <MESSAGE value="fix cookie" />
@@ -687,6 +681,7 @@
     <MESSAGE value="start refactoring client-part to TS" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="complete refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="complete refactoring" />
+    <MESSAGE value="bug fix &amp; add BYN to converter" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fix &amp; add BYN to converter" />
   </component>
 </project>
