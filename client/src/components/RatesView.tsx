@@ -7,7 +7,7 @@ type RatesViewProps = {
     rates: Currency[];
     favorites: string[];
     onToggleFavorite: (currencyCode: string) => void;
-}
+};
 
 function RatesView({ rates, favorites, onToggleFavorite }: RatesViewProps) {
     if (!rates || rates.length === 0) {
@@ -59,7 +59,7 @@ function RatesView({ rates, favorites, onToggleFavorite }: RatesViewProps) {
                         <div className="favorite-column">
                             <span
                                 className={`favorite-star ${isFavorite ? 'is-favorite' : ''}`}
-                                tabIndex="0"
+                                tabIndex={0}
                                 role="button"
                                 onClick={() => onToggleFavorite(currency.abbreviation)}
                             >

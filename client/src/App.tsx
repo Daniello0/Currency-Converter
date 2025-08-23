@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import './mappers/CurrencyMapper.ts';
 
 import './App.css';
@@ -15,15 +15,15 @@ type User = {
     base_currency: string;
     targets: string;
     favorites: string;
-}
+};
 
 function App() {
-    const [currencyList, setCurrencyList] = useState([]);
+    const [currencyList, setCurrencyList] = useState<Currency[]>([]);
     const [activeView, setActiveView] = useState('none'); // 'none', 'rates', 'converter'
-    const [isLoading, setIsLoading] = useState(true);
-    const [favorites, setFavorites] = useState([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [favorites, setFavorites] = useState<string[]>([]);
     const [favoritesReadyToSync, setFavoritesReadyToSync] = useState(false);
-    const serverFavoritesRef = useRef(null);
+    const serverFavoritesRef: RefObject<string[] | null> = useRef<string[]>([]);
 
     useEffect(() => {
         Cache.cleanRequestCache();
@@ -35,12 +35,11 @@ function App() {
 
         try {
             const user: User = await ServerController.getUser();
-            const loaded: string[] =
-                user
-                    ? user.favorites === ''
-                        ? []
-                        : user.favorites.split(',')
-                    : [];
+            const loaded: string[] = user
+                ? user.favorites === ''
+                    ? []
+                    : user.favorites.split(',')
+                : [];
 
             if (!cancelled) {
                 serverFavoritesRef.current = loaded;
@@ -62,10 +61,13 @@ function App() {
     useEffect(() => {
         if (!favoritesReadyToSync) return;
         if (serverFavoritesRef.current) {
-            const sameLength: boolean = serverFavoritesRef.current.length === favorites.length;
+            const sameLength: boolean =
+                serverFavoritesRef.current.length === favorites.length;
             const sameValues: boolean =
                 sameLength &&
-                serverFavoritesRef.current.every((v: string, i: string) => v === favorites[i]);
+                serverFavoritesRef.current.every(
+                    (v: string, i: number) => v === favorites[i]
+                );
             if (sameValues) {
                 serverFavoritesRef.current = null;
                 return;

@@ -1,22 +1,19 @@
 {
-  "compilerOptions": {
-    "jsx": "react",
-    "target": "ESNext",
-    "lib": ["ESNext"],
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
-    "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
-    "allowImportingTsExtensions": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ]
+    "compilerOptions": {
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "jsx": "react-jsx",
+        "outDir": "dist",
+        "rootDir": "src",
+        "strict": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

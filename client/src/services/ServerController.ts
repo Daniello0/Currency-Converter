@@ -8,22 +8,25 @@ const api: AxiosInstance = axios.create({
 
 type RatesData = {
     base: string;
-    target: {
+    targets: {
         abbreviation: string;
         amount: number;
         name: string;
     }[];
-}
+};
 
 type UpsertUserFunc = {
     base_currency?: string;
     favorites?: string;
     targets?: string;
-    amount?: number;
-}
+    amount?: string;
+};
 
 export default class ServerController {
-    static async getRates(baseCurrency: string, targetCurrencies: string[]): Promise<RatesData> {
+    static async getRates(
+        baseCurrency: string,
+        targetCurrencies: string[]
+    ): Promise<RatesData | undefined> {
         try {
             const targetsString: string = targetCurrencies.sort().join(',');
             const params = new URLSearchParams({
@@ -33,7 +36,7 @@ export default class ServerController {
             const url = `/api/rates?${params.toString()}`;
             const cache_key: string = '__cache__' + url;
 
-            const requestCache = Cache.getRequestCacheData(cache_key);
+            const requestCache: RatesData | null = Cache.getRequestCacheData(cache_key);
             if (requestCache) {
                 return requestCache;
             }
@@ -46,9 +49,6 @@ export default class ServerController {
                 Cache.saveRequestCache(cache_key, data);
                 return data;
             }
-
-            const text: string = await res.data.catch(() => '');
-            console.error(text);
         } catch (error) {
             console.error(error);
         }
@@ -77,7 +77,7 @@ export default class ServerController {
     static async getUser() {
         try {
             const cache_key = '__cache__/api/user';
-            const requestCache: object = Cache.getRequestCacheData(cache_key);
+            const requestCache: RatesData | null = Cache.getRequestCacheData(cache_key);
 
             if (requestCache) {
                 return requestCache;
@@ -94,7 +94,12 @@ export default class ServerController {
         }
     }
 
-    static async upsertUser({ base_currency, favorites, targets, amount } : UpsertUserFunc) {
+    static async upsertUser({
+        base_currency,
+        favorites,
+        targets,
+        amount,
+    }: UpsertUserFunc) {
         try {
             const cache_key = '__cache__/api/user';
             const res = await api.post('/api/user', {
@@ -117,7 +122,7 @@ export default class ServerController {
     static async getAllCurrencyInfo() {
         try {
             const cache_key = '__cache__/api/allCurrencyInfo';
-            const requestCache: object = Cache.getRequestCacheData(cache_key);
+            const requestCache: RatesData | null = Cache.getRequestCacheData(cache_key);
 
             if (requestCache) {
                 return requestCache;
@@ -134,7 +139,3 @@ export default class ServerController {
         }
     }
 }
-
-// await ServerController.getRates("USD", ["BYN", "EUR", "RUB"]);
-// await ServerController.getCurrencies();
-// await ServerController.getAllCurrencyInfo();

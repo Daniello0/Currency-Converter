@@ -4,31 +4,41 @@ import Flag from '../services/Flag.ts';
 import ServerController from '../services/ServerController.ts';
 
 type User = {
-    amount: number;
+    amount: string;
     base_currency: string;
     targets: string;
     favorites: string;
-}
+};
 
 type TargetObject = {
     abbreviation: string;
     name: string;
     amount: number;
-}
+};
 
 type ConversionResult = {
     code: string;
     name: string;
     value: string;
-}
+};
+
+type RatesData = {
+    base: string;
+    targets: {
+        abbreviation: string;
+        amount: number;
+        name: string;
+    }[];
+};
 
 function ConverterView() {
     const [initialAbbreviations, setInitialAbbreviations] = useState<string[]>([]);
     const [isInitialAbbrLoaded, setIsInitialAbbrLoaded] = useState<boolean>(false);
-    const [amount, setAmount] = useState<number>(0);
+    const [amount, setAmount] = useState<string>('');
     const [baseCurrency, setBaseCurrency] = useState<string>('USD');
     const [targetCurrencies, setTargetCurrencies] = useState<string[]>([]);
-    const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState<boolean>(false);
+    const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] =
+        useState<boolean>(false);
     const serverTargetsRef: RefObject<string[] | null> = useRef([]);
 
     // Валюты BYN нет, поэтому ее необходимо добавить
@@ -68,11 +78,11 @@ function ConverterView() {
         let cancelled = false;
 
         try {
-            const loaded: string[] =
-                user ? user.targets === ''
-                        ? []
-                        : user.targets.split(',')
-                    : [];
+            const loaded: string[] = user
+                ? user.targets === ''
+                    ? []
+                    : user.targets.split(',')
+                : [];
 
             if (!cancelled) {
                 serverTargetsRef.current = loaded;
@@ -101,7 +111,7 @@ function ConverterView() {
 
         (async () => {
             try {
-                setTimeout( async () => {
+                setTimeout(async () => {
                     await ServerController.upsertUser({
                         amount: amount,
                         base_currency: baseCurrency,
@@ -121,22 +131,22 @@ function ConverterView() {
         }
     };
 
-    const handleBaseCurrencyChange =
-        (e: React.ChangeEvent<HTMLInputElement>) => setBaseCurrency(e.currentTarget.value);
+    const handleBaseCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+        setBaseCurrency(e.currentTarget.value);
 
     const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.currentTarget;
 
-        setTargetCurrencies((prevTargets: TargetObject[]) => {
+        setTargetCurrencies((prevTargets: string[]) => {
             if (checked) {
                 return [...prevTargets, value];
             } else {
-                return prevTargets.filter((currency: TargetObject) => currency !== value);
+                return prevTargets.filter((currency: string) => currency !== value);
             }
         });
     };
 
-    const [ratesData, setRatesData] = useState(null);
+    const [ratesData, setRatesData] = useState<RatesData>();
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -144,7 +154,7 @@ function ConverterView() {
             try {
                 setError(null);
 
-                const result: {base: string, target: TargetObject} = await ServerController.getRates(
+                const result: RatesData | undefined = await ServerController.getRates(
                     baseCurrency,
                     targetCurrencies
                 );
@@ -157,12 +167,12 @@ function ConverterView() {
     }, [amount, baseCurrency, targetCurrencies]);
 
     const conversionResults: ConversionResult[] = useMemo(() => {
-        if (!ratesData || !ratesData.target) {
+        if (!ratesData || !ratesData.targets) {
             return [];
         }
 
-        return ratesData.target.map((targetObj: TargetObject) => {
-            targetObj.amount *= amount;
+        return ratesData.targets.map((targetObj: TargetObject) => {
+            targetObj.amount *= parseFloat(amount);
             return {
                 code: targetObj.abbreviation,
                 name: targetObj.name || '',

@@ -6,7 +6,7 @@ type ApiObject = {
     Cur_Abbreviation: string;
     Cur_OfficialRate: number;
     Date: string;
-}
+};
 
 export function mapApiDataToCurrencies(apiDataArray: ApiObject[]) {
     if (!Array.isArray(apiDataArray)) {

@@ -1,10 +1,26 @@
 type CacheObj = {
-    data: object;
+    data: {
+        base: string;
+        targets: {
+            name: string;
+            abbreviation: string;
+            amount: number;
+        }[];
+    };
     expires: number;
-}
+};
+
+type DataToSave = {
+    base: string;
+    targets: {
+        name: string;
+        abbreviation: string;
+        amount: number;
+    }[];
+};
 
 export default class Cache {
-    static saveRequestCache = (key: string, dataToSave: object) => {
+    static saveRequestCache = (key: string, dataToSave: DataToSave) => {
         //В данном контексте key - набор входных данных в body (при post-запросе) или ссылка (при get-запросе),
         // Или, если параметров нет - уникальный ключ для этого запроса
 
