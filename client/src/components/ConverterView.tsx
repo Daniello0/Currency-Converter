@@ -1,16 +1,45 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import './ConverterView.css';
-import { Flag } from '../services/Flag.js';
-import ServerController from '../services/ServerController.js';
+import Flag from '../services/Flag.ts';
+import ServerController from '../services/ServerController.ts';
+
+type User = {
+    amount: string;
+    base_currency: string;
+    targets: string;
+    favorites: string;
+};
+
+type TargetObject = {
+    abbreviation: string;
+    name: string;
+    amount: number;
+};
+
+type ConversionResult = {
+    code: string;
+    name: string;
+    value: string;
+};
+
+type RatesData = {
+    base: string;
+    targets: {
+        abbreviation: string;
+        amount: number;
+        name: string;
+    }[];
+};
 
 function ConverterView() {
-    const [initialAbbreviations, setInitialAbbreviations] = useState([]);
-    const [isInitialAbbrLoaded, setIsInitialAbbrLoaded] = useState(false);
-    const [amount, setAmount] = useState(0);
-    const [baseCurrency, setBaseCurrency] = useState('USD');
-    const [targetCurrencies, setTargetCurrencies] = useState([]);
-    const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] = useState(false);
-    const serverTargetsRef = useRef(null);
+    const [initialAbbreviations, setInitialAbbreviations] = useState<string[]>([]);
+    const [isInitialAbbrLoaded, setIsInitialAbbrLoaded] = useState<boolean>(false);
+    const [amount, setAmount] = useState<string>('');
+    const [baseCurrency, setBaseCurrency] = useState<string>('USD');
+    const [targetCurrencies, setTargetCurrencies] = useState<string[]>([]);
+    const [isTargetCurrenciesLoaded, setIsTargetCurrenciesLoaded] =
+        useState<boolean>(false);
+    const serverTargetsRef: RefObject<string[] | null> = useRef([]);
 
     // Валюты BYN нет, поэтому ее необходимо добавить
     const abbreviations = useMemo(() => {
@@ -18,7 +47,7 @@ function ConverterView() {
             return;
         }
 
-        const abbreviationsWithByn = [...initialAbbreviations];
+        const abbreviationsWithByn: string[] = [...initialAbbreviations];
 
         if (!abbreviationsWithByn.find((abbr) => abbr === 'BYN')) {
             abbreviationsWithByn.push('BYN');
@@ -33,40 +62,27 @@ function ConverterView() {
                 setInitialAbbreviations(r);
                 setIsInitialAbbrLoaded(true);
             });
-            /*if (abbr_s) {
-                setInitialAbbreviations(abbr_s);
-                setIsInitialAbbrLoaded(true);
-            }*/
 
-            ServerController.getUser().then((r) => {
+            ServerController.getUser().then((r: User) => {
                 setAmount(r.amount);
 
                 setBaseCurrency(r.base_currency);
 
                 loadTargets(r);
             });
-            /*if (user) {
-
-                setAmount(user.amount);
-
-                setBaseCurrency(user.base_currency);
-
-                await loadTargets(user);
-            }*/
         })();
     }, []);
 
     // Загрузка targets при монтировании
-    async function loadTargets(user) {
+    async function loadTargets(user: User) {
         let cancelled = false;
 
         try {
-            const loaded =
-                user && typeof user.targets === 'string'
-                    ? user.targets === ''
-                        ? []
-                        : user.targets.split(',')
-                    : [];
+            const loaded: string[] = user
+                ? user.targets === ''
+                    ? []
+                    : user.targets.split(',')
+                : [];
 
             if (!cancelled) {
                 serverTargetsRef.current = loaded;
@@ -95,7 +111,7 @@ function ConverterView() {
 
         (async () => {
             try {
-                setTimeout( async () => {
+                setTimeout(async () => {
                     await ServerController.upsertUser({
                         amount: amount,
                         base_currency: baseCurrency,
@@ -108,33 +124,37 @@ function ConverterView() {
         })();
     }, [amount, baseCurrency, targetCurrencies, isTargetCurrenciesLoaded]);
 
-    const handleAmountChange = (e) => {
-        if (e.target.value === '' || parseFloat(e.target.value) >= 0) {
-            setAmount(e.target.value);
+    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.currentTarget;
+        if (value === '' || parseFloat(value) >= 0) {
+            setAmount(value);
         }
     };
-    const handleBaseCurrencyChange = (e) => setBaseCurrency(e.target.value);
-    const handleTargetChange = (e) => {
-        const { value, checked } = e.target;
 
-        setTargetCurrencies((prevTargets) => {
+    const handleBaseCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+        setBaseCurrency(e.currentTarget.value);
+
+    const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value, checked } = e.currentTarget;
+
+        setTargetCurrencies((prevTargets: string[]) => {
             if (checked) {
                 return [...prevTargets, value];
             } else {
-                return prevTargets.filter((currency) => currency !== value);
+                return prevTargets.filter((currency: string) => currency !== value);
             }
         });
     };
 
-    const [ratesData, setRatesData] = useState(null);
-    const [error, setError] = useState(null);
+    const [ratesData, setRatesData] = useState<RatesData>();
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
             try {
                 setError(null);
 
-                const result = await ServerController.getRates(
+                const result: RatesData | undefined = await ServerController.getRates(
                     baseCurrency,
                     targetCurrencies
                 );
@@ -146,13 +166,13 @@ function ConverterView() {
         })();
     }, [amount, baseCurrency, targetCurrencies]);
 
-    const conversionResults = useMemo(() => {
-        if (!ratesData || !ratesData.target) {
+    const conversionResults: ConversionResult[] = useMemo(() => {
+        if (!ratesData || !ratesData.targets) {
             return [];
         }
 
-        return ratesData.target.map((targetObj) => {
-            targetObj.amount *= amount;
+        return ratesData.targets.map((targetObj: TargetObject) => {
+            targetObj.amount *= parseFloat(amount);
             return {
                 code: targetObj.abbreviation,
                 name: targetObj.name || '',
@@ -170,10 +190,6 @@ function ConverterView() {
     if (!abbreviations) {
         return <div className="loading-message">Загрузка...</div>;
     }
-
-    /*if (isLoading) {
-        return <div>Загрузка...</div>;
-    }*/
 
     if (error) {
         return <div>Ошибка при загрузке данных</div>;

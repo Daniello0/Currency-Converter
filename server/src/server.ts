@@ -1,12 +1,24 @@
-import express, { json } from 'express';
-import Parser from './Parser.js';
+import { json } from 'express';
+import {Request, Response} from 'express';
+import express, { type Express } from 'express';
+import Parser from './Parser.ts';
 import cors from 'cors';
-import Cookies from './Cookies.js';
+import Cookies from './Cookies.ts';
 import cookieParser from 'cookie-parser';
-import DBController from './DBController.js';
-import Cache from './Cache.js';
+import DBController from './DBController.ts';
+import Cache from './Cache.ts';
 
-const app = express();
+type RequestWithUserId = Request & {
+    userId?: string;
+}
+
+type CacheObj = {
+    base_currency: string;
+    targets: string;
+    data: string;
+}
+
+const app: Express = express();
 const port = 3001;
 
 app.use(json());
@@ -23,7 +35,7 @@ const ONE_HOUR = 3600;
 app.use(cookieParser());
 app.use(Cookies.assignUserIdAndAddUserToDB);
 
-app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (req, res) => {
+app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (_req: Request, res: Response) => {
     try {
         res.send(await Parser.getAllCurrencyInfo());
     } catch (error) {
@@ -31,7 +43,7 @@ app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (req, r
     }
 });
 
-app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (req, res) => {
+app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (_req: Request, res: Response) => {
     try {
         res.json(await Parser.getCurrenciesArray());
     } catch (error) {
@@ -40,12 +52,12 @@ app.get('/api/currencies', Cache.assignMemoryCache(ONE_HOUR), async (req, res) =
     }
 });
 
-app.get('/api/rates', async (req, res) => {
+app.get('/api/rates', async (req: Request, res: Response) => {
     const { base } = req.query;
-    const targets = req.query.targets || '';
+    const targets: unknown = req.query.targets || '';
     console.log('targets: ', targets);
 
-    const targetArray = targets.split(',').filter((currency) => currency.trim() !== '');
+    const targetArray: string[] = String(targets).split(',').filter((currency) => currency.trim() !== '');
 
     if (!base) {
         return res.status(400).json({ error: 'Параметр base обязателен' });
@@ -60,9 +72,9 @@ app.get('/api/rates', async (req, res) => {
     }
 
     try {
-        const sortedTargets = targetArray.sort().join(',');
-        const cacheData = await DBController.getRatesCache({
-            base_currency: base,
+        const sortedTargets: string = targetArray.sort().join(',');
+        const cacheData: CacheObj | null = await DBController.getRatesCache({
+            base_currency: String(base),
             targets: sortedTargets,
         });
         if (cacheData !== null) {
@@ -72,11 +84,12 @@ app.get('/api/rates', async (req, res) => {
         }
         console.log('cacheData is null');
 
-        const data = await Parser.getRates(base, targetArray);
+        const data = await Parser.getRates(String(base), targetArray.sort());
+
         if (data) {
             console.log('Данные из get api/rates: ', data);
             await DBController.upsertRatesCache({
-                base_currency: base,
+                base_currency: String(base),
                 targets: sortedTargets,
                 data: JSON.stringify(data),
             });
@@ -92,19 +105,25 @@ app.get('/api/rates', async (req, res) => {
     }
 });
 
-app.get('/api/user', async (req, res) => {
+app.get('/api/user', async (req: RequestWithUserId, res) => {
     try {
         console.log('user_id (get /api/user): ', req.userId);
-        console.log('get /api/user: ', await DBController.getUser(req.userId));
-        res.json(await DBController.getUser(req.userId));
+        if (req.userId !== undefined) {
+            console.log('get /api/user: ', await DBController.getUser(req.userId));
+            res.json(await DBController.getUser(req.userId));
+        }
     } catch (error) {
         console.error(error);
     }
 });
 
-app.post('/api/user', async (req, res) => {
+app.post('/api/user', async (req: RequestWithUserId, res) => {
     const { base_currency, favorites, targets, amount } = req.body;
     try {
+        if (req.userId === undefined) {
+            console.log("user_id is undefined");
+            return;
+        }
         await DBController.upsertUser({
             userId: req.userId,
             base_currency: base_currency,

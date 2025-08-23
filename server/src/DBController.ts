@@ -1,11 +1,37 @@
 import { createClient } from '@supabase/supabase-js';
-import Supabase from './Supabase.js';
-const supabaseUrl = Supabase.SUPABASE_URL;
-const supabaseKey = Supabase.SUPABASE_ANON_KEY;
+import Supabase from './Supabase.ts';
+
+
+const supabaseUrl: string = Supabase.SUPABASE_URL;
+const supabaseKey: string = Supabase.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+type UserUpsert = {
+    id: string;
+    base_currency?: string;
+    favorites?: string;
+    targets?: string;
+    amount?: number;
+};
+
+type UpsertUserFunc = {
+    userId: string;
+    user?: UserUpsert
+    base_currency?: string;
+    favorites?: string;
+    targets?: string;
+    amount?: number;
+}
+
+type UpsertCache = {
+    base_currency: string;
+    targets: string;
+    data: string;
+}
+
+
 export default class DBController {
-    static async getUser(user_id) {
+    static async getUser(user_id: string) {
         let { data, error } = await supabase
             .from('users')
             .select('*')
@@ -19,13 +45,12 @@ export default class DBController {
         return data;
     }
 
-    static async upsertUser({ userId, base_currency, favorites, targets, amount }) {
+    static async upsertUser({ userId, base_currency, favorites, targets, amount }: UpsertUserFunc) {
         if (!userId) {
             throw new Error('userId обязателен для обновления или создания пользователя');
         }
 
-        const payload = {};
-        payload.id = userId;
+        const payload: UserUpsert = {id: userId};
         if (base_currency !== undefined) payload.base_currency = base_currency;
         if (favorites !== undefined) payload.favorites = favorites;
         if (targets !== undefined) payload.targets = targets;
@@ -44,7 +69,7 @@ export default class DBController {
         return data;
     }
 
-    static async getRatesCache({ base_currency, targets }) {
+    static async getRatesCache({ base_currency, targets }: {base_currency: string, targets: string}) {
         const { data, error } = await supabase
             .from('cache')
             .select('base_currency, targets, data')
@@ -59,8 +84,8 @@ export default class DBController {
         return data;
     }
 
-    static async upsertRatesCache({ base_currency, targets, data }) {
-        const payload = {};
+    static async upsertRatesCache({ base_currency, targets, data }: UpsertCache) {
+        const payload = {} as UpsertCache;
         if (base_currency !== undefined) payload.base_currency = base_currency;
         if (targets !== undefined) payload.targets = targets;
         if (data !== undefined) payload.data = data;

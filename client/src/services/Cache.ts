@@ -1,10 +1,31 @@
+type CacheObj = {
+    data: {
+        base: string;
+        targets: {
+            name: string;
+            abbreviation: string;
+            amount: number;
+        }[];
+    };
+    expires: number;
+};
+
+type DataToSave = {
+    base: string;
+    targets: {
+        name: string;
+        abbreviation: string;
+        amount: number;
+    }[];
+};
+
 export default class Cache {
-    static saveRequestCache = (key, dataToSave) => {
+    static saveRequestCache = (key: string, dataToSave: DataToSave) => {
         //В данном контексте key - набор входных данных в body (при post-запросе) или ссылка (при get-запросе),
         // Или, если параметров нет - уникальный ключ для этого запроса
 
-        const fiveMinutesInMs = 5 * 60 * 1000;
-        const objToSave = {
+        const fiveMinutesInMs: number = 5 * 60 * 1000;
+        const objToSave: CacheObj = {
             data: dataToSave,
             expires: Date.now() + fiveMinutesInMs,
         };
@@ -12,11 +33,11 @@ export default class Cache {
     };
 
     static cleanRequestCache = () => {
-        Object.keys(localStorage).forEach((key) => {
+        Object.keys(localStorage).forEach((key: string) => {
             try {
-                const itemStr = localStorage.getItem(key);
+                const itemStr: string | null = localStorage.getItem(key);
                 if (!itemStr) return;
-                const item = JSON.parse(itemStr);
+                const item: CacheObj = JSON.parse(itemStr);
 
                 if (item && item.expires && Date.now() > item.expires) {
                     console.log(`Удаление просроченного кэша по ключу: ${key}`);
@@ -28,15 +49,15 @@ export default class Cache {
         });
     };
 
-    static getRequestCacheData = (key) => {
-        const itemStr = localStorage.getItem(key);
+    static getRequestCacheData = (key: string) => {
+        const itemStr: string | null = localStorage.getItem(key);
 
         if (!itemStr) {
             return null;
         }
 
         try {
-            const item = JSON.parse(itemStr);
+            const item: CacheObj = JSON.parse(itemStr);
 
             if (Date.now() > item.expires) {
                 localStorage.removeItem(key);

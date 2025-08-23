@@ -1,22 +1,29 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import './mappers/CurrencyMapper.js';
-import './components/RatesView.js';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import './mappers/CurrencyMapper.ts';
 
 import './App.css';
 import './Content.css';
-import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.js';
-import RatesView from './components/RatesView.js';
-import ConverterView from './components/ConverterView.js';
-import ServerController from './services/ServerController.js';
-import Cache from './services/Cache.js';
+import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.ts';
+import RatesView from './components/RatesView.tsx';
+import ConverterView from './components/ConverterView.tsx';
+import ServerController from './services/ServerController.ts';
+import Cache from './services/Cache.ts';
+import Currency from './models/Currency.ts';
+
+type User = {
+    amount: number;
+    base_currency: string;
+    targets: string;
+    favorites: string;
+};
 
 function App() {
-    const [currencyList, setCurrencyList] = useState([]);
+    const [currencyList, setCurrencyList] = useState<Currency[]>([]);
     const [activeView, setActiveView] = useState('none'); // 'none', 'rates', 'converter'
-    const [isLoading, setIsLoading] = useState(true);
-    const [favorites, setFavorites] = useState([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [favorites, setFavorites] = useState<string[]>([]);
     const [favoritesReadyToSync, setFavoritesReadyToSync] = useState(false);
-    const serverFavoritesRef = useRef(null);
+    const serverFavoritesRef: RefObject<string[] | null> = useRef<string[]>([]);
 
     useEffect(() => {
         Cache.cleanRequestCache();
@@ -27,13 +34,12 @@ function App() {
         let cancelled = false;
 
         try {
-            const user = await ServerController.getUser();
-            const loaded =
-                user && typeof user.favorites === 'string'
-                    ? user.favorites === ''
-                        ? []
-                        : user.favorites.split(',')
-                    : [];
+            const user: User = await ServerController.getUser();
+            const loaded: string[] = user
+                ? user.favorites === ''
+                    ? []
+                    : user.favorites.split(',')
+                : [];
 
             if (!cancelled) {
                 serverFavoritesRef.current = loaded;
@@ -55,10 +61,13 @@ function App() {
     useEffect(() => {
         if (!favoritesReadyToSync) return;
         if (serverFavoritesRef.current) {
-            const sameLength = serverFavoritesRef.current.length === favorites.length;
-            const sameValues =
+            const sameLength: boolean =
+                serverFavoritesRef.current.length === favorites.length;
+            const sameValues: boolean =
                 sameLength &&
-                serverFavoritesRef.current.every((v, i) => v === favorites[i]);
+                serverFavoritesRef.current.every(
+                    (v: string, i: number) => v === favorites[i]
+                );
             if (sameValues) {
                 serverFavoritesRef.current = null;
                 return;
@@ -77,8 +86,8 @@ function App() {
         })();
     }, [favorites, favoritesReadyToSync]);
 
-    const toggleFavorite = (currencyCode) => {
-        setFavorites((prevFavorites) => {
+    const toggleFavorite = (currencyCode: string) => {
+        setFavorites((prevFavorites: string[]) => {
             const newFavorites = new Set(prevFavorites);
             if (newFavorites.has(currencyCode)) {
                 newFavorites.delete(currencyCode);
@@ -86,7 +95,7 @@ function App() {
                 newFavorites.add(currencyCode);
             }
             console.log(Array.from(newFavorites));
-            return Array.from(newFavorites);
+            return Array.from(newFavorites).sort();
         });
     };
 
@@ -127,7 +136,7 @@ function App() {
         }
     };
 
-    async function setActiveViewAndGetCurrencyList(activeViewName) {
+    async function setActiveViewAndGetCurrencyList(activeViewName: string) {
         setIsLoading(true);
         setActiveView(activeViewName);
 
@@ -149,7 +158,7 @@ function App() {
 
     const sortedCurrencyList = useMemo(() => {
         if (!currencyList.length) return [];
-        return [...currencyList].sort((a, b) => {
+        return [...currencyList].sort((a: Currency, b: Currency) => {
             const aIsFav = favorites.includes(a.abbreviation);
             const bIsFav = favorites.includes(b.abbreviation);
             if (aIsFav === bIsFav) return 0;
