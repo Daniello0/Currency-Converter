@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="start refactoring to TS, refactor server-part to TS">
-      <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +29,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -53,47 +53,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JavaScript Debug.Debug Application.executor": "Run",
-    "Jest.Test get rates.Test get rates.executor": "Run",
-    "Jest.test.js.executor": "Run",
-    "Mocha.Parser.executor": "Run",
-    "Mocha.Test.executor": "Run",
-    "Mocha.Класс Parser.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Node.js.ConverterTest.js.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "addServerToConverter(TS)",
-    "js.last.introduce.type": "LET",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/daniel/WebstormProjects/currency-converter/client",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/react-scripts",
-    "nodejs.mocha.mocha_node_package_dir": "/Users/daniel/WebstormProjects/currency-converter/client/node_modules/mocha",
-    "nodejs_interpreter_path": "/Users/daniel/Library/Application Support/JetBrains/WebStorm2025.1/node/versions/22.17.0/bin/node",
-    "nodejs_package_manager_path": "npm",
-    "npm.format.executor": "Run",
-    "npm.lint.executor": "Run",
-    "npm.lint:fix.executor": "Run",
-    "npm.npm start.executor": "Run",
-    "npm.test.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/Users/daniel/WebstormProjects/currency-converter/server/node_modules/prettier",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "ts.external.directory.path": "/Users/daniel/WebstormProjects/currency-converter/server/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.Debug Application.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.Test get rates.Test get rates.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.test.js.executor&quot;: &quot;Run&quot;,
+    &quot;Mocha.Parser.executor&quot;: &quot;Run&quot;,
+    &quot;Mocha.Test.executor&quot;: &quot;Run&quot;,
+    &quot;Mocha.Класс Parser.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.ConverterTest.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;addServerToConverter(TS)&quot;,
+    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client/node_modules/react-scripts&quot;,
+    &quot;nodejs.mocha.mocha_node_package_dir&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client/node_modules/mocha&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;/Users/daniel/Library/Application Support/JetBrains/WebStorm2025.1/node/versions/22.17.0/bin/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.format.executor&quot;: &quot;Run&quot;,
+    &quot;npm.lint.executor&quot;: &quot;Run&quot;,
+    &quot;npm.lint:fix.executor&quot;: &quot;Run&quot;,
+    &quot;npm.npm start.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/server/node_modules/prettier&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/server/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/client" />
