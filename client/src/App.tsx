@@ -1,14 +1,21 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import './mappers/CurrencyMapper.js';
-import './components/RatesView.js';
+import './mappers/CurrencyMapper.ts';
 
 import './App.css';
 import './Content.css';
-import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.js';
-import RatesView from './components/RatesView.js';
-import ConverterView from './components/ConverterView.js';
+import { mapApiDataToCurrencies } from './mappers/CurrencyMapper.ts';
+import RatesView from './components/RatesView.tsx';
+import ConverterView from './components/ConverterView.tsx';
 import ServerController from './services/ServerController.ts';
 import Cache from './services/Cache.ts';
+import Currency from './models/Currency.ts';
+
+type User = {
+    amount: number;
+    base_currency: string;
+    targets: string;
+    favorites: string;
+}
 
 function App() {
     const [currencyList, setCurrencyList] = useState([]);
@@ -27,8 +34,8 @@ function App() {
         let cancelled = false;
 
         try {
-            const user = await ServerController.getUser();
-            const loaded =
+            const user: User = await ServerController.getUser();
+            const loaded: string[] =
                 user && typeof user.favorites === 'string'
                     ? user.favorites === ''
                         ? []
@@ -55,10 +62,10 @@ function App() {
     useEffect(() => {
         if (!favoritesReadyToSync) return;
         if (serverFavoritesRef.current) {
-            const sameLength = serverFavoritesRef.current.length === favorites.length;
-            const sameValues =
+            const sameLength: boolean = serverFavoritesRef.current.length === favorites.length;
+            const sameValues: boolean =
                 sameLength &&
-                serverFavoritesRef.current.every((v, i) => v === favorites[i]);
+                serverFavoritesRef.current.every((v: string, i: string) => v === favorites[i]);
             if (sameValues) {
                 serverFavoritesRef.current = null;
                 return;
@@ -77,8 +84,8 @@ function App() {
         })();
     }, [favorites, favoritesReadyToSync]);
 
-    const toggleFavorite = (currencyCode) => {
-        setFavorites((prevFavorites) => {
+    const toggleFavorite = (currencyCode: string) => {
+        setFavorites((prevFavorites: string[]) => {
             const newFavorites = new Set(prevFavorites);
             if (newFavorites.has(currencyCode)) {
                 newFavorites.delete(currencyCode);
@@ -127,7 +134,7 @@ function App() {
         }
     };
 
-    async function setActiveViewAndGetCurrencyList(activeViewName) {
+    async function setActiveViewAndGetCurrencyList(activeViewName: string) {
         setIsLoading(true);
         setActiveView(activeViewName);
 
@@ -149,7 +156,7 @@ function App() {
 
     const sortedCurrencyList = useMemo(() => {
         if (!currencyList.length) return [];
-        return [...currencyList].sort((a, b) => {
+        return [...currencyList].sort((a: Currency, b: Currency) => {
             const aIsFav = favorites.includes(a.abbreviation);
             const bIsFav = favorites.includes(b.abbreviation);
             if (aIsFav === bIsFav) return 0;

@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import Supabase from './Supabase';
+import Supabase from './Supabase.ts';
 
 
 const supabaseUrl: string = Supabase.SUPABASE_URL;

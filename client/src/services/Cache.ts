@@ -8,7 +8,7 @@ export default class Cache {
         //В данном контексте key - набор входных данных в body (при post-запросе) или ссылка (при get-запросе),
         // Или, если параметров нет - уникальный ключ для этого запроса
 
-        const fiveMinutesInMs = 5 * 60 * 1000;
+        const fiveMinutesInMs: number = 5 * 60 * 1000;
         const objToSave: CacheObj = {
             data: dataToSave,
             expires: Date.now() + fiveMinutesInMs,

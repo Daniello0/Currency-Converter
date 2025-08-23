@@ -1,15 +1,12 @@
 import { json } from 'express';
 import {Request, Response} from 'express';
-// @ts-expect-error express импортируется
 import express, { type Express } from 'express';
-import Parser from './Parser';
-// @ts-expect-error cors импортируется
+import Parser from './Parser.ts';
 import cors from 'cors';
-import Cookies from './Cookies';
-// @ts-expect-error cookieParser импортируется
+import Cookies from './Cookies.ts';
 import cookieParser from 'cookie-parser';
-import DBController from './DBController';
-import Cache from './Cache';
+import DBController from './DBController.ts';
+import Cache from './Cache.ts';
 
 type RequestWithUserId = Request & {
     userId?: string;

@@ -33,14 +33,14 @@ export default class Parser {
         const API_URL = 'https://api.nbrb.by/exrates/rates?periodicity=0';
         const response = await fetch(API_URL);
         if (response.ok) {
-            const json = await response.json();
+            const json: RateParsed[] = await response.json();
 
             let rates: {base: string; target: RateObject[]} = {
                 base: baseCurrency,
                 target: [],
             };
 
-            let baseObject = json.find((rate: RateParsed) => {
+            let baseObject: RateParsed = json.find((rate: RateParsed) => {
                 return rate.Cur_Abbreviation === baseCurrency;
             });
 
@@ -53,7 +53,12 @@ export default class Parser {
                 };
             }
 
-            const oneBaseCurrency = baseObject.Cur_OfficialRate / baseObject.Cur_Scale;
+            if (!baseObject) {
+                throw new Error(`Неизвестная базовая валюта: ${baseCurrency}`);
+            }
+
+
+            const oneBaseCurrency: number = baseObject.Cur_OfficialRate / baseObject.Cur_Scale;
 
             for (let currency of targetCurrencies) {
                 let currencyObject: RateParsed = json.find((rate: RateParsed) => {
@@ -69,7 +74,7 @@ export default class Parser {
                     };
                 }
 
-                const oneCurrencyObject =
+                const oneCurrencyObject: number =
                     currencyObject.Cur_OfficialRate / currencyObject.Cur_Scale;
                 const abbreviation = currencyObject.Cur_Abbreviation;
                 const name = currencyObject.Cur_Name;

@@ -4,21 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="minor fixies">
-      <change afterPath="$PROJECT_DIR$/client/tsconfig.client.json" afterDir="false" />
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="start refactoring client-part to TS">
+      <change afterPath="$PROJECT_DIR$/client/eslint.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/eslint.config.mjs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Test/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RatesView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RatesView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/mappers/CurrencyMapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/mappers/CurrencyMapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/models/Currency.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/models/Currency.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/Cache.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/Cache.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/Flag.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/Flag.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/Parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/Parser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Test/test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RatesView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RatesView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/mappers/CurrencyMapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/mappers/CurrencyMapper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reportWebVitals.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reportWebVitals.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/Cache.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/Cache.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/Flag.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/Flag.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tsconfig.client.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/eslint.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/eslint.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/Parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/Parser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tsconfig.server.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,9 +192,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.lint" />
         <item itemvalue="npm.format" />
         <item itemvalue="npm.lint:fix" />
-        <item itemvalue="npm.lint" />
       </list>
     </recent_temporary>
   </component>
@@ -618,7 +625,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755955225348</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="start refactoring client-part to TS">
+      <option name="closed" value="true" />
+      <created>1755965405859</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1755965405859</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -648,7 +663,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add &amp; connect supabase" />
     <MESSAGE value="add some DB functions in DBController.js" />
     <MESSAGE value="little updates" />
     <MESSAGE value="add ServerController.js, minor updates" />
@@ -673,6 +687,7 @@
     <MESSAGE value="minor fixes" />
     <MESSAGE value="Merge remote-tracking branch 'origin/addServerToConverter(TS)' into addServerToConverter(TS)&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="minor fixies" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor fixies" />
+    <MESSAGE value="start refactoring client-part to TS" />
+    <option name="LAST_COMMIT_MESSAGE" value="start refactoring client-part to TS" />
   </component>
 </project>

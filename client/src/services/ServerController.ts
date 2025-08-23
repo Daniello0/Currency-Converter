@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import Cache from './Cache';
+import Cache from './Cache.ts';
 
 const api: AxiosInstance = axios.create({
     baseURL: 'http://localhost:3001',
@@ -23,27 +23,7 @@ type UpsertUserFunc = {
 }
 
 export default class ServerController {
-    static async getCurrencies() {
-        try {
-            const cache_key = '__cache__/api/currencies';
-            const requestCache = Cache.getRequestCacheData(cache_key);
-
-            if (requestCache) {
-                return requestCache;
-            }
-
-            const res = await api.get('/api/currencies');
-            if (res) {
-                console.log(res.data);
-                Cache.saveRequestCache(cache_key, res.data);
-                return res.data;
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    static async getRates(baseCurrency: string, targetCurrencies: string[]) {
+    static async getRates(baseCurrency: string, targetCurrencies: string[]): Promise<RatesData> {
         try {
             const targetsString: string = targetCurrencies.sort().join(',');
             const params = new URLSearchParams({
@@ -53,7 +33,7 @@ export default class ServerController {
             const url = `/api/rates?${params.toString()}`;
             const cache_key: string = '__cache__' + url;
 
-            const requestCache: object = Cache.getRequestCacheData(cache_key);
+            const requestCache = Cache.getRequestCacheData(cache_key);
             if (requestCache) {
                 return requestCache;
             }
@@ -69,6 +49,26 @@ export default class ServerController {
 
             const text: string = await res.data.catch(() => '');
             console.error(text);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    static async getCurrencies() {
+        try {
+            const cache_key = '__cache__/api/currencies';
+            const requestCache = Cache.getRequestCacheData(cache_key);
+
+            if (requestCache) {
+                return requestCache;
+            }
+
+            const res = await api.get('/api/currencies');
+            if (res) {
+                console.log(res.data);
+                Cache.saveRequestCache(cache_key, res.data);
+                return res.data;
+            }
         } catch (error) {
             console.error(error);
         }
