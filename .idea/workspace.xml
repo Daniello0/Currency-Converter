@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="refactoring">
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="complete refactoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ConverterView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ConverterView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RatesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RatesView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/models/Currency.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/models/Currency.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/Cache.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/Cache.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/ServerController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/ServerController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/Parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/Parser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +109,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.lint">
+  <component name="RunManager" selected="npm.npm start">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -180,8 +175,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.lint" />
         <item itemvalue="npm.format" />
+        <item itemvalue="npm.lint" />
         <item itemvalue="npm.lint:fix" />
       </list>
     </recent_temporary>
@@ -244,14 +239,6 @@
       <workItem from="1755765267908" duration="1343000" />
       <workItem from="1755766734243" duration="25750000" />
       <workItem from="1755858018647" duration="15975000" />
-    </task>
-    <task id="LOCAL-00002" summary="Delete main.html, add buttons and simple state transition">
-      <option name="closed" value="true" />
-      <created>1751964847459</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1751964847459</updated>
     </task>
     <task id="LOCAL-00003" summary="add some classes (Currency, Parser), add test environment, minor changes in Currency, Parser, test.">
       <option name="closed" value="true" />
@@ -637,7 +624,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755980606856</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="complete refactoring">
+      <option name="closed" value="true" />
+      <created>1755983677520</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1755983677520</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -667,7 +662,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="little updates" />
     <MESSAGE value="add ServerController.js, minor updates" />
     <MESSAGE value="add getAllCurrencyInfo() in ServerController.js" />
     <MESSAGE value="remove prismaORM" />
@@ -692,6 +686,7 @@
     <MESSAGE value="minor fixies" />
     <MESSAGE value="start refactoring client-part to TS" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="complete refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="complete refactoring" />
   </component>
 </project>

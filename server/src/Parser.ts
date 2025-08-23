@@ -1,10 +1,3 @@
-type RateParsed = {
-    Cur_Abbreviation: string;
-    Cur_Scale: number;
-    Cur_OfficialRate: number;
-    Cur_Name: string;
-}
-
 type PlainAllCurrenciesObject = {
     Cur_Abbreviation: string;
     Cur_Scale: number;
@@ -68,6 +61,13 @@ export default class Parser {
                 throw new Error('Неверный формат данных от API');
             }
 
+            data.push({
+                Cur_Abbreviation: 'BYN',
+                Cur_Scale: 1,
+                Cur_OfficialRate: 1,
+                Cur_Name: 'Белорусский рубль',
+            })
+
             let rates: { base: string; targets: TargetObject[] } = {
                 base: baseCurrency,
                 targets: [],
@@ -77,15 +77,6 @@ export default class Parser {
                 return rate.Cur_Abbreviation === baseCurrency;
             });
 
-            if (baseCurrency === 'BYN') {
-                baseObject = {
-                    Cur_Abbreviation: 'BYN',
-                    Cur_Scale: 1,
-                    Cur_OfficialRate: 1,
-                    Cur_Name: 'Белорусский рубль',
-                };
-            }
-
             if (!baseObject) {
                 throw new Error(`Неизвестная базовая валюта: ${baseCurrency}`);
             }
@@ -94,7 +85,7 @@ export default class Parser {
                 baseObject.Cur_OfficialRate / baseObject.Cur_Scale;
 
             for (let currency of targetCurrencies) {
-                let currencyObject: PlainAllCurrenciesObject | undefined = data.find((rate: RateParsed) => {
+                let currencyObject: PlainAllCurrenciesObject | undefined = data.find((rate: PlainAllCurrenciesObject) => {
                     return rate.Cur_Abbreviation === currency;
                 });
 

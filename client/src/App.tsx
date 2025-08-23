@@ -95,7 +95,7 @@ function App() {
                 newFavorites.add(currencyCode);
             }
             console.log(Array.from(newFavorites));
-            return Array.from(newFavorites);
+            return Array.from(newFavorites).sort();
         });
     };
 

@@ -57,7 +57,7 @@ app.get('/api/rates', async (req: Request, res: Response) => {
     const targets: unknown = req.query.targets || '';
     console.log('targets: ', targets);
 
-    const targetArray = String(targets).split(',').filter((currency) => currency.trim() !== '');
+    const targetArray: string[] = String(targets).split(',').filter((currency) => currency.trim() !== '');
 
     if (!base) {
         return res.status(400).json({ error: 'Параметр base обязателен' });
@@ -84,7 +84,7 @@ app.get('/api/rates', async (req: Request, res: Response) => {
         }
         console.log('cacheData is null');
 
-        const data = await Parser.getRates(String(base), targetArray);
+        const data = await Parser.getRates(String(base), targetArray.sort());
 
         if (data) {
             console.log('Данные из get api/rates: ', data);
