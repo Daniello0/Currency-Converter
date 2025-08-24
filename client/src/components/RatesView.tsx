@@ -14,11 +14,6 @@ function RatesView({ rates, favorites, onToggleFavorite }: RatesViewProps) {
         return <div className="loading-message">Загрузка...</div>;
     }
 
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('ru-RU');
-    };
-
     return (
         <div className="rates-view-container">
             <div className="rates-header rate-row">

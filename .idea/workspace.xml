@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="bug fix &amp; add BYN to converter">
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add demo file, fix Date in RatesView.tsx &amp; Currency.ts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RatesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RatesView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/models/Currency.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/models/Currency.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo.pages" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -241,14 +239,6 @@
       <workItem from="1755765267908" duration="1343000" />
       <workItem from="1755766734243" duration="25750000" />
       <workItem from="1755858018647" duration="15975000" />
-    </task>
-    <task id="LOCAL-00004" summary="delete useless files, add directories">
-      <option name="closed" value="true" />
-      <created>1752068640775</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1752068640775</updated>
     </task>
     <task id="LOCAL-00005" summary="Add fully functioning Currency.js &amp; CurrencyRatesList.js, converting from Api-Object to Array of Currencies (in CurrencyRatesView.js). Start working on design of CurrencyRatesView.js &amp; RatesView.css.">
       <option name="closed" value="true" />
@@ -634,7 +624,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755986695754</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="add demo file, fix Date in RatesView.tsx &amp; Currency.ts">
+      <option name="closed" value="true" />
+      <created>1756036400678</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1756036400678</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -664,7 +662,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove prismaORM" />
     <MESSAGE value="fix cookie" />
     <MESSAGE value="add working favorites &amp; base_currency (App.js, ConverterView.js)" />
     <MESSAGE value="add" />
@@ -689,6 +686,7 @@
     <MESSAGE value="complete refactoring" />
     <MESSAGE value="bug fix &amp; add BYN to converter" />
     <MESSAGE value="Merge pull request #9 from Daniello0/addServerToConverter(TS)&#10;&#10;Add server to converter (refactoring to TypeScript)" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="add demo file, fix Date in RatesView.tsx &amp; Currency.ts" />
+    <option name="LAST_COMMIT_MESSAGE" value="add demo file, fix Date in RatesView.tsx &amp; Currency.ts" />
   </component>
 </project>
