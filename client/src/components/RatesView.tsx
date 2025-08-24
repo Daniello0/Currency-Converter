@@ -52,7 +52,7 @@ function RatesView({ rates, favorites, onToggleFavorite }: RatesViewProps) {
 
                         {/* Столбец 3: Дата */}
                         <div className="currency-date">
-                            {String(formatDate(currency.updateDate))}
+                            {String(currency.updateDate)}
                         </div>
 
                         {/*Столбец 4: Избранное*/}

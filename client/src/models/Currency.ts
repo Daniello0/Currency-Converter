@@ -11,7 +11,7 @@ type constructorParams = {
     scale: number;
     abbreviation: string;
     officialRate: number;
-    updateDate: Date;
+    updateDate: string;
 };
 
 export default class Currency {
@@ -42,7 +42,7 @@ export default class Currency {
                 scale: 0,
                 abbreviation: '',
                 officialRate: 0,
-                updateDate: new Date(),
+                updateDate: new Date().toLocaleString()
             });
         }
 
@@ -51,7 +51,7 @@ export default class Currency {
             scale: apiObject.Cur_Scale,
             abbreviation: apiObject.Cur_Abbreviation,
             officialRate: apiObject.Cur_OfficialRate,
-            updateDate: new Date(apiObject.Date),
+            updateDate: apiObject.Date,
         });
     }
 }

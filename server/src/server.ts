@@ -7,6 +7,8 @@ import Cookies from './Cookies.ts';
 import cookieParser from 'cookie-parser';
 import DBController from './DBController.ts';
 import Cache from './Cache.ts';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 type RequestWithUserId = Request & {
     userId?: string;
@@ -34,6 +36,26 @@ const ONE_HOUR = 3600;
 
 app.use(cookieParser());
 app.use(Cookies.assignUserIdAndAddUserToDB);
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Серверное API',
+            version: '1.0',
+        },
+        servers: [
+            {
+                url: `http://localhost:${port}`,
+                description: 'Локальный сервер',
+            },
+        ],
+    },
+    apis: ['./server.ts'],
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/api/allCurrencyInfo', Cache.assignMemoryCache(ONE_HOUR), async (_req: Request, res: Response) => {
     try {
