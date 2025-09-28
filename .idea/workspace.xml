@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="add demo file, fix Date in RatesView.tsx &amp; Currency.ts">
+    <list default="true" id="9633df15-fc81-42ea-a2b3-c6246a0f6034" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo.pages" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +43,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -68,7 +66,7 @@
     &quot;Node.js.ConverterTest.js.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;addSwagger&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/daniel/WebstormProjects/currency-converter/client&quot;,
@@ -167,11 +165,11 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Debug Application" />
-      <item itemvalue="Mocha.Test" />
-      <item itemvalue="npm.npm start" />
       <item itemvalue="npm.format" />
       <item itemvalue="npm.lint" />
       <item itemvalue="npm.lint:fix" />
+      <item itemvalue="npm.npm start" />
+      <item itemvalue="Mocha.Test" />
     </list>
     <recent_temporary>
       <list>
@@ -239,6 +237,7 @@
       <workItem from="1755765267908" duration="1343000" />
       <workItem from="1755766734243" duration="25750000" />
       <workItem from="1755858018647" duration="15975000" />
+      <workItem from="1757333122385" duration="252000" />
     </task>
     <task id="LOCAL-00005" summary="Add fully functioning Currency.js &amp; CurrencyRatesList.js, converting from Api-Object to Array of Currencies (in CurrencyRatesView.js). Start working on design of CurrencyRatesView.js &amp; RatesView.css.">
       <option name="closed" value="true" />
@@ -649,7 +648,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="addServerToConverter(TS)" />
+                        <option value="origin/main" />
                       </list>
                     </value>
                   </entry>
