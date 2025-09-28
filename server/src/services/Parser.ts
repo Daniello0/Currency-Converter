@@ -11,17 +11,6 @@ type TargetObject = {
     name: string;
 }
 
-function isPlainCurrenciesArray(data: unknown): data is PlainAllCurrenciesObject[] {
-    return Array.isArray(data) &&
-        data.every(
-            (item) =>
-                item &&
-                typeof item === 'object' &&
-                'Cur_Abbreviation' in item &&
-                typeof (item).Cur_Abbreviation === 'string'
-        );
-}
-
 type RateObject = {
     base: string,
     targets : {
@@ -32,8 +21,19 @@ type RateObject = {
 }
 
 export default class Parser {
-    static round(value: number, digits = 4) {
+    private static round(value: number, digits = 4) {
         return Number(Number(value).toFixed(digits));
+    }
+
+    private static isPlainCurrenciesArray(data: unknown): data is PlainAllCurrenciesObject[] {
+        return Array.isArray(data) &&
+            data.every(
+                (item) =>
+                    item &&
+                    typeof item === 'object' &&
+                    'Cur_Abbreviation' in item &&
+                    typeof (item).Cur_Abbreviation === 'string'
+            );
     }
 
     static async getCurrenciesArray(): Promise<string[]> {
@@ -44,7 +44,7 @@ export default class Parser {
             throw new Error(`API error: ${response.status} ${response.statusText}`);
         }
         const data: unknown = await response.json();
-        if (!isPlainCurrenciesArray(data)) {
+        if (!this.isPlainCurrenciesArray(data)) {
             throw new Error('Неверный формат данных от API');
         }
         return data.map((item) => item.Cur_Abbreviation);
@@ -57,7 +57,7 @@ export default class Parser {
         if (response.ok) {
             const data: unknown = await response.json();
 
-            if (!isPlainCurrenciesArray(data)) {
+            if (!this.isPlainCurrenciesArray(data)) {
                 throw new Error('Неверный формат данных от API');
             }
 
