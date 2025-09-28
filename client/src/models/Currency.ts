@@ -42,7 +42,7 @@ export default class Currency {
                 scale: 0,
                 abbreviation: '',
                 officialRate: 0,
-                updateDate: new Date().toLocaleString()
+                updateDate: new Date().toLocaleString(),
             });
         }
 

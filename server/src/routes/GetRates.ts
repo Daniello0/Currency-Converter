@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
-import DBController from '../DBController.js';
-import Parser from '../Parser.js';
+import DBController from '../services/DBController.js';
+import Parser from '../services/Parser.js';
 
-type CacheObj = {
+export type CacheObj = {
     base_currency: string;
     targets: string;
     data: string;

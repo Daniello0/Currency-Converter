@@ -1,7 +1,7 @@
 import { Request, Router } from 'express';
-import DBController from '../DBController.js';
+import DBController from '../services/DBController.js';
 
-type RequestWithUserId = Request & {
+export type RequestWithUserId = Request & {
     userId?: string;
 }
 

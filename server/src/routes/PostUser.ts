@@ -1,9 +1,6 @@
-import { Request, Router } from 'express';
-import DBController from '../DBController.js';
-
-type RequestWithUserId = Request & {
-    userId?: string;
-}
+import { Router } from 'express';
+import DBController from '../services/DBController.js';
+import { RequestWithUserId } from './GetUser.js';
 
 export const postUser = Router();
 postUser.post('/api/user', async (req: RequestWithUserId, res) => {

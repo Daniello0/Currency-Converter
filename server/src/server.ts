@@ -1,11 +1,11 @@
 import { json } from 'express';
 import {Request, Response} from 'express';
 import express, { type Express } from 'express';
-import Parser from './Parser.ts';
+import Parser from './services/Parser.js';
 import cors from 'cors';
-import Cookies from './Cookies.ts';
+import Cookies from './services/Cookies.js';
 import cookieParser from 'cookie-parser';
-import Cache from './Cache.ts';
+import Cache from './services/Cache.js';
 import { setupSwagger } from './routes/Swagger.js';
 import { getRates } from './routes/GetRates.js';
 import { getUser } from './routes/GetUser.js';
